@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration>
+    <Appenders>
+        <!--  Console appender  -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{YY-MM-dd HH:mm:ss} [%-5p] [%c{1}:%L] - %m%n"/>
+        </Console>
+
+        <!--  Rolling file appender  -->
+        <RollingFile name="RollingFile" fileName="logs/log.log" filePattern="logs/$${date:yyyy-MM}/log-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{YY-MM-dd HH:mm:ss} [%-5p] [%c{1}:%L] - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+
+    <!--  Change no important loggers level to warn for console appender -->
+    <Loggers>
+        <Logger name="org.hibernate" level="warn">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.springframework" level="warn">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!--  ROOT LOGGER CONFIGURATION -->
+
+        <Root level="trace">
+            <AppenderRef ref="Console" level="debug"/>
+            <AppenderRef ref="RollingFile" level="trace"/>
+        </Root>
+    </Loggers>
+</Configuration>
