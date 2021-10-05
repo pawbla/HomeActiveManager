@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/v1/weather")
 public class RestControllers {
 
     @Autowired
@@ -18,13 +18,13 @@ public class RestControllers {
     @Autowired
     private WeatherRenderer weatherRenderer;
 
-    @GetMapping(value = "/weather", produces= MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/measurements", produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<String> weather() {
         return ResponseEntity.ok().body(weatherRenderer.getJSON());
     }
 
-    @GetMapping(value = "/connectors", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/status", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<String> getConnectorsDetails() {
         return ResponseEntity.ok().body(connectorDetailsRenderer.getJSON());

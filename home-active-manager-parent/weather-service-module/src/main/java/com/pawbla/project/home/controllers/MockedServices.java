@@ -2333,7 +2333,7 @@ public class MockedServices {
     private static final String SUN_RISE_SET_JSON = "{\"results\":{\"sunrise\":\"2019-10-05T04:46:45+00:00\",\"sunset\":\"2019-10-05T16:10:24+00:00\",\"solar_noon\":\"2019-10-05T10:28:35+00:00\",\"day_length\":41019,\"civil_twilight_begin\":\"2019-10-05T04:14:35+00:00\",\"civil_twilight_end\":\"2019-10-05T16:42:34+00:00\",\"nautical_twilight_begin\":\"2019-10-05T03:37:08+00:00\",\"nautical_twilight_end\":\"2019-10-05T17:20:01+00:00\",\"astronomical_twilight_begin\":\"2019-10-05T02:59:05+00:00\",\"astronomical_twilight_end\":\"2019-10-05T17:58:04+00:00\"},\"status\":\"OK\"}";
 
     private static final String ACCU_WEATHER_JSON = "[{\"LocalObservationDateTime\":\"2019-10-05T16:55:00+02:00\",\"EpochTime\""
-            + ":1570287300,\"WeatherText\":\"Częściowo słonecznie \",\"WeatherIcon\":7,\"HasPrecipitation\":false,\"PrecipitationType\":null"
+            + ":1570287300,\"WeatherText\":\"Czesciowo slonecznie \",\"WeatherIcon\":7,\"HasPrecipitation\":false,\"PrecipitationType\":null"
             + ",\"IsDayTime\":true,\"Temperature\":{\"Metric\":{\"Value\":8.9,\"Unit\":\"C\",\"UnitType\":17},\"Imperial\":{\"Value"
             + "\":48.0,\"Unit\":\"F\",\"UnitType\":18}},\"RealFeelTemperature\":{\"Metric\":{\"Value\":4.0,\"Unit\":\"C\",\"UnitType"
             + "\":17},\"Imperial\":{\"Value\":39.0,\"Unit\":\"F\",\"UnitType\":18}},\"RealFeelTemperatureShade\":{\"Metric\":{\"Value"

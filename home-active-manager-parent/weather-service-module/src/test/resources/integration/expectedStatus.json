@@ -1,0 +1,36 @@
+{
+  "connectors":[
+    {
+      "date":"10.04 20:38",
+      "isError":false,
+      "provider":"Internal ESP8266",
+      "name":"internal",
+      "link":"",
+      "errorMessage":"",
+      "responseCode":200
+    },{
+      "date":"10.04 20:38",
+      "isError":false,
+      "provider":"AccuWeather",
+      "name":"accuweather",
+      "link":"https://www.accuweather.com/",
+      "errorMessage":"",
+      "responseCode":200
+    },{
+      "date":"10.04 20:38",
+      "isError":false,
+      "provider":"Sunrise Sunset",
+      "name":"sun",
+      "link":"https://sunrise-sunset.org/",
+      "errorMessage":"",
+      "responseCode":200
+    },{
+      "date":"10.04 20:38",
+      "isError":false,
+      "provider":"AirLy",
+      "name":"airLy",
+      "link":"https://www.airly.eu/",
+      "errorMessage":"",
+      "responseCode":200}
+  ]
+}

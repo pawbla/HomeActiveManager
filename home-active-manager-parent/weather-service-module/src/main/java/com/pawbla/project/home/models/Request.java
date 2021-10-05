@@ -1,6 +1,5 @@
 package com.pawbla.project.home.models;
 
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 
