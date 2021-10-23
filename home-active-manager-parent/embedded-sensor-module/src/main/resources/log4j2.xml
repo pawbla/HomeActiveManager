@@ -4,13 +4,14 @@
     <Appenders>
         <!--  Console appender  -->
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{YY-MM-dd HH:mm:ss} [%-5p] [%c{1}:%L] - %m%n"/>
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%-5p] [%c{1}:%L] - %m%n"/>
         </Console>
 
         <!--  Rolling file appender  -->
-        <RollingFile name="RollingFile" fileName="test-logs/weather-service-test/log.log"
-                     filePattern="test-logs/weather-service-test/$${date:yyyy-MM}/log-%d{MM-dd-yyyy}-%i.log.gz">
-            <PatternLayout pattern="%d{YY-MM-dd HH:mm:ss} [%-5p] [%c{1}:%L] - %m%n"/>
+        <RollingFile name="RollingFile"
+                     fileName="/var/log/home_active_manager/embedded_sensor/log.txt"
+                     filePattern="/var/log/home_active_manager/embedded_sensor/log-%d{MM-dd-yyyy}-%i.txt.gz">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%-5p] [%c{1}:%L] - %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy />
                 <SizeBasedTriggeringPolicy size="5 MB"/>
