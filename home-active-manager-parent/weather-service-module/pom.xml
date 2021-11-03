@@ -13,9 +13,9 @@
 
   <name>weather-service-module</name>
 
-  <dependencies>
-
-  </dependencies>
+  <properties>
+    <release.project.folder>${project.parent.basedir}/${release.folder.name}/${project.name}</release.project.folder>
+  </properties>
 
   <build>
     <plugins>
@@ -63,6 +63,39 @@
                   <mainClass>com.pawbla.project.home.weather.service.WeatherServiceMain</mainClass>
                 </transformer>
               </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.coderplus.maven.plugins</groupId>
+        <artifactId>copy-rename-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-file</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <fileSets>
+                <fileSet>
+                  <sourceFile>${project.basedir}/target/${project.build.finalName}.jar</sourceFile>
+                  <destinationFile>${release.project.folder}/${build.finalName}.jar</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/scripts/start_app.sh</sourceFile>
+                  <destinationFile>${release.project.folder}/start_app.sh</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/scripts/dev.config</sourceFile>
+                  <destinationFile>${release.project.folder}/dev.config</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/scripts/prod.config</sourceFile>
+                  <destinationFile>${release.project.folder}/prod.config</destinationFile>
+                </fileSet>
+              </fileSets>
             </configuration>
           </execution>
         </executions>
