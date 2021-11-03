@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 **/release
 **/test-logs
+*prod.config
 ### STS ###
 .apt_generated
 .classpath
