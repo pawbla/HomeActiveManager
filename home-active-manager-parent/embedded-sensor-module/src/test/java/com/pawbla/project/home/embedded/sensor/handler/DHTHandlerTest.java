@@ -39,7 +39,7 @@ public class DHTHandlerTest {
     }
 
     @Test
-    public void handleTest() {
+    public void handleTest() throws InterruptedException {
         //before
         Mockito.when(reader.getDht()).thenReturn(new DHT(12, 35, false));
         //when
@@ -51,7 +51,7 @@ public class DHTHandlerTest {
     }
 
     @Test
-    public void calculateAvgValuesTest() {
+    public void calculateAvgValuesTest() throws InterruptedException {
         //before
         Mockito.when(reader.getDht()).thenReturn(new DHT(10, 11, false));
         handler.handle();
@@ -67,7 +67,7 @@ public class DHTHandlerTest {
     }
 
     @Test
-    public void maxAcceptableConsecutiveErrorsReachedTest() {
+    public void maxAcceptableConsecutiveErrorsReachedTest() throws InterruptedException {
         //before
         Mockito.when(reader.getDht()).thenReturn(new DHT(10, 11, true));
         //when
@@ -79,7 +79,7 @@ public class DHTHandlerTest {
     }
 
     @Test
-    public void maxAcceptableConsecutiveErrorsExceededTest() {
+    public void maxAcceptableConsecutiveErrorsExceededTest() throws InterruptedException {
         //before
         Mockito.when(reader.getDht()).thenReturn(new DHT(10, 11, true));
         //when

@@ -18,7 +18,6 @@ public class DHTHandler implements Handler {
     private int errCounter;
 
     private static final int LIST_MAX_SIZE = 10;
-    private static final int MAX_REPEATES = 2;
     private static final int MAX_ACCEPTABLE_CONSECUTIVE_ERRORS = 3;
 
     @Autowired
@@ -29,15 +28,11 @@ public class DHTHandler implements Handler {
         lastCorrectReadData = LocalDateTime.of(2000, 1, 1, 1, 1, 1);
     }
 
-    @Scheduled(fixedRate = 10000, initialDelay = 20000)
-    public void handle() {
+    @Scheduled(fixedRate = 20000, initialDelay = 20000)
+    public void handle() throws InterruptedException {
         DHT dht;
-        int repeatesCnt = 0;
-        do {
-            reader.read();
-            dht = (DHT) reader.getDht();
-            repeatesCnt++;
-        } while(dht.isError() && repeatesCnt <= MAX_REPEATES);
+        reader.read();
+        dht = (DHT) reader.getDht();
         addDHTToList(measurements, dht);
         handleError(dht);
     }

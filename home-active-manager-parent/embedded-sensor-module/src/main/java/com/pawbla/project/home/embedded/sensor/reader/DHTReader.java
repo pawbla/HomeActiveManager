@@ -17,19 +17,17 @@ public class DHTReader implements Reader {
 
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
-    private static final int DHT_MAX_COUNT = 120;
-    private static final int DHT_PULSES = 41;
-    private static final int DHT_PULSES_DOUBLED = DHT_PULSES * 2;
+    private static final int MAXTIMINGS  = 85;
+
+    private final int[] data = { 0, 0, 0, 0, 0 };
 
     private final int pin;
     private final int supplyPin;
-    private int controlVal;
     private int temperature;
     private int humidity;
     private boolean isError;
 
     public DHTReader(@Value("${custom.dhtDataPin}") int pin, @Value("${custom.dhtSupplyPin}") int supplyPin) {
-        controlVal = 0;
         this.pin = pin;
         this.supplyPin = supplyPin;
         this.isError = true;
@@ -38,93 +36,61 @@ public class DHTReader implements Reader {
     @Override
     public void read() {
         logger.info("Read data from DHT sensor");
-        controlVal++;
+        int laststate = Gpio.HIGH;
+        int j = 0;
+
         isError = true;
-        //TODO Maybe it could be handle in better way
-        if (controlVal > 5) {
-            logger.warn("Control values has exceeded: " + controlVal);
-        }
-        int[] pulseCnt = new int [DHT_PULSES_DOUBLED];
-
-        for (int i = 0; i < DHT_PULSES_DOUBLED; i++) {
-            pulseCnt[i] = 0;
-        }
-
-        Gpio.pinMode(pin, Gpio.OUTPUT);
-        Gpio.digitalWrite(pin, Gpio.HIGH);
-        Gpio.delay(500);
+        data[0] = data[1] = data[2] = data[3] = data[4] = 0;
 
         Gpio.pinMode(pin, Gpio.OUTPUT);
         Gpio.digitalWrite(pin, Gpio.LOW);
-        Gpio.delay(20);
+        Gpio.delay(18);
 
+        Gpio.digitalWrite(pin, Gpio.HIGH);
         Gpio.pinMode(pin, Gpio.INPUT);
 
-        for (int i = 0; i < 50; i++) {
-            //do nothing - just wait
-        }
-
-        //Wait until DHT pull pin down
-        int count = 0;
-        while(Gpio.digitalRead(pin) == Gpio.HIGH) {
-            Gpio.delayMicroseconds(1);
-            count++;
-        }
-
-        //Record pulse widths for a expected result bits
-        for (int i = 0; i < DHT_PULSES_DOUBLED; i+=2) {
-            //Count how long pin is in low state and store into pulseCnt[i]
-            while(Gpio.digitalRead(pin) == Gpio.LOW) {
+        for (int i = 0; i < MAXTIMINGS; i++) {
+            int counter = 0;
+            while (Gpio.digitalRead(pin) == laststate) {
+                counter++;
                 Gpio.delayMicroseconds(1);
-                if (++pulseCnt[i] >= DHT_MAX_COUNT) {
-                    logger.warn("Error reading from DHT, pulseCnt lower than max count");
-                    return;
+                if (counter == 255) {
+                    break;
                 }
             }
-            //Count how long pin is in low state and store into pulseCnt[i]
-            while(Gpio.digitalRead(pin) == Gpio.HIGH) {
-                Gpio.delayMicroseconds(1);
-                if (++pulseCnt[i+1] >= DHT_MAX_COUNT) {
-                    logger.warn("Error reading from DHT, timeout exceeded");
-                    return;
+
+            laststate = Gpio.digitalRead(pin);
+
+            if (counter == 255) {
+                break;
+            }
+
+            /* ignore first 3 transitions */
+            if (i >= 4 && i % 2 == 0) {
+                /* shove each bit into the storage bytes */
+                data[j / 8] <<= 1;
+                if (counter > 16) {
+                    data[j / 8] |= 1;
                 }
+                j++;
             }
         }
 
-        int threshold = 0;
-        for (int i = 2; i < DHT_PULSES_DOUBLED; i+=2) {
-            threshold += pulseCnt[i];
-        }
+        logger.info("Measured values data[0]: " + data[0] + " data[1]: " + data[1] + " data[2]: " + data[2] +
+                " data[3]: " + data[3] + " data[4]: " + data[4]);
 
-        threshold /= DHT_PULSES_DOUBLED - 1;
-
-        // Interpret each high pulse as 0 or 1 by comparing to the 50us reference
-        // When the count is less than 50us it must be a ~28us (LOW) pulse
-        // when is higher it must be a ~70us (HIGH) pulse
-        int[] data = {0, 0, 0, 0, 0};
-        for (int i = 3; i < DHT_PULSES_DOUBLED; i+=2) {
-            int index = (i - 3) / 16;
-            data[index] <<= 1;
-            if (pulseCnt[i] >= threshold) {
-                //One bit for long pulse
-                data[index] |= 1;
-            } //Else zero bit for short pulse
-        }
-        logger.info("Measured values " + data[0] + " -- " + data[1] + " -- " + data[2] + " -- " + data[3]);
-        //Verify checksum and set measured data
-        if (checkParity(data)) {
-            controlVal = 0;
-            //TODO Check what about other bytes, since on stackoverflow are used
-            // https://stackoverflow.com/questions/28486159/read-temperature-from-dht11-using-pi4j
-
-            // data[0] - integral data[1] - decimal
-            temperature = data[0];
-            // data[2] - integral data[3] - decimal
-            humidity = data[2];
+        if (j >= 40 && checkParity(data) && checkNotZero(data)) {
+            final float humidityFloat = (float) ((data[0] << 8) + data[1]) / 10;
+            final float temperatureFloat = (float) (((data[2] & 0x7F) << 8) + data[3]) / 10;
+            humidity = Math.round(humidityFloat);
+            if ((data[2] & 0x80) != 0) {
+                temperature = -Math.round(temperatureFloat);
+            } else {
+                temperature = Math.round(temperatureFloat);
+            }
             isError = false;
-
         } else {
-            logger.warn("Checksum error");
+            logger.warn("Checksum or all values zero error");
         }
     }
 
@@ -150,23 +116,7 @@ public class DHTReader implements Reader {
         return data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF);
     }
 
-    /*
-     float h = (float) ((dht11_dat[0] << 8) + dht11_dat[1]) / 10;
-            if (h > 100) {
-                h = dht11_dat[0]; // for DHT11
-            }
-            float c = (float) (((dht11_dat[2] & 0x7F) << 8) + dht11_dat[3]) / 10;
-            if (c > 125) {
-                c = dht11_dat[2]; // for DHT11
-            }
-            if ((dht11_dat[2] & 0x80) != 0) {
-                c = -c;
-            }
-            final float f = c * 1.8f + 32;
-            System.out.println("Humidity = " + h + " Temperature = " + c + "(" + f + "f)");
-        } else {
-            System.out.println("Data not good, skip");
-        }
-     */
-
+    private boolean checkNotZero(int[] data) {
+        return data[0] != 0 || data[1] != 0 || data[2] != 0 || data[3] != 0 || data[4] != 0;
+    }
 }

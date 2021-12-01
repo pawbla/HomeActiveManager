@@ -26,9 +26,8 @@ public class InternalConnector implements ConnectorInterface {
 
     private Connector connector;
 
-    public InternalConnector (@Value("${custom.ipInternalSensor}") String url,
-                              @Value("${custom.intSensorPassword}") String password) {
-        this.connector = this.buildConnector(this.buildRequest(url, password));
+    public InternalConnector (@Value("${custom.ipInternalSensor}") String url) {
+        this.connector = this.buildConnector(this.buildRequest(url));
     }
 
     @Override
@@ -36,12 +35,11 @@ public class InternalConnector implements ConnectorInterface {
         return connector;
     }
 
-    private Request buildRequest(String url, String password) {
+    private Request buildRequest(String url) {
         Request request = new RequestBuilder()
                 .setURL(url)
                 .setHttpMethod(HttpMethod.GET)
                 .addContentType(MediaType.APPLICATION_JSON)
-                .addHeader("Authorization", password)
                 .build();
         return request;
     }
