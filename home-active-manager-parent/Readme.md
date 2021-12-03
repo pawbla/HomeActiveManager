@@ -5,7 +5,7 @@ Purpose of the project is to create application which allows showing current wea
 ## Technical details
 
 This application base on already existing code which was developed in [RpiApplication](https://github.com/pawbla/RpiApplication) project and base on solution from the project.
-Purpose for refactoring was to divide a previous app which was king of a monolith to several small and simply modules.
+Purpose for refactoring was split a previous app which was king of a monolith to several small and simply services. Every service is responsible for different business funcions, like e.g. reading datas from embedded sensor, providing Rest api with measurements, etc. Functionality responsible for sharing static reasources, previosuly build in java application, now is providing with Nginx server. 
 
 ### Assumptions:
 - applications will be run on Raspberry Pi
@@ -39,6 +39,11 @@ Application can be started in two ways:
 
 Setting `<optional parameter>` with `dev` allows to start application(s) with **dev** profile, in other case application will
 start in **prod**, e.g. `sudo bash start_app.sh dev`.
+
+### Hardware
+- Raspberry Pi model B+
+- Display - [Waveshare 3.5" LCD](https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(B))  
+- DHT22 - temperature and humidity sensor
 
 ### Contact
 

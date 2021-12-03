@@ -3,10 +3,7 @@ package com.pawbla.project.home.weather.service.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/weather")
@@ -19,6 +16,7 @@ public class RestControllers {
     private WeatherRenderer weatherRenderer;
 
     @GetMapping(value = "/measurements", produces= MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
     @ResponseBody
     public ResponseEntity<String> weather() {
         return ResponseEntity.ok().body(weatherRenderer.getJSON());

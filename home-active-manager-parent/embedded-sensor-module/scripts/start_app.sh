@@ -4,7 +4,7 @@ app_name="embedded-sensor-module"
 profile="prod"
 
 path=$(dirname "$0")
-source ./${path}/prod.config
+source ./${path}/app.config
 
 if [[ $1 == "dev" ]];then
   profile="dev"
