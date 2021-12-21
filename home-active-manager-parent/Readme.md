@@ -52,7 +52,7 @@ All important changes to this project will be documented in this place.
 <details>
 <summary><b>Features</b> </summary>
 
-* Configure Nginx to serve HomeActive static context application
+* Configure Nginx to serve HomeActiveRemote static context application
 * Scripts for starting application on Raspberry
 * Configure Nginx to serve HomeActiveDisplay static context application
 * Create a new module weather-service-module

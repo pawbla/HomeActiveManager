@@ -39,18 +39,18 @@ public class RestConnector implements RestInterface {
     }
 
     public void execute() {
-        logger.debug("Execute connection to url " + connector.getRequest().getIp());
+        logger.debug("Execute connection to url " + connector.getRequest().getIp() + " for service " + connector.getName());
         ResponseEntity<String> resp = null;
         try {
             resp = getResponseEntity();
-            logger.debug("Received status code " + resp.getStatusCodeValue() + " for: " + connector.getRequest().getIp());
+            logger.info("Received status code " + resp.getStatusCodeValue() + " for: " + connector.getName());
             if (resp.getStatusCodeValue() != 200) {
                 response.setError(true);
                 response.setModified(false);
                 response.setErrorMsg(resp.getStatusCode().getReasonPhrase());
             }
             if (StringUtils.isNotBlank(resp.getBody())) {
-                logger.trace("Received response for " + connector.getRequest().getIp() + " body: " + resp.getBody());
+                logger.trace("Received response for " + connector.getName() + " body: " + resp.getBody());
                 response.setBody(resp.getBody());
                 response.setDate(dateFormat.format(new Date()));
             }
@@ -60,7 +60,7 @@ public class RestConnector implements RestInterface {
             response.setErrorMsg("Unknown error has occured: " + e.getMessage());
             response.setError(true);
             response.setModified(false);
-            logger.warn("An exception has occured when executed connection to url " + connector.getRequest().getIp() + ": " + e.getMessage());
+            logger.warn("An exception has occured when executed connection to url " + connector.getName() + ": " + e.getMessage());
         } finally {
             connector.setResponse(response);
         }
@@ -70,15 +70,15 @@ public class RestConnector implements RestInterface {
         ResponseEntity<String> resp = null;
         int iter = 0;
         while (iter < 3) {
-            logger.debug("Get REST data for ip " + connector.getRequest().getIp() + " iteration " + iter);
+            logger.debug("Get REST data for service " + connector.getName() + " iteration " + iter);
             try {
                 resp = rest.exchange(connector.getRequest().getIp(), connector.getRequest().getMethod(), connector.getRequest().getEntity(), String.class);
                 if (resp.getStatusCodeValue() == 200) {
-                    logger.debug("Received message with response code 200 for service: " + connector.getRequest().getIp());
+                    logger.debug("Received message with response code 200 for service: " + connector.getName());
                     break;
                 }
             } catch (RestClientException e) {
-                logger.warn("Unable to fetch datas from ip " + connector.getRequest().getIp() + " caused by exception: " + e);
+                logger.warn("Unable to fetch datas from ip " + connector.getName() + " caused by exception: " + e);
                 throw new RestClientException(e.getMessage());
             }
             iter++;
