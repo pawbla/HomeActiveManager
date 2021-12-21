@@ -45,6 +45,27 @@ start in **prod**, e.g. `sudo bash start_app.sh dev`.
 - Display - [Waveshare 3.5" LCD](https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(B))  
 - DHT22 - temperature and humidity sensor
 
-### Contact
+## Change log
+All important changes to this project will be documented in this place.
+
+### Version 1.0.0
+<details>
+<summary><b>Features</b> </summary>
+
+* Configure Nginx to serve HomeActive static context application
+* Scripts for starting application on Raspberry
+* Configure Nginx to serve HomeActiveDisplay static context application
+* Create a new module weather-service-module
+* Create a new module embedded-sensor-module
+* Split application into modules
+
+</details>
+
+<details>
+<summary><b>Bugs</b></summary>
+
+</details>
+
+## Contact
 
 Paweł Błachut - blachut.pawel@gmail.com
