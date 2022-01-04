@@ -1,6 +1,9 @@
 package com.pawbla.project.home.weather.service.parsers;
 
+import com.pawbla.project.home.weather.service.models.AirlyMeasurement;
+import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
+import com.pawbla.project.home.weather.service.models.SunRiseSetMeasurement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -19,6 +22,8 @@ import java.util.TimeZone;
 @Component
 @Qualifier("sunRiseSet")
 public class SunRiseSetParser extends AbstractParser {
+
+    private final SunRiseSetMeasurement sunRiseSetMeasurement;
 
     public enum SunValues implements Values {
 
@@ -56,11 +61,12 @@ public class SunRiseSetParser extends AbstractParser {
     /**
      * Variables
      */
-    private DateTimeFormatter inFormatter;
-    private SimpleDateFormat outFormatter;
-    private SimpleDateFormat outFormatter2;
+    private final DateTimeFormatter inFormatter;
+    private final SimpleDateFormat outFormatter;
+    private final SimpleDateFormat outFormatter2;
 
     public SunRiseSetParser() {
+        this.sunRiseSetMeasurement = new SunRiseSetMeasurement();
         inFormatter = DateTimeFormat.forPattern(SIMPLE_DATE_FORMAT).withZoneUTC();
 
         outFormatter = new SimpleDateFormat(OUT_DATE_FORMAT);
@@ -79,13 +85,17 @@ public class SunRiseSetParser extends AbstractParser {
 
             long dayLentStr = (long) jsonObject.getJSONObject(RESULTS_KEY).getInt(DAY_LENGTH_KEY);
             logger.trace("Fetched datas: rise: " + sunRiseStr + " set: " + sunSetStr + " day length: " + dayLentStr);
-
-            this.addParsed(SunValues.SUN_RISE, outFormatter.format(DateTime.parse(sunRiseStr, inFormatter).toDate()));
-            this.addParsed(SunValues.SUN_SET, outFormatter.format(DateTime.parse(sunSetStr, inFormatter).toDate()));
-            this.addParsed(SunValues.DAY_LENGTH, outFormatter2.format(new Date((long)(dayLentStr*1000))));
+            sunRiseSetMeasurement.setSunRise(outFormatter.format(DateTime.parse(sunRiseStr, inFormatter).toDate()));
+            sunRiseSetMeasurement.setSunSet(outFormatter.format(DateTime.parse(sunSetStr, inFormatter).toDate()));
+            sunRiseSetMeasurement.setDayLength(outFormatter2.format(new Date((long)(dayLentStr*1000))));
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
         }
+    }
+
+    @Override
+    public Measurement getParsedAsObject() {
+        return sunRiseSetMeasurement;
     }
 
     private TimeZone getCurrentTimeZone() {

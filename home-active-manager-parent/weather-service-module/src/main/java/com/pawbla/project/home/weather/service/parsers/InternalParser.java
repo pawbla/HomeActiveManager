@@ -1,5 +1,7 @@
 package com.pawbla.project.home.weather.service.parsers;
 
+import com.pawbla.project.home.weather.service.models.InternalMeasurement;
+import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +18,12 @@ public class InternalParser extends AbstractParser {
      * Logger
      */
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
+
+    private final InternalMeasurement internalMeasurement;
+
+    public InternalParser() {
+        this.internalMeasurement = new InternalMeasurement();
+    }
 
     public enum InternalValues implements Values {
 
@@ -44,10 +52,15 @@ public class InternalParser extends AbstractParser {
     public void parse(Response response) throws JSONException {
         try {
             JSONObject jsonObject = new JSONObject(response.getBody());
-            this.addParsed(InternalValues.HUMIDITY, Integer.toString(jsonObject.getInt(HUMIDITY_SENSOR_KEY)));
-            this.addParsed(InternalValues.TEMPERATURE, Integer.toString(jsonObject.getInt(TEMPERATURE_SENSOR_KEY)));
+            internalMeasurement.setHumidity(Integer.toString(jsonObject.getInt(HUMIDITY_SENSOR_KEY)));
+            internalMeasurement.setTemperature(Integer.toString(jsonObject.getInt(TEMPERATURE_SENSOR_KEY)));
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
         }
+    }
+
+    @Override
+    public Measurement getParsedAsObject() {
+        return internalMeasurement;
     }
 }

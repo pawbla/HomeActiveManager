@@ -1,5 +1,6 @@
 package com.pawbla.project.home.weather.service.handlers;
 
+import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
 import com.pawbla.project.home.weather.service.parsers.ParserInterface;
 import com.pawbla.project.home.weather.service.registry.ConnectorsRegistryInterface;
@@ -70,7 +71,9 @@ public abstract class AbstractHandler implements HandlerInterface {
 
     }
 
-    public String getResponseValue(String key) {
-        return this.parser.getParsed().get(key);
+    public Measurement getResponseObject() {
+        return this.parser.getParsedAsObject();
     }
+
+
 }

@@ -1,5 +1,7 @@
 package com.pawbla.project.home.weather.service.parsers;
 
+import com.pawbla.project.home.weather.service.models.AirlyMeasurement;
+import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +20,12 @@ public class AirLyParser extends AbstractParser {
      */
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
+    private final AirlyMeasurement airlyMeasurement;
+
+    public AirLyParser() {
+        this.airlyMeasurement = new AirlyMeasurement();
+    }
+
     public enum AirLyValues implements Values {
 
         TEMPERATURE("temperature"),
@@ -30,7 +38,6 @@ public class AirLyParser extends AbstractParser {
         CAQI_COLOR("caqiColor"),
         PM_10_PERCENT("pm10percent"),
         PM_25_PERCENT("pm25percent");
-
 
         public final String value;
 
@@ -70,19 +77,23 @@ public class AirLyParser extends AbstractParser {
             JSONArray jsonArrayValues = jsonObject.getJSONArray(VALUES_KEY);
             JSONArray jsonArrayIndexes = jsonObject.getJSONArray(INDEXES_KEY);
             JSONArray jsonArrayStandards = jsonObject.getJSONArray(STANDARDS_KEY);
-            this.addParsed(AirLyValues.PM_1, getRoundedDouble(jsonArrayValues.getJSONObject(PM1_POS).getDouble(VALUE_KEY)));
-            this.addParsed(AirLyValues.PM_10, getRoundedDouble(jsonArrayValues.getJSONObject(PM10_POS).getDouble(VALUE_KEY)));
-            this.addParsed(AirLyValues.PM_25, getRoundedDouble(jsonArrayValues.getJSONObject(PM25_POS).getDouble(VALUE_KEY)));
-            this.addParsed(AirLyValues.CAQI, getRoundedDouble(jsonArrayIndexes.getJSONObject(CAQI_POS).getDouble(VALUE_KEY)));
-            this.addParsed(AirLyValues.CAQI_COLOR, jsonArrayIndexes.getJSONObject(CAQI_POS).getString(COLOR_KEY));
-            this.addParsed(AirLyValues.PM_10_PERCENT, getRoundedDouble(jsonArrayStandards.getJSONObject(PM10_PERCENT_POS).getDouble(PERCENT_KEY)));
-            this.addParsed(AirLyValues.PM_25_PERCENT, getRoundedDouble(jsonArrayStandards.getJSONObject(PM25_PERCENT_POS).getDouble(PERCENT_KEY)));
-            this.addParsed(AirLyValues.HUMIDITY,  getRoundedDouble(jsonArrayValues.getJSONObject(HUMIDITY_POS).getDouble(VALUE_KEY)));
-            this.addParsed(AirLyValues.PRESSURE, getRoundedDouble(jsonArrayValues.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY)));
-            this.addParsed(AirLyValues.TEMPERATURE, getRoundedDouble(jsonArrayValues.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY)));
+            airlyMeasurement.setPm1(getRoundedDouble(jsonArrayValues.getJSONObject(PM1_POS).getDouble(VALUE_KEY)));
+            airlyMeasurement.setPm10(getRoundedDouble(jsonArrayValues.getJSONObject(PM10_POS).getDouble(VALUE_KEY)));
+            airlyMeasurement.setPm25(getRoundedDouble(jsonArrayValues.getJSONObject(PM25_POS).getDouble(VALUE_KEY)));
+            airlyMeasurement.setCaqi(getRoundedDouble(jsonArrayIndexes.getJSONObject(CAQI_POS).getDouble(VALUE_KEY)));
+            airlyMeasurement.setCaqiColour(jsonArrayIndexes.getJSONObject(CAQI_POS).getString(COLOR_KEY));
+            airlyMeasurement.setPm10percent(getRoundedDouble(jsonArrayStandards.getJSONObject(PM10_PERCENT_POS).getDouble(PERCENT_KEY)));
+            airlyMeasurement.setPm25percent(getRoundedDouble(jsonArrayStandards.getJSONObject(PM25_PERCENT_POS).getDouble(PERCENT_KEY)));
+            airlyMeasurement.setHumidity(getRoundedDouble(jsonArrayValues.getJSONObject(HUMIDITY_POS).getDouble(VALUE_KEY)));
+            airlyMeasurement.setPressure(getRoundedDouble(jsonArrayValues.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY)));
+            airlyMeasurement.setTemperature(getRoundedDouble(jsonArrayValues.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY)));
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
         }
     }
 
+    @Override
+    public Measurement getParsedAsObject() {
+        return airlyMeasurement;
+    }
 }

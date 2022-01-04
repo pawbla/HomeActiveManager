@@ -1,5 +1,7 @@
 package com.pawbla.project.home.weather.service.parsers;
 
+import com.pawbla.project.home.weather.service.models.AirLyInstallationMeasurement;
+import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +18,8 @@ public class AirLyInstalltionParser  extends AbstractParser {
      * Logger
      */
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
+
+    private AirLyInstallationMeasurement airLyInstallationMeasurement;
 
     public enum AirLyInstalltionValues implements Values {
 
@@ -42,16 +46,25 @@ public class AirLyInstalltionParser  extends AbstractParser {
     private static final String CITY_KEY = "city";
     private static final String STREET_KEY = "street";
 
+    public AirLyInstalltionParser() {
+        this.airLyInstallationMeasurement = new AirLyInstallationMeasurement();
+    }
+
     @Override
     public void parse(Response response) throws JSONException {
         try {
             JSONObject jsonArray = new JSONObject(response.getBody()).getJSONObject(ADDRESS_KEY);
-            this.addParsed(AirLyInstalltionValues.COUNTRY, jsonArray.getString(COUNTRY_KEY));
-            this.addParsed(AirLyInstalltionValues.CITY, jsonArray.getString(CITY_KEY));
-            this.addParsed(AirLyInstalltionValues.STREET, jsonArray.getString(STREET_KEY));
+            airLyInstallationMeasurement.setCountry(jsonArray.getString(COUNTRY_KEY));
+            airLyInstallationMeasurement.setCity(jsonArray.getString(CITY_KEY));
+            airLyInstallationMeasurement.setStreet(jsonArray.getString(STREET_KEY));
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
         }
+    }
+
+    @Override
+    public Measurement getParsedAsObject() {
+        return airLyInstallationMeasurement;
     }
 
 }
