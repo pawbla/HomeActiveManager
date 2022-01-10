@@ -1,5 +1,7 @@
 package com.pawbla.project.home.weather.service.models;
 
+import java.util.List;
+
 public class AirlyMeasurement extends Measurement {
     private String temperature;
     private String humidity;
@@ -11,9 +13,11 @@ public class AirlyMeasurement extends Measurement {
     private String caqiColour;
     private String pm10percent;
     private String pm25percent;
+    private List<AirPollutionForecast> airPollutionForecast;
 
     public void setMeasurements(String temperature, String humidity, String pressure, String pm1,
-                            String pm10, String pm25, String caqi, String caqiColour, String pm10percent, String pm25percent) {
+                            String pm10, String pm25, String caqi, String caqiColour, String pm10percent,
+                            String pm25percent, List<AirPollutionForecast> airPollutionForecast) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.pressure = pressure;
@@ -24,6 +28,7 @@ public class AirlyMeasurement extends Measurement {
         this.caqiColour = caqiColour;
         this.pm10percent = pm10percent;
         this.pm25percent = pm25percent;
+        this.airPollutionForecast = airPollutionForecast;
     }
 
     public String getCaqiColour() {
@@ -64,5 +69,9 @@ public class AirlyMeasurement extends Measurement {
 
     public String getPm25percent() {
         return pm25percent;
+    }
+
+    public List<AirPollutionForecast> getAirPollutionForecast() {
+        return airPollutionForecast;
     }
 }

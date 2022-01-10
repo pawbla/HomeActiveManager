@@ -6,10 +6,13 @@ import com.pawbla.project.home.weather.service.handlers.HandlerInterface;
 import com.pawbla.project.home.weather.service.parsers.AccuWeatherParser;
 import com.pawbla.project.home.weather.service.parsers.AirLyParser;
 import com.pawbla.project.home.weather.service.parsers.SunRiseSetParser;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class WeatherRenderer implements Renderer {
@@ -80,7 +83,8 @@ public class WeatherRenderer implements Renderer {
                         .put(AirLyParser.AirLyValues.PM_25.getValue(),
                                 this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm25()))
                         .put(AirLyParser.AirLyValues.PM_25_PERCENT.getValue(),
-                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm25percent())))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm25percent()))
+                        .put("forecast", prepareAirPollutionForecast(getAirLyMeasurement())))
                 .put("sun", new JSONObject()
                         .put(SunRiseSetParser.SunValues.SUN_RISE.getValue(),
                                 this.setMeasureObj(getSunMeasurement(), this.getSunMeasurement().getSunRise()))
@@ -112,5 +116,25 @@ public class WeatherRenderer implements Renderer {
 
     private AccWeMeasurement getAccuWeatherMeasurement() {
         return (AccWeMeasurement) accuWeather.getMeasurement();
+    }
+
+    private JSONObject prepareAirPollutionForecast(AirlyMeasurement measurement) {
+        return new JSONObject()
+                .put("isError", measurement.isError())
+                .put("date", measurement.getDate())
+                .put("values", airPollutionForecastArr(measurement.getAirPollutionForecast()));
+    }
+
+    private JSONArray airPollutionForecastArr(List<AirPollutionForecast> airPollutionForecastList) {
+        JSONArray airPollutionForecast = new JSONArray();
+        airPollutionForecastList.forEach(item -> airPollutionForecast.put(prepareForecastObj(item)));
+        return airPollutionForecast;
+    }
+
+    private JSONObject prepareForecastObj(AirPollutionForecast item) {
+        return new JSONObject()
+                .put("date", item.getDate())
+                .put("caqi", item.getCaqi())
+                .put("caqiColour", item.getCaqiColour());
     }
 }

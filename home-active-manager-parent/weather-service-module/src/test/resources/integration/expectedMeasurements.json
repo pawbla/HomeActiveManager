@@ -26,7 +26,133 @@
   "pm10":{
     "date":"10.04 20:38",
     "isError":false,
-    "value":"31"}
+    "value":"31"},
+  "forecast": {
+    "date": "10.04 20:38",
+    "isError": false,
+    "values": [
+      {
+        "date": "2019-10-05T16:00:00.000Z",
+        "caqi": "30",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-05T17:00:00.000Z",
+        "caqi": "31",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-05T18:00:00.000Z",
+        "caqi": "32",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-05T19:00:00.000Z",
+        "caqi": "33",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-05T20:00:00.000Z",
+        "caqi": "34",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-05T21:00:00.000Z",
+        "caqi": "35",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-05T22:00:00.000Z",
+        "caqi": "35",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-05T23:00:00.000Z",
+        "caqi": "34",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-06T00:00:00.000Z",
+        "caqi": "34",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-06T01:00:00.000Z",
+        "caqi": "33",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-06T02:00:00.000Z",
+        "caqi": "32",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-06T03:00:00.000Z",
+        "caqi": "30",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-06T04:00:00.000Z",
+        "caqi": "28",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-06T05:00:00.000Z",
+        "caqi": "26",
+        "caqiColour": "#D1CF1E"
+      },
+      {
+        "date": "2019-10-06T06:00:00.000Z",
+        "caqi": "24",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T07:00:00.000Z",
+        "caqi": "22",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T08:00:00.000Z",
+        "caqi": "20",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T09:00:00.000Z",
+        "caqi": "19",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T10:00:00.000Z",
+        "caqi": "19",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T11:00:00.000Z",
+        "caqi": "19",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T12:00:00.000Z",
+        "caqi": "19",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T13:00:00.000Z",
+        "caqi": "19",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T14:00:00.000Z",
+        "caqi": "20",
+        "caqiColour": "#6BC926"
+      },
+      {
+        "date": "2019-10-06T15:00:00.000Z",
+        "caqi": "21",
+        "caqiColour": "#6BC926"
+      }
+    ]
+  }
 },
   "in":{
     "temperature":{

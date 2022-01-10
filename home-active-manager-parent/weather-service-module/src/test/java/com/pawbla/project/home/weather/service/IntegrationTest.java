@@ -1,5 +1,6 @@
 package com.pawbla.project.home.weather.service;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -37,7 +38,8 @@ public class IntegrationTest {
         String actual = testRestTemplate.getForObject(getUri("measurements"), String.class);
         actual = actual.replaceAll(REGEXP, DATE);
         String expected = readFile("integration/expectedMeasurements.json");
-        JSONAssert.assertEquals("Measurements response", expected, new JSONObject(actual), false);
+        JSONObject actualJSON = new JSONObject(actual);
+        JSONAssert.assertEquals("Measurements response", new JSONObject(expected), actualJSON, true);
     }
 
     @Test
@@ -45,7 +47,7 @@ public class IntegrationTest {
         String actual = testRestTemplate.getForObject(getUri("status"), String.class);
         actual = actual.replaceAll(REGEXP, DATE);
         String expected = readFile("integration/expectedStatus.json");
-        JSONAssert.assertEquals("Status response", expected, new JSONObject(actual), false);
+        JSONAssert.assertEquals("Status response", expected, new JSONObject(actual), true);
     }
 
     private String getUri(String path) {
