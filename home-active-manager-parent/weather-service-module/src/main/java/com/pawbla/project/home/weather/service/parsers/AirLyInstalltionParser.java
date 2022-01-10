@@ -51,20 +51,22 @@ public class AirLyInstalltionParser  extends AbstractParser {
     }
 
     @Override
-    public void parse(Response response) throws JSONException {
+    public Measurement parse(Response response) throws JSONException {
         try {
-            JSONObject jsonArray = new JSONObject(response.getBody()).getJSONObject(ADDRESS_KEY);
-            airLyInstallationMeasurement.setCountry(jsonArray.getString(COUNTRY_KEY));
-            airLyInstallationMeasurement.setCity(jsonArray.getString(CITY_KEY));
-            airLyInstallationMeasurement.setStreet(jsonArray.getString(STREET_KEY));
+            if (!response.isError()) {
+                JSONObject jsonArray = new JSONObject(response.getBody()).getJSONObject(ADDRESS_KEY);
+                String country = jsonArray.getString(COUNTRY_KEY);
+                String city = jsonArray.getString(CITY_KEY);
+                String street = jsonArray.getString(STREET_KEY);
+                airLyInstallationMeasurement.setDate(response.getDate());
+                airLyInstallationMeasurement.setMeasurements(country, city, street);
+            }
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
-        }
-    }
+        } finally {
+            airLyInstallationMeasurement.setError(response.isError());
 
-    @Override
-    public Measurement getParsedAsObject() {
+        }
         return airLyInstallationMeasurement;
     }
-
 }

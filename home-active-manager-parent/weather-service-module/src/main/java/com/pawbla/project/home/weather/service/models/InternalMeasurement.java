@@ -1,23 +1,21 @@
 package com.pawbla.project.home.weather.service.models;
 
-public class InternalMeasurement implements Measurement {
+public class InternalMeasurement extends Measurement {
     private String temperature;
+    private String humidity;
+
+    public void setMeasurements(String temperature, String humidity) {
+        this.temperature = temperature;
+        this.humidity = humidity;
+    }
 
     public String getTemperature() {
         return temperature;
-    }
-
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
     }
 
     public String getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(String humidity) {
-        this.humidity = humidity;
-    }
 
-    private String humidity;
 }

@@ -71,29 +71,31 @@ public class AirLyParser extends AbstractParser {
     private static final int TEMPERATURE_POS = 5;
 
     @Override
-    public void parse (Response response) throws JSONException {
+    public Measurement parse (Response response) throws JSONException {
         try {
-            JSONObject jsonObject = new JSONObject(response.getBody()).getJSONObject(CURRENT_KEY);
-            JSONArray jsonArrayValues = jsonObject.getJSONArray(VALUES_KEY);
-            JSONArray jsonArrayIndexes = jsonObject.getJSONArray(INDEXES_KEY);
-            JSONArray jsonArrayStandards = jsonObject.getJSONArray(STANDARDS_KEY);
-            airlyMeasurement.setPm1(getRoundedDouble(jsonArrayValues.getJSONObject(PM1_POS).getDouble(VALUE_KEY)));
-            airlyMeasurement.setPm10(getRoundedDouble(jsonArrayValues.getJSONObject(PM10_POS).getDouble(VALUE_KEY)));
-            airlyMeasurement.setPm25(getRoundedDouble(jsonArrayValues.getJSONObject(PM25_POS).getDouble(VALUE_KEY)));
-            airlyMeasurement.setCaqi(getRoundedDouble(jsonArrayIndexes.getJSONObject(CAQI_POS).getDouble(VALUE_KEY)));
-            airlyMeasurement.setCaqiColour(jsonArrayIndexes.getJSONObject(CAQI_POS).getString(COLOR_KEY));
-            airlyMeasurement.setPm10percent(getRoundedDouble(jsonArrayStandards.getJSONObject(PM10_PERCENT_POS).getDouble(PERCENT_KEY)));
-            airlyMeasurement.setPm25percent(getRoundedDouble(jsonArrayStandards.getJSONObject(PM25_PERCENT_POS).getDouble(PERCENT_KEY)));
-            airlyMeasurement.setHumidity(getRoundedDouble(jsonArrayValues.getJSONObject(HUMIDITY_POS).getDouble(VALUE_KEY)));
-            airlyMeasurement.setPressure(getRoundedDouble(jsonArrayValues.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY)));
-            airlyMeasurement.setTemperature(getRoundedDouble(jsonArrayValues.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY)));
+            if (!response.isError()) {
+                JSONObject jsonObject = new JSONObject(response.getBody()).getJSONObject(CURRENT_KEY);
+                JSONArray jsonArrayValues = jsonObject.getJSONArray(VALUES_KEY);
+                JSONArray jsonArrayIndexes = jsonObject.getJSONArray(INDEXES_KEY);
+                JSONArray jsonArrayStandards = jsonObject.getJSONArray(STANDARDS_KEY);
+                String pm1 = getRoundedDouble(jsonArrayValues.getJSONObject(PM1_POS).getDouble(VALUE_KEY));
+                String pm10 = getRoundedDouble(jsonArrayValues.getJSONObject(PM10_POS).getDouble(VALUE_KEY));
+                String pm25 = getRoundedDouble(jsonArrayValues.getJSONObject(PM25_POS).getDouble(VALUE_KEY));
+                String caqi = getRoundedDouble(jsonArrayIndexes.getJSONObject(CAQI_POS).getDouble(VALUE_KEY));
+                String caqiColor = jsonArrayIndexes.getJSONObject(CAQI_POS).getString(COLOR_KEY);
+                String pm10perc = getRoundedDouble(jsonArrayStandards.getJSONObject(PM10_PERCENT_POS).getDouble(PERCENT_KEY));
+                String pm25per = getRoundedDouble(jsonArrayStandards.getJSONObject(PM25_PERCENT_POS).getDouble(PERCENT_KEY));
+                String humidity = getRoundedDouble(jsonArrayValues.getJSONObject(HUMIDITY_POS).getDouble(VALUE_KEY));
+                String pressure = getRoundedDouble(jsonArrayValues.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY));
+                String temperature = getRoundedDouble(jsonArrayValues.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY));
+                airlyMeasurement.setDate(response.getDate());
+                airlyMeasurement.setMeasurements(temperature, humidity, pressure, pm1, pm10, pm25, caqi, caqiColor, pm10perc, pm25per);
+            }
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
+        } finally {
+            airlyMeasurement.setError(response.isError());
         }
-    }
-
-    @Override
-    public Measurement getParsedAsObject() {
         return airlyMeasurement;
     }
 }

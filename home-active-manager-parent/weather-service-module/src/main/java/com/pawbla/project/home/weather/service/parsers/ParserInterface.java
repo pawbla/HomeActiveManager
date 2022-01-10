@@ -7,6 +7,5 @@ import org.json.JSONException;
 import java.util.Map;
 
 public interface ParserInterface {
-    void parse(Response response) throws JSONException;
-    Measurement getParsedAsObject();
+    Measurement parse(Response response) throws JSONException;
 }

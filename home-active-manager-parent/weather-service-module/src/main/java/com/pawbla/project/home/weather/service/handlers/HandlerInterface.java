@@ -12,6 +12,6 @@ public interface HandlerInterface {
     void setConnector(Connector Connector);
     void setRecovery(int delay, int confTime);
     Response getResponse();
-    Measurement getResponseObject();
+    Measurement getMeasurement();
 }
 

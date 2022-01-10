@@ -14,10 +14,6 @@ public abstract class AbstractParser implements ParserInterface {
         parsed = new HashMap<String, String>();
     }
 
-    protected void addParsed(Values key, String value) {
-        parsed.put(key.getValue(), value);
-    }
-
     public String getRoundedDouble(Double value) {
         DecimalFormat df = new DecimalFormat("#");
         return df.format(value).toString();

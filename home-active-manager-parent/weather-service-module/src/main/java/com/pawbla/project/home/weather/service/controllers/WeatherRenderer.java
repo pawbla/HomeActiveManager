@@ -33,85 +33,84 @@ public class WeatherRenderer implements Renderer {
         JSONObject response = new JSONObject()
                 .put("in", new JSONObject()
                         .put(InternalParser.InternalValues.TEMPERATURE.getValue(),
-                                this.setMeasureObj(internal, getInternalMeasurement().getTemperature()))
+                                this.setMeasureObj(getInternalMeasurement(), getInternalMeasurement().getTemperature()))
                         .put(InternalParser.InternalValues.HUMIDITY.getValue(),
-                                this.setMeasureObj(internal, getInternalMeasurement().getHumidity())))
+                                this.setMeasureObj(getInternalMeasurement(), getInternalMeasurement().getHumidity())))
                 .put("out", new JSONObject()
                         .put(AirLyParser.AirLyValues.TEMPERATURE.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getTemperature()))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getTemperature()))
                         .put(AirLyParser.AirLyValues.HUMIDITY.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getHumidity())))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getHumidity())))
                 .put("weather", new JSONObject()
                         .put(AirLyParser.AirLyValues.PRESSURE.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getPressure()))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPressure()))
                         .put(AccuWeatherParser.AccuWeatherValues.WEATHER_ICON.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getWeatherIcon()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getWeatherIcon()))
                         .put(AccuWeatherParser.AccuWeatherValues.WEATHER_TEXT.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getWeatherText()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getWeatherText()))
                         .put(AccuWeatherParser.AccuWeatherValues.CLOUD_COVER.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getCloudCover()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getCloudCover()))
                         .put(AccuWeatherParser.AccuWeatherValues.CEILING.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getCeiling()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getCeiling()))
                         .put(AccuWeatherParser.AccuWeatherValues.VISIBILITY.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getVisibility()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getVisibility()))
                         .put(AccuWeatherParser.AccuWeatherValues.WIND_DIRECTION.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getWindDirection()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getWindDirection()))
                         .put(AccuWeatherParser.AccuWeatherValues.WIND_DIRECTION_DEG.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getWindDirectionDeg()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getWindDirectionDeg()))
                         .put(AccuWeatherParser.AccuWeatherValues.WIND_SPEED.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getWindSpeed()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getWindSpeed()))
                         .put(AccuWeatherParser.AccuWeatherValues.UV_INDEX_DESCRIPTION.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getUvIndexDescription()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getUvIndexDescription()))
                         .put(AccuWeatherParser.AccuWeatherValues.UV_INDEX_VALUE.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getUvIndexValue()))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getUvIndexValue()))
                         .put(AccuWeatherParser.AccuWeatherValues.UV_INDEX_COLOR.getValue(),
-                                this.setMeasureObj(accuWeather, this.getAccuWeatherMeasurement().getUvIndexColor())))
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getUvIndexColor())))
                 .put("airPolution", new JSONObject()
                         .put(AirLyParser.AirLyValues.CAQI.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getCaqi()))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getCaqi()))
                         .put(AirLyParser.AirLyValues.CAQI_COLOR.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getCaqiColour()))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getCaqiColour()))
                         .put(AirLyParser.AirLyValues.PM_1.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getPm1()))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm1()))
                         .put(AirLyParser.AirLyValues.PM_10.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getPm10()))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm10()))
                         .put(AirLyParser.AirLyValues.PM_10_PERCENT.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getPm10percent()))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm10percent()))
                         .put(AirLyParser.AirLyValues.PM_25.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getPm25()))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm25()))
                         .put(AirLyParser.AirLyValues.PM_25_PERCENT.getValue(),
-                                this.setMeasureObj(airLy, getAirLyMeasurement().getPm25percent())))
+                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm25percent())))
                 .put("sun", new JSONObject()
                         .put(SunRiseSetParser.SunValues.SUN_RISE.getValue(),
-                                this.setMeasureObj(sunRiseSet, this.getSunMeasurement().getSunRise()))
+                                this.setMeasureObj(getSunMeasurement(), this.getSunMeasurement().getSunRise()))
                         .put(SunRiseSetParser.SunValues.SUN_SET.getValue(),
-                                this.setMeasureObj(sunRiseSet, this.getSunMeasurement().getSunSet()))
+                                this.setMeasureObj(getSunMeasurement(), this.getSunMeasurement().getSunSet()))
                         .put(SunRiseSetParser.SunValues.DAY_LENGTH.getValue(),
-                                this.setMeasureObj(sunRiseSet, this.getSunMeasurement().getDayLength())));
+                                this.setMeasureObj(getSunMeasurement(), this.getSunMeasurement().getDayLength())));
         return response.toString();
     }
 
-    private JSONObject setMeasureObj(HandlerInterface connector, String value) {
-        Response response = connector.getResponse();
+    private JSONObject setMeasureObj(Measurement measurement, String value) {
         return new JSONObject()
                 .put("value", value)
-                .put("isError", response.isError())
-                .put("date", response.getDate());
+                .put("isError", measurement.isError())
+                .put("date", measurement.getDate());
     }
 
     private AirlyMeasurement getAirLyMeasurement() {
-        return (AirlyMeasurement) airLy.getResponseObject();
+        return (AirlyMeasurement) airLy.getMeasurement();
     }
 
     private SunRiseSetMeasurement getSunMeasurement() {
-        return (SunRiseSetMeasurement) sunRiseSet.getResponseObject();
+        return (SunRiseSetMeasurement) sunRiseSet.getMeasurement();
     }
 
     private InternalMeasurement getInternalMeasurement() {
-        return (InternalMeasurement) internal.getResponseObject();
+        return (InternalMeasurement) internal.getMeasurement();
     }
 
     private AccWeMeasurement getAccuWeatherMeasurement() {
-        return (AccWeMeasurement) accuWeather.getResponseObject();
+        return (AccWeMeasurement) accuWeather.getMeasurement();
     }
 }

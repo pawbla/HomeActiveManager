@@ -49,18 +49,20 @@ public class InternalParser extends AbstractParser {
     private static final String HUMIDITY_SENSOR_KEY = "humidity";
 
     @Override
-    public void parse(Response response) throws JSONException {
+    public Measurement parse(Response response) throws JSONException {
         try {
-            JSONObject jsonObject = new JSONObject(response.getBody());
-            internalMeasurement.setHumidity(Integer.toString(jsonObject.getInt(HUMIDITY_SENSOR_KEY)));
-            internalMeasurement.setTemperature(Integer.toString(jsonObject.getInt(TEMPERATURE_SENSOR_KEY)));
+            if (!response.isError()) {
+                JSONObject jsonObject = new JSONObject(response.getBody());
+                String humidity = Integer.toString(jsonObject.getInt(HUMIDITY_SENSOR_KEY));
+                String temperature = Integer.toString(jsonObject.getInt(TEMPERATURE_SENSOR_KEY));
+                internalMeasurement.setMeasurements(temperature, humidity);
+                internalMeasurement.setDate(response.getDate());
+            }
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
+        } finally {
+            internalMeasurement.setError(response.isError());
         }
-    }
-
-    @Override
-    public Measurement getParsedAsObject() {
         return internalMeasurement;
     }
 }

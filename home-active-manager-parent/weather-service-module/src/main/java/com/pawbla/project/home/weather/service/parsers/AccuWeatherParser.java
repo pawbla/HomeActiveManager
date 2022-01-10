@@ -73,35 +73,38 @@ public class AccuWeatherParser extends AbstractParser {
     private static final String VIOLET_HEX = "#B803FF";
 
     @Override
-    public void parse (Response response) throws JSONException {
+    public Measurement parse (Response response) throws JSONException {
         try {
-            JSONObject mainObj = (JSONObject) new JSONArray(response.getBody()).get(0);
-            /* General */
-            accWeMeasurement.setWeatherText(mainObj.getString(WEATHER_TEXT_KEY));
-            accWeMeasurement.setWeatherIcon(Integer.toString(mainObj.getInt(WEATHER_ICON_KEY)));
-
-            /* Wind */
-            JSONObject wind = mainObj.getJSONObject(WIND_KEY);
-            JSONObject direction = wind.getJSONObject(WIND_DIRECTION_KEY);
-            accWeMeasurement.setWindDirection(direction.getString(WIND_LOCALIZED_KEY));
-            accWeMeasurement.setWindDirectionDeg(Integer.toString(direction.getInt(WIND_DEGREE_KEY)));
-            accWeMeasurement.setWindSpeed(getRoundedDouble(wind.getJSONObject(WIND_SPEED_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
-            /* UV indexes and visibility */
-            accWeMeasurement.setUvIndexValue(Integer.toString(mainObj.getInt(UV_INDEX_KEY)));
-            accWeMeasurement.setUvIndexDescription(mainObj.getString(UV_INDEX_TEXT_KEY));
-            accWeMeasurement.setUvIndexColor(this.getUvIndexColor(mainObj.getInt(UV_INDEX_KEY)));
-            accWeMeasurement.setVisibility(getRoundedDouble(mainObj.getJSONObject(VISIBILITY_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
-            /* Cloud cover and ceiling */
-            accWeMeasurement.setCloudCover(Integer.toString(mainObj.getInt(CLOUD_COVER_KEY)));
-            accWeMeasurement.setCeiling(Integer.toString(mainObj.getJSONObject(CEILING_KEY).getJSONObject(METRIC_KEY).getInt(VALUE_KEY)));
+            if (!response.isError()) {
+                JSONObject mainObj = (JSONObject) new JSONArray(response.getBody()).get(0);
+                /* General */
+                String weatherText = mainObj.getString(WEATHER_TEXT_KEY);
+                String weatherIcon = Integer.toString(mainObj.getInt(WEATHER_ICON_KEY));
+                /* Wind */
+                JSONObject wind = mainObj.getJSONObject(WIND_KEY);
+                JSONObject direction = wind.getJSONObject(WIND_DIRECTION_KEY);
+                String windDirection = direction.getString(WIND_LOCALIZED_KEY);
+                String windDirectionDeg = Integer.toString(direction.getInt(WIND_DEGREE_KEY));
+                String windSpeed = getRoundedDouble(wind.getJSONObject(WIND_SPEED_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY));
+                /* UV indexes and visibility */
+                String uvIndex = Integer.toString(mainObj.getInt(UV_INDEX_KEY));
+                String uvIndexText = mainObj.getString(UV_INDEX_TEXT_KEY);
+                String uvIndexColor = this.getUvIndexColor(mainObj.getInt(UV_INDEX_KEY));
+                String visibility = getRoundedDouble(mainObj.getJSONObject(VISIBILITY_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY));
+                /* Cloud cover and ceiling */
+                String cloudCover = Integer.toString(mainObj.getInt(CLOUD_COVER_KEY));
+                String ceiling = Integer.toString(mainObj.getJSONObject(CEILING_KEY).getJSONObject(METRIC_KEY).getInt(VALUE_KEY));
+                accWeMeasurement.setDate(response.getDate());
+                accWeMeasurement.setMeasurements(weatherText, weatherIcon, windDirection, windDirectionDeg, windSpeed,
+                        uvIndex, uvIndexText, uvIndexColor, visibility, cloudCover, ceiling);
+            }
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
+        } finally {
+            accWeMeasurement.setError(response.isError());
         }
-    }
-
-    @Override
-    public Measurement getParsedAsObject() {
         return accWeMeasurement;
+
     }
 
     private String getUvIndexColor(int uvIndexValue) {

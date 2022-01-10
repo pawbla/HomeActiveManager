@@ -20,6 +20,7 @@ public abstract class AbstractHandler implements HandlerInterface {
     private RestInterface restConnector;
     private Connector connector;
     private ConnectorsRegistryInterface registry;
+    private Measurement measurement;
     private int delay;
     private int confTime;
 
@@ -56,10 +57,11 @@ public abstract class AbstractHandler implements HandlerInterface {
         do {
             this.restConnector.execute();
             Response response = this.connector.getResponse();
-            this.parser.parse(response);
+            measurement = this.parser.parse(response);
             if (response.getResponseCode() == 200 || confTime == 0) {
                 break;
             }
+
             logger.debug("Prepare " + iter + " recovery reading datas for connector " + this.connector.getName());
             try {
                 Thread.sleep((long)delay * 60 * 1000);
@@ -71,8 +73,8 @@ public abstract class AbstractHandler implements HandlerInterface {
 
     }
 
-    public Measurement getResponseObject() {
-        return this.parser.getParsedAsObject();
+    public Measurement getMeasurement() {
+        return this.measurement;
     }
 
 
