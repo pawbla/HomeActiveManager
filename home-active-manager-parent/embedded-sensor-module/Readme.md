@@ -6,42 +6,46 @@ Sensor is connected into Raspberry Pi.
 
 ### REST API
 
-Rest api is available on port 8083
+Rest api is available on port 8083 with prefixed `/api/v1/embedded`
 
-- **GET** measurements data
+   - **Show measured datas**
+    
+        Return weather datas measured by module
+   * **URL**
 
-   ```shell
-   curl --location --request GET 'http://localhost:8082/api/v1/embedded/measurements' \
-   --header 'Content-Type: application/json'l
-   ```
+      /measurements
+   * **Method**
 
-  <details>
-  <summary>Click to open expected response</summary>
+      `GET`
+   * **Param**
 
-  ```json
-    {
-      "dateTime":"2021-10-23 01:01:01",
-      "temperature":12,
-      "humidity":35,
-      "isError": false
-    }
-  ```
-  </details>
+      user - username of user storend in database
+   * **Success Response**
+        * Code: 200
 
-- **POST** shutdown application
+   * **Sample call**
+    <details>
+    <summary>Click to open </summary>
+    ```shell
+     curl --location --request GET 'http://localhost:8082/api/v1/embedded/measurements' \
+     --header 'Content-Type: application/json'
+    ```
+    </details>
 
-  ```shell
-  curl --location --request POST 'http://localhost:8083/actuator/shutdown'
-  ```   
-  <details>
-  <summary>Click to open expected response</summary>
+   * **Sample response**
+      <details>
+      <summary>Click to open </summary>
 
-  ```json
-    {
-      "message": "Shutting down, bye..."
-    }
-  ```
-  </details>
+      ```json
+      {
+        "dateTime":"2021-10-23 01:01:01",
+        "temperature":12,
+        "humidity":35,
+        "isError": false
+      }
+      ```
+      </details>
+
 
 ### Usage
 

@@ -45,6 +45,41 @@ start in **prod**, e.g. `sudo bash start_app.sh dev`.
 - Display - [Waveshare 3.5" LCD](https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(B))  
 - DHT22 - temperature and humidity sensor
 
+### Shutting down
+Every application can be shutted down with the following REST API call:
+- **Shutdown application**
+
+  Actuator allowed to shutdown application.
+  * **URL**
+
+    /actuator/shutdown
+  * **Method**
+
+    `POST`
+
+  * **Success Response**
+    * Code: 200
+
+  * **Sample call**
+     <details>
+     <summary>Click to open </summary>
+
+     ```shell
+     curl --location --request POST 'http://localhost:8083/actuator/shutdown'
+     ```
+     </details>   
+
+  * **Sample response**
+      <details>
+      <summary>Click to open </summary>
+
+      ```json
+      {
+        "message": "Shutting down, bye..."
+      }
+      ```
+      </details>
+
 ## Change log
 All important changes to this project will be documented in this place.
 
@@ -52,6 +87,7 @@ All important changes to this project will be documented in this place.
 <details>
 <summary><b>Features</b> </summary>
 
+* Create a new module user-management-module
 * Configure Nginx to serve HomeActiveRemote static context application
 * Scripts for starting application on Raspberry
 * Configure Nginx to serve HomeActiveDisplay static context application

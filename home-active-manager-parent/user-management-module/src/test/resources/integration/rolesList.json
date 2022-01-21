@@ -1,0 +1,16 @@
+{
+  "roles": [
+    {
+      "role": "ROLE_USER",
+      "role_id": 1
+    },
+    {
+      "role": "ROLE_ADMIN",
+      "role_id": 2
+    },
+    {
+      "role": "ROLE_GUEST",
+      "role_id": 3
+    }
+  ]
+}

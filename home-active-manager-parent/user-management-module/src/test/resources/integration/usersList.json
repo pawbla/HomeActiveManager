@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "firstName": "userName1",
+      "role": "ROLE_USER",
+      "user_id": 1,
+      "enabled": false,
+      "username": "user"
+    },
+    {
+      "firstName": "userName2",
+      "role": "ROLE_GUEST",
+      "user_id": 2,
+      "enabled": false,
+      "username": "guest"
+    },
+    {
+      "firstName": "adminFirstName",
+      "lastName": "adminLastName",
+      "role": "ROLE_ADMIN",
+      "user_id": 3,
+      "enabled": true,
+      "email": "adres.email@email.com",
+      "username": "admin"
+    },
+    {
+      "firstName": "updateFirstName",
+      "lastName": "updateLastName",
+      "role": "ROLE_USER",
+      "user_id": 5,
+      "enabled": true,
+      "email": "update.email@email.com",
+      "username": "updateUser"
+    },
+    {
+      "firstName": "userPassChange",
+      "role": "ROLE_USER",
+      "user_id": 6,
+      "enabled": false,
+      "username": "UserPassChange"
+    }
+  ]
+}

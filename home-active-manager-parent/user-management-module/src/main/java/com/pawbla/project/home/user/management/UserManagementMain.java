@@ -1,13 +1,13 @@
 package com.pawbla.project.home.user.management;
 
-/**
- * Hello world!
- *
- */
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class UserManagementMain
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        SpringApplication.run(UserManagementMain.class, args);
     }
 }

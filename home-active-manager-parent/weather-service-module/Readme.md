@@ -11,179 +11,213 @@ Measurements are gathered from several free APIs:
 
 ### REST API
 
-Rest api is available on port 8082
+Rest api is available on port 8082, beginning with `/api/v1/weather/`
+  - **Show measured datas**
 
-- **GET** measurements data
-  
-   ```shell
-   curl --location --request GET 'http://localhost:8082/api/v1/weather/measurements' \
-   --header 'Content-Type: application/json'l
-   ```
+    Return weather datas gathered by module
+  * **URL**
 
-  <details>
-  <summary>Click to open expected response</summary>
+    /measurements
+  * **Method**
+
+    `GET`
+  * **Success Response**
+    * Code: 200
+
+  * **Sample call**
+
+     <details>
+     <summary>Click to open </summary>
+    
+     ```shell
+      curl --location --request GET 'http://localhost:8082/api/v1/weather/measurements' \
+     --header 'Content-Type: application/json'
+     ```
+     </details>
   
-  ```json
-    {
-    "airPolution": {
-        "pm25percent": {
+  * **Sample response**
+
+     <details>
+     <summary>Click to open </summary>
+
+     ```json
+       {
+        "airPolution": {
+          "pm25percent": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "62"
-        },
-        "pm10percent": {
+          },
+          "pm10percent": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "62"
-        },
-        "pm25": {
+          },
+          "pm25": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "17"
-        },
-        "pm1": {
+          },
+          "pm1": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "13"
-        },
-        "caqiColor": {
+          },
+          "caqiColor": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "#D1CF1E"
-        },
-        "caqi": {
+          },
+          "caqi": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "31"
-        },
-        "pm10": {
+          },
+          "pm10": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "31"
-        }
-    },
-    "in": {
-        "temperature": {
+          }
+        },
+        "in": {
+          "temperature": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "1"
-        },
-        "humidity": {
+          },
+          "humidity": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "35"
-        }
-    },
-    "weather": {
-        "ceiling": {
+          }
+        },
+        "weather": {
+          "ceiling": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "457"
-        },
-        "windDirectionDeg": {
+          },
+          "windDirectionDeg": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "45"
-        },
-        "weatherIcon": {
+          },
+          "weatherIcon": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "7"
-        },
-        "visibility": {
+          },
+          "visibility": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "10"
-        },
-        "cloudCover": {
+          },
+          "cloudCover": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "100"
-        },
-        "uvIndexDescription": {
+          },
+          "uvIndexDescription": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "Niska"
-        },
-        "uvIndexColor": {
+          },
+          "uvIndexColor": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "#ffc800"
-        },
-        "pressure": {
+          },
+          "pressure": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "1007"
-        },
-        "windDirection": {
+          },
+          "windDirection": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "NE"
-        },
-        "windSpeed": {
+          },
+          "windSpeed": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "18"
-        },
-        "uvIndexValue": {
+          },
+          "uvIndexValue": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "7"
-        },
-        "weatherText": {
+          },
+          "weatherText": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "Czesciowo slonecznie "
-        }
-    },
-    "sun": {
-        "dayLength": {
+          }
+        },
+        "sun": {
+          "dayLength": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "11:23"
-        },
-        "set": {
+          },
+          "set": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "18:10"
-        },
-        "rise": {
+          },
+          "rise": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "06:46"
-        }
-    },
-    "out": {
-        "temperature": {
+          }
+        },
+        "out": {
+          "temperature": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "9"
-        },
-        "humidity": {
+          },
+          "humidity": {
             "date": "10.05 21:22",
             "isError": false,
             "value": "95"
+          }
         }
       }
-    }
-  ```
-  </details>
-  
+     ```
+     </details>
 
-- **GET** sensor information
+- **Show services information**
 
-   ```shell
-   curl --location --request GET 'http://localhost:8082/api/v1/weather/status' \
-   --header 'Content-Type: application/json'
-   ```
+  Return status information about used services to gather weather informations.
+  * **URL**
 
-  <details>
-  <summary>Click to open expected response</summary>
+    /status
+  * **Method**
 
-  ```json
-    {
-    "connectors": [
-        {
+    `GET`
+  * **Success Response**
+    * Code: 200
+
+  * **Sample call**
+
+     <details>
+     <summary>Click to open </summary>
+
+     ```shell
+      curl --location --request GET 'http://localhost:8082/api/v1/weather/status' \
+      --header 'Content-Type: application/json'
+     ```
+     </details>
+
+  * **Sample response**
+
+     <details>
+     <summary>Click to open </summary>
+
+    ```json
+      {
+        "connectors": [
+          {
             "date": "10.05 21:22",
             "isError": false,
             "provider": "Internal ESP8266",
@@ -191,8 +225,8 @@ Rest api is available on port 8082
             "link": "",
             "errorMessage": "",
             "responseCode": 200
-        },
-        {
+          },
+          {
             "date": "10.05 21:22",
             "isError": false,
             "provider": "AccuWeather",
@@ -200,8 +234,8 @@ Rest api is available on port 8082
             "link": "https://www.accuweather.com/",
             "errorMessage": "",
             "responseCode": 200
-        },
-        {
+          },
+          {
             "date": "10.05 21:22",
             "isError": false,
             "provider": "Sunrise Sunset",
@@ -209,8 +243,8 @@ Rest api is available on port 8082
             "link": "https://sunrise-sunset.org/",
             "errorMessage": "",
             "responseCode": 200
-        },
-        {
+          },
+          {
             "date": "10.05 21:22",
             "isError": false,
             "provider": "AirLy",
@@ -218,27 +252,12 @@ Rest api is available on port 8082
             "link": "https://www.airly.eu/",
             "errorMessage": "",
             "responseCode": 200
-        }
-      ]
-    }
-  ```
-  </details>
+          }
+        ]
+      }      
+     ```
+     </details>
 
-
-- **POST** shutdown application
-
-  ```shell
-  curl --location --request POST 'http://localhost:8082/actuator/shutdown'
-  ```   
-  <details>
-  <summary>Click to open expected response</summary>
-  
-  ```json
-    {
-      "message": "Shutting down, bye..."
-    }
-  ```
-  </details>
 
 ### Usage
 

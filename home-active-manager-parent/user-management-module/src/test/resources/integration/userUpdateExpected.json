@@ -1,0 +1,9 @@
+{
+  "firstName":"newFirstName",
+  "lastName":"newLastName",
+  "role":"ROLE_GUEST",
+  "user_id":5,
+  "email":"new.email@com",
+  "enabled":false,
+  "username":"updateUser"
+}
