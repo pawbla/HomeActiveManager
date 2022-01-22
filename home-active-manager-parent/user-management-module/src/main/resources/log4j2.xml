@@ -9,8 +9,8 @@
 
         <!--  Rolling file appender  -->
         <RollingFile name="RollingFile"
-                     fileName="/var/log/home_active_manager/weather_service/log.txt"
-                     filePattern="/var/log/home_active_manager/weather_service/log-%d{MM-dd-yyyy}-%i.txt.gz">
+                     fileName="/var/log/home_active_manager/users_manager/log.txt"
+                     filePattern="/var/log/home_active_manager/users_manager/log-%d{MM-dd-yyyy}-%i.txt.gz">
             <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%-5p] [%c{1}:%L] - %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy />
