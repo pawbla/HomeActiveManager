@@ -25,6 +25,10 @@ public class IntegrationTest {
 
     private static final String REGEXP = "date\":\"[0-9.]* [0-9:]*";
     private static final String DATE = "date\":\"10.04 20:38";
+    private static final String REGEXP_SUN_RISE = "value\":\"0[0-9]:46";
+    private static final String DATE_SUN_RISE = "value\":\"06:00";
+    private static final String REGEXP_SUN_SET = "value\":\"1[0-9]:33";
+    private static final String DATE_SUN_SET = "value\":\"18:00";
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -36,6 +40,8 @@ public class IntegrationTest {
     public void measurementsConnctorTest() throws IOException, JSONException {
         String actual = testRestTemplate.getForObject(getUri("measurements"), String.class);
         actual = actual.replaceAll(REGEXP, DATE);
+        actual = actual.replaceAll(REGEXP_SUN_RISE, DATE_SUN_RISE);
+        actual = actual.replaceAll(REGEXP_SUN_SET, DATE_SUN_SET);
         String expected = readFile("integration/expectedMeasurements.json");
         JSONObject actualJSON = new JSONObject(actual);
         JSONAssert.assertEquals("Measurements response", new JSONObject(expected), actualJSON, true);

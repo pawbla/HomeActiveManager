@@ -222,11 +222,11 @@
     "set":{
       "date":"10.04 20:38",
       "isError":false,
-      "value":"18:10"},
+      "value":"18:00"},
     "rise":{
       "date":"10.04 20:38",
       "isError":false,
-      "value":"06:46"}
+      "value":"06:00"}
   },
   "out":{
     "temperature":{
