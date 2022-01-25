@@ -1,7 +1,5 @@
 package com.pawbla.project.home.user.management.controllers;
 
-import com.pawbla.project.home.user.management.models.User;
-import com.pawbla.project.home.user.management.services.ManageUsers;
 import com.pawbla.project.home.user.management.services.ManageUsersService;
 import org.json.JSONArray;
 import org.json.JSONObject;
