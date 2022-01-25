@@ -20,7 +20,6 @@ import java.nio.file.Files;
 import static org.junit.Assert.*;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
 
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = AFTER_CLASS)
