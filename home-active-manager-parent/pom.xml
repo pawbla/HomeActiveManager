@@ -183,7 +183,7 @@
     <module>weather-service-module</module>
     <module>user-management-module</module>
     <module>embedded-sensor-module</module>
-    <module>internal-resource-handler-module</module>
+    <module>application-monitoring-module</module>
   </modules>
 
 </project>
