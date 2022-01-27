@@ -1,4 +1,4 @@
-package com.pawbla.project.home.internal.resource.handler;
+package com.pawbla.project.home.application.monitoring;
 
 import static org.junit.Assert.assertTrue;
 
