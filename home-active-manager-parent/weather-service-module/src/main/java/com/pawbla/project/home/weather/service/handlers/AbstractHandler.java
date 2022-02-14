@@ -62,11 +62,11 @@ public abstract class AbstractHandler implements HandlerInterface {
                 break;
             }
 
-            logger.debug("Prepare " + iter + " recovery reading datas for connector " + this.connector.getName());
+            logger.debug("Prepare " + iter + " recovery reading data for connector " + this.connector.getName());
             try {
                 Thread.sleep((long)delay * 60 * 1000);
             } catch (InterruptedException e) {
-                logger.error("An exception has occured during thread sleep " + e.getMessage());
+                logger.error("An exception has occurred during thread sleep " + e.getMessage());
             }
             iter++;
         } while (iter < confTime / (delay * 2));

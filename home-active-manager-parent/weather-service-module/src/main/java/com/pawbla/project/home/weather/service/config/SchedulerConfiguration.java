@@ -11,6 +11,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
+import javax.annotation.PreDestroy;
+
 @Configuration
 @EnableScheduling
 public class SchedulerConfiguration {

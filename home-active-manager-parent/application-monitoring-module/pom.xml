@@ -18,6 +18,19 @@
     <release.project.folder>${project.parent.basedir}/${release.folder.name}/${project.name}</release.project.folder>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.mock-server</groupId>
+      <artifactId>mockserver-netty</artifactId>
+      <version>5.11.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mock-server</groupId>
+      <artifactId>mockserver-client-java</artifactId>
+      <version>5.11.1</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -87,14 +100,6 @@
                 <fileSet>
                   <sourceFile>${project.basedir}/scripts/start_app.sh</sourceFile>
                   <destinationFile>${release.project.folder}/start_app.sh</destinationFile>
-                </fileSet>
-                <fileSet>
-                  <sourceFile>${project.basedir}/scripts/dev.config</sourceFile>
-                  <destinationFile>${release.project.folder}/dev.config</destinationFile>
-                </fileSet>
-                <fileSet>
-                  <sourceFile>${project.basedir}/scripts/prod.config</sourceFile>
-                  <destinationFile>${release.project.folder}/prod.config</destinationFile>
                 </fileSet>
               </fileSets>
             </configuration>
