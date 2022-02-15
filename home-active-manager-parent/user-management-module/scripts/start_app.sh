@@ -16,7 +16,7 @@ fi
 echo "Start ${app_name} application with profile ${profile}"
 
 java_args=("-Dspring.profiles.active=${profile}")
-java_args=("-Dspring.datasource.url=${DATASOURCE_URL}")
+java_args+=("-Dspring.datasource.url=${DATASOURCE_URL}")
 java_args+=("-Dspring.datasource.username=${DATASOURCE_USERNAME}")
 java_args+=("-Dspring.datasource.password=${DATASOURCE_PASSWORD}")
 
