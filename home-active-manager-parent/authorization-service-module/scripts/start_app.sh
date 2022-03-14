@@ -1,6 +1,6 @@
 #!/bin/bash
 # User management module
-app_name="user-management-module"
+app_name="authorization-service-module"
 profile="prod"
 
 path=$(dirname "$0")

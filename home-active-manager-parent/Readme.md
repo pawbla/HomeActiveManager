@@ -19,7 +19,7 @@ Purpose for refactoring was split a previous app which was king of a monolith to
 The application consist of the following modules:
 - Weather service module
 - Embedded sensor module
-- Internal resource handler module
+- Application monitoring module
 - User management module
 
 ### Application package
@@ -87,6 +87,7 @@ All important changes to this project will be documented in this place.
 <details>
 <summary><b>Features</b> </summary>
 
+* Create a new module application-monitoring-module
 * Create a new module user-management-module
 * Configure Nginx to serve HomeActiveRemote static context application
 * Scripts for starting application on Raspberry
