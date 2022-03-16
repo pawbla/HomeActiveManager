@@ -266,14 +266,14 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
     Use the following configuration for running app in IntelliJ IDEA:
     ```
     --spring.profiles.active=dev
-    --custom.ipInternalSensor=http://localhosat:8081/mocked_internalsensor
+    --custom.ipInternalSensor=http://localhost:8082/mocked_internalsensor
     --custom.intSensorPassword=mockedApiKey
-    --custom.ipExternalSensor=http://localhost:8081/mocked_externalsensor
-    --custom.ipAirLy=http://localhost:8081/mocked_airly
-    --custom.ipAirLyInstallation=http://localhost:8081/mocked_airlyInstalation
+    --custom.ipExternalSensor=http://localhost:8082/mocked_externalsensor
+    --custom.ipAirLy=http://localhost:8082/mocked_airly
+    --custom.ipAirLyInstallation=http://localhost:8082/mocked_airlyInstalation
     --custom.apiKeyAirLy=mockedApiKey
-    --custom.ipSunSetRise=http://localhost:8081/mocked_sunsetrise
-    --custom.urlAccuWeather=http://localhost:8081/mocked_accuweather
+    --custom.ipSunSetRise=http://localhost:8082/mocked_sunsetrise
+    --custom.urlAccuWeather=http://localhost:8082/mocked_accuweather
     ```
 
     That configuration allows to test runtime application with mocked service for development testing purpose.

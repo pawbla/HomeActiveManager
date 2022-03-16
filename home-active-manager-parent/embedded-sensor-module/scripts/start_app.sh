@@ -3,6 +3,9 @@
 app_name="embedded-sensor-module"
 profile="prod"
 
+curr_date=$(date +%F_%X)
+log_file="/var/log/home_active_manager/startup_log"
+
 path=$(dirname "$0")
 source ./${path}/app.config
 
@@ -10,7 +13,7 @@ if [[ $1 == "dev" ]];then
   profile="dev"
 fi
 
-echo "Start ${app_name} application with profile ${profile}"
+echo "${curr_date} Start ${app_name} application with profile ${profile}" >> $log_file
 
 java_args=("-Dspring.profiles.active=${profile}")
 java_args+=("-Dcustom.dhtDataPin=${DHT_DATA_PIN}")

@@ -1,19 +1,22 @@
 package com.pawbla.project.home.weather.service.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
+
 public class AirlyMeasurement extends Measurement {
-    private String temperature;
-    private String humidity;
-    private String pressure;
-    private String pm1;
-    private String pm10;
-    private String pm25;
-    private String caqi;
-    private String caqiColour;
-    private String pm10percent;
-    private String pm25percent;
-    private List<AirPollutionForecast> airPollutionForecast;
+    private String temperature = EMPTY;
+    private String humidity = EMPTY;
+    private String pressure = EMPTY;
+    private String pm1 = EMPTY;
+    private String pm10 = EMPTY;
+    private String pm25 = EMPTY;
+    private String caqi = EMPTY;
+    private String caqiColour = EMPTY;
+    private String pm10percent = EMPTY;
+    private String pm25percent = EMPTY;
+    private List<AirPollutionForecast> airPollutionForecast = new ArrayList<>();
 
     public void setMeasurements(String temperature, String humidity, String pressure, String pm1,
                             String pm10, String pm25, String caqi, String caqiColour, String pm10percent,

@@ -1,9 +1,11 @@
 package com.pawbla.project.home.weather.service.models;
 
+import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
+
 public class AirLyInstallationMeasurement extends Measurement {
-    private String country;
-    private String city;
-    private String street;
+    private String country = EMPTY;
+    private String city = EMPTY;
+    private String street = EMPTY;
 
     public void setMeasurements(String country, String city, String street) {
         this.country = country;
