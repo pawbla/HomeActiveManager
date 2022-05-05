@@ -1,5 +1,6 @@
 package com.pawbla.project.home.weather.service.parsers;
 
+import com.pawbla.project.home.weather.service.models.AirLyHistory;
 import com.pawbla.project.home.weather.service.models.AirPollutionForecast;
 import com.pawbla.project.home.weather.service.models.AirlyMeasurement;
 import com.pawbla.project.home.weather.service.models.Measurement;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 @Component
 @Qualifier("AirLy")
@@ -33,17 +33,20 @@ public class AirLyParser extends AbstractParser {
 
     public enum AirLyValues implements Values {
 
-        TEMPERATURE("temperature"),
-        HUMIDITY("humidity"),
-        PRESSURE("pressure"),
-        PM_1("pm1"),
-        PM_10("pm10"),
-        PM_25("pm25"),
         CAQI("caqi"),
         CAQI_COLOR("caqiColor"),
+        DATE_TIME("dateTime"),
+        FORECAST("forecast"),
+        HISTORY("history"),
+        HUMIDITY("humidity"),
+        PM_1("pm1"),
+        PM_10("pm10"),
         PM_10_PERCENT("pm10percent"),
+        PM_25("pm25"),
         PM_25_PERCENT("pm25percent"),
-        DATE_TIME("dateTime");
+        PRESSURE("pressure"),
+        TEMPERATURE("temperature");
+
 
         public final String value;
 
@@ -59,14 +62,16 @@ public class AirLyParser extends AbstractParser {
     /**
      * Constants
      */
-    private static final String CURRENT_KEY = "current";
-    private static final String VALUES_KEY = "values";
-    private static final String INDEXES_KEY = "indexes";
-    private static final String STANDARDS_KEY = "standards";
-    private static final String FORECAST_KEY = "forecast";
-    private static final String VALUE_KEY = "value";
     private static final String COLOR_KEY = "color";
+    private static final String CURRENT_KEY = "current";
+    private static final String FORECAST_KEY = "forecast";
+    private static final String HISTORY_KEY = "history";
+    private static final String INDEXES_KEY = "indexes";
     private static final String PERCENT_KEY = "percent";
+    private static final String STANDARDS_KEY = "standards";
+    private static final String VALUE_KEY = "value";
+    private static final String VALUES_KEY = "values";
+
     private static final int CAQI_POS = 0;
     private static final int PM1_POS = 0;
     private static final int PM25_PERCENT_POS = 0;
@@ -85,6 +90,7 @@ public class AirLyParser extends AbstractParser {
                 JSONArray values = jsonObject.getJSONArray(VALUES_KEY);
                 JSONArray indexes = jsonObject.getJSONArray(INDEXES_KEY);
                 JSONArray standards = jsonObject.getJSONArray(STANDARDS_KEY);
+                JSONArray history = new JSONObject(response.getBody()).getJSONArray(HISTORY_KEY);
                 JSONArray forecast = new JSONObject(response.getBody()).getJSONArray(FORECAST_KEY);
                 String pm1 = getRoundedDouble(values.getJSONObject(PM1_POS).getDouble(VALUE_KEY));
                 String pm10 = getRoundedDouble(values.getJSONObject(PM10_POS).getDouble(VALUE_KEY));
@@ -97,9 +103,10 @@ public class AirLyParser extends AbstractParser {
                 String pressure = getRoundedDouble(values.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY));
                 String temperature = getRoundedDouble(values.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY));
                 List<AirPollutionForecast> airPollutionForecasts = prepareAirPollutionForecastList(forecast);
+                List<AirLyHistory> airLyHistoryList = prepareHistoryList(history);
 
                 airlyMeasurement.setMeasurements(temperature, humidity, pressure, pm1, pm10, pm25, caqi, caqiColor,
-                        pm10perc, pm25per, airPollutionForecasts);
+                        pm10perc, pm25per, airPollutionForecasts, airLyHistoryList);
                 airlyMeasurement.setDate(response.getDate());
             }
         } catch (JSONException e) {
@@ -119,10 +126,6 @@ public class AirLyParser extends AbstractParser {
         return airPollutionForecastList;
     }
 
-    private String getDate(JSONObject item) {
-        return item.getString("tillDateTime");
-    }
-
     private String getCaqi(JSONObject item) {
         return getRoundedDouble(item.getJSONArray(INDEXES_KEY).getJSONObject(0).getDouble(VALUE_KEY));
     }
@@ -130,4 +133,22 @@ public class AirLyParser extends AbstractParser {
     private String getCaqiColour(JSONObject item) {
         return item.getJSONArray(INDEXES_KEY).getJSONObject(0).getString(COLOR_KEY);
     }
+
+    private List<AirLyHistory> prepareHistoryList(final JSONArray history) {
+        List<AirLyHistory> airLyHistoryList = new ArrayList<>();
+        history.forEach(item -> {
+            airLyHistoryList.add(new AirLyHistory(getDate((JSONObject) item), getPressure((JSONObject) item)));
+        });
+        return airLyHistoryList;
+    }
+
+    private String getPressure(JSONObject item) {
+        return getRoundedDouble(item.getJSONArray(VALUES_KEY).getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY));
+    }
+
+    private String getDate(JSONObject item) {
+        return item.getString("tillDateTime");
+    }
+
+
 }

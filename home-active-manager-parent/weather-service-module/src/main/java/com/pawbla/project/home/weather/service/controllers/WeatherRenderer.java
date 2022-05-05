@@ -69,6 +69,7 @@ public class WeatherRenderer implements Renderer {
                                 this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getUvIndexValue()))
                         .put(AccuWeatherParser.AccuWeatherValues.UV_INDEX_COLOR.getValue(),
                                 this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getUvIndexColor())))
+                        .put(AirLyParser.AirLyValues.HISTORY.getValue(), prepareAirLyHistory(getAirLyMeasurement()))
                 .put("airPolution", new JSONObject()
                         .put(AirLyParser.AirLyValues.CAQI.getValue(),
                                 this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getCaqi()))
@@ -84,7 +85,7 @@ public class WeatherRenderer implements Renderer {
                                 this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm25()))
                         .put(AirLyParser.AirLyValues.PM_25_PERCENT.getValue(),
                                 this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPm25percent()))
-                        .put("forecast", prepareAirPollutionForecast(getAirLyMeasurement())))
+                        .put(AirLyParser.AirLyValues.FORECAST.getValue(), prepareAirPollutionForecast(getAirLyMeasurement())))
                 .put("sun", new JSONObject()
                         .put(SunRiseSetParser.SunValues.SUN_RISE.getValue(),
                                 this.setMeasureObj(getSunMeasurement(), this.getSunMeasurement().getSunRise()))
@@ -125,6 +126,13 @@ public class WeatherRenderer implements Renderer {
                 .put("values", airPollutionForecastArr(measurement.getAirPollutionForecast()));
     }
 
+    private JSONObject prepareAirLyHistory(AirlyMeasurement measurement) {
+        return new JSONObject()
+                .put("isError", measurement.isError())
+                .put("date", measurement.getDate())
+                .put("pressure", preparePressureHistoryArr(measurement.getAirLyHistory()));
+    }
+
     private JSONArray airPollutionForecastArr(List<AirPollutionForecast> airPollutionForecastList) {
         JSONArray airPollutionForecast = new JSONArray();
         airPollutionForecastList.forEach(item -> airPollutionForecast.put(prepareForecastObj(item)));
@@ -136,5 +144,17 @@ public class WeatherRenderer implements Renderer {
                 .put("date", item.getDate())
                 .put("caqi", item.getCaqi())
                 .put("caqiColour", item.getCaqiColour());
+    }
+
+    private JSONArray preparePressureHistoryArr(final List<AirLyHistory> airLyHistoryList) {
+        JSONArray airLyPressureHistory = new JSONArray();
+        airLyHistoryList.forEach(item -> airLyPressureHistory.put(preparePressureHistoryObj(item)));
+        return airLyPressureHistory;
+    }
+
+    private JSONObject preparePressureHistoryObj(final AirLyHistory item) {
+        return new JSONObject()
+                .put("date", item.getDate())
+                .put("value", item.getPressure());
     }
 }
