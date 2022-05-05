@@ -3,13 +3,16 @@
 app_name="application-monitoring-module"
 profile="prod"
 
+curr_date=$(date +%F_%X)
+log_file="/var/log/home_active_manager/startup_log"
+
 path=$(dirname "$0")
 if [[ $1 == "dev" ]];then
   profile="dev"
 fi
 
-echo "Start ${app_name} application with profile ${profile}"
+echo "${curr_date} Start ${app_name} application with profile ${profile}" >> $log_file
 
 java_args=("-Dspring.profiles.active=${profile}")
 
-sudo java -jar ${java_args[@]} ${path}/${app_name}-*.jar &
+sudo java -jar ${java_args[@]} ${path}/${app_name}-*.jar

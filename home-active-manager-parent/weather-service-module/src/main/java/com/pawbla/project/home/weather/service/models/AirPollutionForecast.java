@@ -1,9 +1,11 @@
 package com.pawbla.project.home.weather.service.models;
 
+import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
+
 public class AirPollutionForecast {
-    private String date;
-    private String caqi;
-    private String caqiColour;
+    private String date = EMPTY;
+    private String caqi = EMPTY;
+    private String caqiColour = EMPTY;
 
     public AirPollutionForecast(String date, String caqi, String caqiColour) {
         this.date = date;

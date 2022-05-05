@@ -5,6 +5,9 @@ app_name="weather-service-module"
 path=$(dirname "$0")
 profile="prod"
 
+curr_date=$(date +%F_%X)
+log_file="/var/log/home_active_manager/startup_log"
+
 if [[ $1 == "dev" ]];then
   profile="dev"
   source ./${path}/dev.config
@@ -12,7 +15,7 @@ else
   source ./${path}/prod.config
 fi
 
-echo "Start ${app_name} application with profile ${profile}"
+echo "${curr_date} Start ${app_name} application with profile ${profile}" >> $log_file
 
 java_args=("-Dcustom.ipInternalSensor=${IP_INTERNAL_SENSOR}")
 java_args+=("-Dcustom.ipExternalSensor=${IP_EXTERNAL_SENSOR}")

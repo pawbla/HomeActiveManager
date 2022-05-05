@@ -1,18 +1,20 @@
 package com.pawbla.project.home.weather.service.models;
 
+import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
+
 public class AccWeMeasurement extends Measurement {
 
-    private String weatherText;
-    private String weatherIcon;
-    private String windDirection;
-    private String windDirectionDeg;
-    private String windSpeed;
-    private String uvIndexValue;
-    private String uvIndexDescription;
-    private String uvIndexColor;
-    private String visibility;
-    private String cloudCover;
-    private String ceiling;
+    private String weatherText = EMPTY;
+    private String weatherIcon = EMPTY;
+    private String windDirection = EMPTY;
+    private String windDirectionDeg = EMPTY;
+    private String windSpeed = EMPTY;
+    private String uvIndexValue = EMPTY;
+    private String uvIndexDescription = EMPTY;
+    private String uvIndexColor = EMPTY;
+    private String visibility = EMPTY;
+    private String cloudCover = EMPTY;
+    private String ceiling = EMPTY;
 
     public void setMeasurements(String weatherText, String weatherIcon, String windDirection,
                             String windDirectionDeg, String windSpeed, String uvIndexValue, String uvIndexDescription,

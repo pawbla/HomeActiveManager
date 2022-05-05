@@ -153,6 +153,108 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "value": "Czesciowo slonecznie "
           }
         },
+        "history": {
+            "date": "05.05 17:17",
+            "isError": false,
+            "pressure": [
+                {
+                    "date": "2019-10-04T16:00:00.000Z",
+                    "value": "1011"
+                },
+                {
+                    "date": "2019-10-04T17:00:00.000Z",
+                    "value": "1011"
+                },
+                {
+                    "date": "2019-10-04T18:00:00.000Z",
+                    "value": "1011"
+                },
+                {
+                    "date": "2019-10-04T19:00:00.000Z",
+                    "value": "1011"
+                },
+                {
+                    "date": "2019-10-04T20:00:00.000Z",
+                    "value": "1011"
+                },
+                {
+                    "date": "2019-10-04T21:00:00.000Z",
+                    "value": "1010"
+                },
+                {
+                    "date": "2019-10-04T22:00:00.000Z",
+                    "value": "1010"
+                },
+                {
+                    "date": "2019-10-04T23:00:00.000Z",
+                    "value": "1010"
+                },
+                {
+                    "date": "2019-10-05T00:00:00.000Z",
+                    "value": "1009"
+                },
+                {
+                    "date": "2019-10-05T01:00:00.000Z",
+                    "value": "1009"
+                },
+                {
+                    "date": "2019-10-05T02:00:00.000Z",
+                    "value": "1009"
+                },
+                {
+                    "date": "2019-10-05T03:00:00.000Z",
+                    "value": "1008"
+                },
+                {
+                    "date": "2019-10-05T04:00:00.000Z",
+                    "value": "1008"
+                },
+                {
+                    "date": "2019-10-05T05:00:00.000Z",
+                    "value": "1008"
+                },
+                {
+                    "date": "2019-10-05T06:00:00.000Z",
+                    "value": "1008"
+                },
+                {
+                    "date": "2019-10-05T07:00:00.000Z",
+                    "value": "1008"
+                },
+                {
+                    "date": "2019-10-05T08:00:00.000Z",
+                    "value": "1007"
+                },
+                {
+                    "date": "2019-10-05T09:00:00.000Z",
+                    "value": "1007"
+                },
+                {
+                    "date": "2019-10-05T10:00:00.000Z",
+                    "value": "1007"
+                },
+                {
+                    "date": "2019-10-05T11:00:00.000Z",
+                    "value": "1007"
+                },
+                {
+                    "date": "2019-10-05T12:00:00.000Z",
+                    "value": "1007"
+                },
+                {
+                    "date": "2019-10-05T13:00:00.000Z",
+                    "value": "1007"
+                },
+                {
+                    "date": "2019-10-05T14:00:00.000Z",
+                    "value": "1007"
+                },
+                {
+                    "date": "2019-10-05T15:00:00.000Z",
+                    "value": "1007"
+                }
+            ]
+        },
         "sun": {
           "dayLength": {
             "date": "10.05 21:22",
@@ -266,14 +368,14 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
     Use the following configuration for running app in IntelliJ IDEA:
     ```
     --spring.profiles.active=dev
-    --custom.ipInternalSensor=http://localhosat:8081/mocked_internalsensor
+    --custom.ipInternalSensor=http://localhost:8082/mocked_internalsensor
     --custom.intSensorPassword=mockedApiKey
-    --custom.ipExternalSensor=http://localhost:8081/mocked_externalsensor
-    --custom.ipAirLy=http://localhost:8081/mocked_airly
-    --custom.ipAirLyInstallation=http://localhost:8081/mocked_airlyInstalation
+    --custom.ipExternalSensor=http://localhost:8082/mocked_externalsensor
+    --custom.ipAirLy=http://localhost:8082/mocked_airly
+    --custom.ipAirLyInstallation=http://localhost:8082/mocked_airlyInstalation
     --custom.apiKeyAirLy=mockedApiKey
-    --custom.ipSunSetRise=http://localhost:8081/mocked_sunsetrise
-    --custom.urlAccuWeather=http://localhost:8081/mocked_accuweather
+    --custom.ipSunSetRise=http://localhost:8082/mocked_sunsetrise
+    --custom.urlAccuWeather=http://localhost:8082/mocked_accuweather
     ```
 
     That configuration allows to test runtime application with mocked service for development testing purpose.
