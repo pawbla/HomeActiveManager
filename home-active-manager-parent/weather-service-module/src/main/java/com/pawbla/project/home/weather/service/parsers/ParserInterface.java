@@ -8,4 +8,5 @@ import java.util.Map;
 
 public interface ParserInterface {
     Measurement parse(Response response) throws JSONException;
+    Measurement parse(int value) throws JSONException;
 }
