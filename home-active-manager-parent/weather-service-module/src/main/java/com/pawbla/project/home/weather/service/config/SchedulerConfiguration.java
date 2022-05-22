@@ -19,6 +19,23 @@ public class SchedulerConfiguration {
 
     private final static int POOL_SIZE = 10;
 
+    private HandlerInterface airLy;
+    private HandlerInterface accuWeather;
+    private HandlerInterface internal;
+    private HandlerInterface sunRiseSet;
+    private HandlerInterface moonPhase;
+
+    @Autowired
+    public SchedulerConfiguration(@Qualifier("AirLy") HandlerInterface airLy, @Qualifier("accuWeather") HandlerInterface accuWeather,
+                                  @Qualifier("internal") HandlerInterface internal, @Qualifier("sunRiseSet") HandlerInterface sunRiseSet,
+                                  @Qualifier("moonPhase") HandlerInterface moonPhase) {
+        this.airLy = airLy;
+        this.accuWeather = accuWeather;
+        this.internal = internal;
+        this.sunRiseSet = sunRiseSet;
+        this.moonPhase = moonPhase;
+    }
+
     @Bean
     public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
@@ -29,10 +46,6 @@ public class SchedulerConfiguration {
     /**
      * AirLy Connector configuration
      **/
-    @Autowired
-    @Qualifier("AirLy")
-    private HandlerInterface airLy;
-
     @EventListener(ApplicationReadyEvent.class)
     @Scheduled(cron="0 0/15 * ? * *", zone="Europe/Warsaw") //cron at every 15 minutes
     public void fetchAirLyData() {
@@ -43,10 +56,6 @@ public class SchedulerConfiguration {
     /**
      * AccuWeather Connector configuration
      */
-    @Autowired
-    @Qualifier("accuWeather")
-    private HandlerInterface accuWeather;
-
     @EventListener(ApplicationReadyEvent.class)
     @Scheduled(cron="0 0/30 * ? * *", zone="Europe/Warsaw")  //cron at every 30 minutes
     public void fetchAccuWeatherData() {
@@ -57,13 +66,8 @@ public class SchedulerConfiguration {
     /**
      * Internal Connector configuration
      */
-    @Autowired
-    @Qualifier("internal")
-    private HandlerInterface internal;
-
     private final int INT_TIMEOUT = 30000;
     private final int INT_DELAY_TIMEOUT = 20000;
-
     @EventListener(ApplicationReadyEvent.class)
     @Scheduled(fixedRate = INT_TIMEOUT, initialDelay = INT_DELAY_TIMEOUT)
     public void fetchInternalData() {
@@ -73,14 +77,19 @@ public class SchedulerConfiguration {
     /**
      * Sun rise set configuration
      */
-    @Autowired
-    @Qualifier("sunRiseSet")
-    private HandlerInterface sunRiseSet;
-
     @EventListener(ApplicationReadyEvent.class)
     @Scheduled(cron="10 0 0 * * ?", zone="Europe/Warsaw") //cron configured at 00:00:10am every day
     public void fetchSunRiseSetData() {
         sunRiseSet.setRecovery(10, 1400); // when incorrect response received call api every 10 minute within 1400 minutes
         sunRiseSet.execute();
+    }
+
+    /**
+     * Moon Phase set configuration
+     */
+    @EventListener(ApplicationReadyEvent.class)
+    @Scheduled(cron="0 0 * * * ?", zone="Europe/Warsaw") //cron configured at 00:00:10am every day
+    public void calculateMoonPhase() {
+        moonPhase.execute();
     }
 }
