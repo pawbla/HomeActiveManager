@@ -20,15 +20,17 @@ public class WeatherRenderer implements Renderer {
     private HandlerInterface airLy;
     private HandlerInterface sunRiseSet;
     private HandlerInterface accuWeather;
+    private HandlerInterface moonPhase;
 
     @Autowired
     public WeatherRenderer(@Qualifier("internal") HandlerInterface internal,
                            @Qualifier("AirLy") HandlerInterface airLy, @Qualifier("sunRiseSet") HandlerInterface sunRiseSet,
-                           @Qualifier("accuWeather") HandlerInterface accuWeather) {
+                           @Qualifier("accuWeather") HandlerInterface accuWeather, @Qualifier("moonPhase") HandlerInterface moonPhase) {
         this.internal = internal;
         this.airLy = airLy;
         this.sunRiseSet = sunRiseSet;
         this.accuWeather = accuWeather;
+        this.moonPhase = moonPhase;
     }
 
     @Override
@@ -92,7 +94,12 @@ public class WeatherRenderer implements Renderer {
                         .put(SunRiseSetParser.SunValues.SUN_SET.getValue(),
                                 this.setMeasureObj(getSunMeasurement(), this.getSunMeasurement().getSunSet()))
                         .put(SunRiseSetParser.SunValues.DAY_LENGTH.getValue(),
-                                this.setMeasureObj(getSunMeasurement(), this.getSunMeasurement().getDayLength())));
+                                this.setMeasureObj(getSunMeasurement(), this.getSunMeasurement().getDayLength())))
+                .put("moon", new JSONObject()
+                        .put(MoonPhaseParser.MoonPhaseValues.TEXT.getValue(),
+                                setMeasureObj(getMoonPhaseMeasurement(), this.getMoonPhaseMeasurement().getText()))
+                        .put(MoonPhaseParser.MoonPhaseValues.PICTURE.getValue(),
+                                setMeasureObj(getMoonPhaseMeasurement(), this.getMoonPhaseMeasurement().getPictureNo())));
         return response.toString();
     }
 
@@ -117,6 +124,10 @@ public class WeatherRenderer implements Renderer {
 
     private AccWeMeasurement getAccuWeatherMeasurement() {
         return (AccWeMeasurement) accuWeather.getMeasurement();
+    }
+
+    private MoonPhaseMeasurement getMoonPhaseMeasurement() {
+        return (MoonPhaseMeasurement) moonPhase.getMeasurement();
     }
 
     private JSONObject prepareAirPollutionForecast(AirlyMeasurement measurement) {

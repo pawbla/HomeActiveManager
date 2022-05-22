@@ -19,6 +19,7 @@ public class MoonPhaseHandler implements HandlerInterface {
     @Autowired
     public MoonPhaseHandler(MoonPhaseProcessor processor, @Qualifier("moonPhase") ParserInterface parser) {
         this.processor = processor;
+        this.parser = parser;
     }
 
     @Override

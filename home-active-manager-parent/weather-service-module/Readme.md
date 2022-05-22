@@ -79,6 +79,18 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "value": "31"
           }
         },
+        "moon": {
+          "text":{
+            "date":"2000-00-00",
+            "isError":false,
+            "value":"Przybywający sierp"
+          },
+        "picture":{
+          "date":"2000-00-00",
+          "isError":false,
+          "value":"1"
+          }
+        },
         "in": {
           "temperature": {
             "date": "10.05 21:22",

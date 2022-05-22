@@ -154,6 +154,15 @@
     ]
   }
 },
+  "moon":{
+    "text":{
+      "date":"2000-00-00",
+      "isError":false,
+      "value":"Przybywający sierp"},
+    "picture":{
+      "date":"2000-00-00",
+      "isError":false,
+      "value":"1"}},
   "in":{
     "temperature":{
       "date":"10.04 20:38",

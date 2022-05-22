@@ -1,12 +1,15 @@
 package com.pawbla.project.home.weather.service;
 
+import com.pawbla.project.home.weather.service.utils.DateTimeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
@@ -14,7 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+
+import static org.mockito.Mockito.when;
 
 /**
  * Integration test.
@@ -33,8 +39,22 @@ public class IntegrationTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
+    @MockBean
+    private DateTimeUtils dataTimeUtils;
+
     @LocalServerPort
     int serverPort;
+
+    @BeforeAll
+    void init() {
+        when(dataTimeUtils.getCurrentYear()).thenReturn(2022);
+        when(dataTimeUtils.getCurrentMonth()).thenReturn(2);
+        when(dataTimeUtils.getCurrentDay()).thenReturn(4);
+        when(dataTimeUtils.getCurrentHour()).thenReturn(12);
+        when(dataTimeUtils.getCurrentMinute()).thenReturn(0);
+        when(dataTimeUtils.getCurrentSecond()).thenReturn(0);
+    }
+
 
     @Test
     public void measurementsConnctorTest() throws IOException, JSONException {
@@ -61,6 +81,6 @@ public class IntegrationTest {
 
     private String readFile(String path) throws IOException {
         File resource = new ClassPathResource(path).getFile();
-        return new String(Files.readAllBytes(resource.toPath()));
+        return new String(Files.readAllBytes(resource.toPath()), StandardCharsets.UTF_8);
     }
 }
