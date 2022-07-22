@@ -338,7 +338,15 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "name": "internal",
             "link": "",
             "errorMessage": "",
-            "responseCode": 200
+            "responseCode": 200,
+              "dailyCounter": {
+                "requests": 1,
+                "errors": 0
+              },
+              "sumCounter": {
+                "requests": 1,
+                "errors": 0
+              }
           },
           {
             "date": "10.05 21:22",
@@ -347,7 +355,15 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "name": "accuweather",
             "link": "https://www.accuweather.com/",
             "errorMessage": "",
-            "responseCode": 200
+            "responseCode": 200,
+              "dailyCounter": {
+                "requests": 1,
+                "errors": 0
+              },
+              "sumCounter": {
+                "requests": 1,
+                "errors": 0
+              }
           },
           {
             "date": "10.05 21:22",
@@ -356,7 +372,15 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "name": "sun",
             "link": "https://sunrise-sunset.org/",
             "errorMessage": "",
-            "responseCode": 200
+            "responseCode": 200,
+              "dailyCounter": {
+                "requests": 1,
+                "errors": 0
+              },
+              "sumCounter": {
+                "requests": 1,
+                "errors": 0
+              }
           },
           {
             "date": "10.05 21:22",
@@ -365,7 +389,15 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "name": "airLy",
             "link": "https://www.airly.eu/",
             "errorMessage": "",
-            "responseCode": 200
+            "responseCode": 200,
+              "dailyCounter": {
+                "requests": 1,
+                "errors": 0
+              },
+              "sumCounter": {
+                "requests": 1,
+                "errors": 0
+              }
           }
         ]
       }      

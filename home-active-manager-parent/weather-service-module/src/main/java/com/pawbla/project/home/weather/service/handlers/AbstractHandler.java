@@ -8,6 +8,7 @@ import com.pawbla.project.home.weather.service.rest.RestInterface;
 import com.pawbla.project.home.weather.service.models.Connector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.scheduling.annotation.Scheduled;
 
 public abstract class AbstractHandler implements HandlerInterface {
 
@@ -75,6 +76,12 @@ public abstract class AbstractHandler implements HandlerInterface {
 
     public Measurement getMeasurement() {
         return this.measurement;
+    }
+
+    @Scheduled(cron="0 0 0 * * ?", zone="Europe/Warsaw")
+    public void clearRequestCounter() {
+        logger.info("Clean daily request counter for {}", connector.getName());
+        connector.restartDailyRequestCounter();
     }
 
 
