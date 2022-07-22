@@ -21,7 +21,7 @@ public class InternalConnector implements ConnectorInterface {
 
     /* Connector values */
     private static final String NAME = "internal";
-    private static final String PROVIDER = "Internal ESP8266";
+    private static final String PROVIDER = "Internal DHT22";
     private static final String LINK = "";
 
     private Connector connector;

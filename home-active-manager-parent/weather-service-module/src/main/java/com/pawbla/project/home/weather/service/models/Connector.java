@@ -1,5 +1,11 @@
 package com.pawbla.project.home.weather.service.models;
 
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Scheduled;
+
+import java.time.LocalDate;
+
 /**
  *
  * @author blapaw
@@ -15,6 +21,10 @@ public class Connector {
     private Request request;
     private Response response;
 
+    private RequestCounter dailyRequestCounter;
+    private RequestCounter sumRequestCounter;
+
+
     /**
      * Constructor, contains only parameters which could be set during construct the object
      * @param name
@@ -27,6 +37,8 @@ public class Connector {
         this.provider = provider;
         this.linkToProviderPage = linkToProviderPage;
         this.request = request;
+        this.dailyRequestCounter = new RequestCounter();
+        this.sumRequestCounter = new RequestCounter();
     }
 
     public String getName() {
@@ -64,6 +76,28 @@ public class Connector {
     }
     public void setResponse(Response response) {
         this.response = response;
+    }
+
+    public void incrementRequestCnt() {
+        dailyRequestCounter.incRequests();
+        sumRequestCounter.incRequests();
+    }
+
+    public void incrementErrorRequestCnt() {
+        sumRequestCounter.incErrorResponseCnt();
+        sumRequestCounter.incErrorResponseCnt();
+    }
+
+    public void restartDailyRequestCounter() {
+        sumRequestCounter = new RequestCounter();
+    }
+
+    public RequestCounter getDailyRequestCounter() {
+        return dailyRequestCounter;
+    }
+
+    public RequestCounter getSumRequestCounter() {
+        return sumRequestCounter;
     }
 }
 

@@ -20,9 +20,6 @@ import java.util.Date;
 @Service
 @Scope("prototype")
 public class RestConnector implements RestInterface {
-    /**
-     * Logger
-     */
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     private RestTemplate rest;
@@ -42,20 +39,25 @@ public class RestConnector implements RestInterface {
         logger.debug("Execute connection to url " + connector.getRequest().getIp() + " for service " + connector.getName());
         ResponseEntity<String> resp = null;
         try {
+            connector.incrementRequestCnt();
             resp = getResponseEntity();
             logger.info("Received status code " + resp.getStatusCodeValue() + " for: " + connector.getName());
             if (resp.getStatusCodeValue() != 200) {
+                connector.incrementErrorRequestCnt();
                 response.setError(true);
                 response.setModified(false);
                 response.setErrorMsg(resp.getStatusCode().getReasonPhrase());
             }
             if (StringUtils.isNotBlank(resp.getBody())) {
                 logger.trace("Received response for " + connector.getName() + " body: " + resp.getBody());
+                response.setError(false);
+                response.setErrorMsg("");
                 response.setBody(resp.getBody());
                 response.setDate(dateFormat.format(new Date()));
             }
             response.setResponseCode(resp.getStatusCodeValue());
         } catch (RestClientException e) {
+            connector.incrementErrorRequestCnt();
             response.setResponseCode(520);
             response.setErrorMsg("Unknown error has occured: " + e.getMessage());
             response.setError(true);

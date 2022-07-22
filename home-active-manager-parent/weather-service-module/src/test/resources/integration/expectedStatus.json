@@ -3,11 +3,19 @@
     {
       "date":"10.04 20:38",
       "isError":false,
-      "provider":"Internal ESP8266",
+      "provider":"Internal DHT22",
       "name":"internal",
       "link":"",
       "errorMessage":"",
-      "responseCode":200
+      "responseCode":200,
+      "dailyCounter": {
+        "requests": 1,
+        "errors": 0
+      },
+      "sumCounter": {
+        "requests": 1,
+        "errors": 0
+      }
     },{
       "date":"10.04 20:38",
       "isError":false,
@@ -15,7 +23,15 @@
       "name":"accuweather",
       "link":"https://www.accuweather.com/",
       "errorMessage":"",
-      "responseCode":200
+      "responseCode":200,
+      "dailyCounter": {
+        "requests": 1,
+        "errors": 0
+      },
+      "sumCounter": {
+        "requests": 1,
+        "errors": 0
+      }
     },{
       "date":"10.04 20:38",
       "isError":false,
@@ -23,7 +39,15 @@
       "name":"sun",
       "link":"https://sunrise-sunset.org/",
       "errorMessage":"",
-      "responseCode":200
+      "responseCode":200,
+      "dailyCounter": {
+        "requests": 1,
+        "errors": 0
+      },
+      "sumCounter": {
+        "requests": 1,
+        "errors": 0
+      }
     },{
       "date":"10.04 20:38",
       "isError":false,
@@ -31,6 +55,15 @@
       "name":"airLy",
       "link":"https://www.airly.eu/",
       "errorMessage":"",
-      "responseCode":200}
+      "responseCode":200,
+      "dailyCounter": {
+        "requests": 1,
+        "errors": 0
+      },
+      "sumCounter": {
+        "requests": 1,
+        "errors": 0
+      }
+    }
   ]
 }

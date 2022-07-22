@@ -23,6 +23,7 @@ public class RestControllers {
     }
 
     @GetMapping(value = "/status", produces=MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
     @ResponseBody
     public ResponseEntity<String> getConnectorsDetails() {
         return ResponseEntity.ok().body(connectorDetailsRenderer.getJSON());

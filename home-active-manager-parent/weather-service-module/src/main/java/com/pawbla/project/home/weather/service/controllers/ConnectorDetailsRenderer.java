@@ -1,5 +1,6 @@
 package com.pawbla.project.home.weather.service.controllers;
 
+import com.pawbla.project.home.weather.service.models.RequestCounter;
 import com.pawbla.project.home.weather.service.registry.ConnectorsRegistryInterface;
 import com.pawbla.project.home.weather.service.models.Connector;
 import org.json.JSONArray;
@@ -37,8 +38,16 @@ public class ConnectorDetailsRenderer implements Renderer {
                 .put("responseCode", connector.getResponse().getResponseCode())
                 .put("isError", connector.getResponse().isError())
                 .put("errorMessage", connector.getResponse().getErrorMsg())
-                .put("date", connector.getResponse().getDate());
+                .put("date", connector.getResponse().getDate())
+                .put("dailyCounter", getCounter(connector.getDailyRequestCounter()))
+                .put("sumCounter", getCounter(connector.getSumRequestCounter()));
         return response;
+    }
+
+    private JSONObject getCounter(RequestCounter requestCounter) {
+        return new JSONObject()
+                .put("requests", requestCounter.getRequestsCnt())
+                .put("errors", requestCounter.getErrorResponseCnt());
     }
 
 }
