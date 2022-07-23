@@ -143,7 +143,12 @@ public class AirLyParser extends AbstractParser {
     }
 
     private String getPressure(JSONObject item) {
-        return getRoundedDouble(item.getJSONArray(VALUES_KEY).getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY));
+        JSONArray values = item.getJSONArray(VALUES_KEY);
+        double pressure = 0.0;
+        if (values.length() > 0) {
+            pressure = values.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY);
+        }
+        return getRoundedDouble(pressure);
     }
 
     private String getDate(JSONObject item) {
