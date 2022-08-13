@@ -1,28 +1,39 @@
 package com.pawbla.project.home.application.monitoring.services;
 
-import org.junit.Before;
+import com.pawbla.project.home.application.monitoring.handler.MonitoringHandlerImpl;
+import com.pawbla.project.home.application.monitoring.utils.DateTimeUtils;
+import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.time.LocalDateTime;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.client.ExpectedCount.times;
@@ -44,22 +55,30 @@ class IntegrationTest {
     @MockBean
     private CommandExecutor commandExecutor;
 
+    @MockBean
+    private DateTimeUtils dateTimeUtils;
+
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private MonitoringHandlerImpl monitoringHandler;
 
     @Captor
     ArgumentCaptor<String> cmdCaptor;
 
     private MockRestServiceServer mockRestServiceServer;
 
-    @Before
+    @BeforeEach
     public void before() {
         Mockito.when(commandExecutor.execute(anyString())).thenReturn(-9).thenReturn(1);
+        Mockito.when(dateTimeUtils.getNow()).thenReturn(LocalDateTime.of(2022, 8, 16, 19, 40, 1));
+        Mockito.when(dateTimeUtils.getTimeOf(anyString())).thenReturn(LocalDateTime.of(2022, 8, 16, 20, 40, 1));
+        mockRestServiceServer =  MockRestServiceServer.bindTo(restTemplate).ignoreExpectOrder(true).build();
     }
 
     @Test
-    public void shutdown_applications() {
-        mockRestServiceServer =  MockRestServiceServer.bindTo(restTemplate).ignoreExpectOrder(true).build();
+    void shouldShutdownApplications() {
 
         prepareMockedSuccessResponse("http://localhost:8081/actuator/shutdown", HttpMethod.POST);
         prepareMockedSuccessResponse("http://localhost:8082/actuator/shutdown", HttpMethod.POST);
@@ -73,8 +92,33 @@ class IntegrationTest {
         testRestTemplate.postForObject(getUri("shutdown"), request, String.class);
 
         mockRestServiceServer.verify();
-        verify(commandExecutor).execute(cmdCaptor.capture());
+        verify(commandExecutor, Mockito.times(2)).execute(cmdCaptor.capture());
         assertEquals("Captured shutdown command", "sudo shutdown -h now", cmdCaptor.getValue());
+
+    }
+
+    @Test
+    void shouldProvideApplicationAndSystemStatus() throws IOException {
+        //Given
+        prepareMockedSuccessResponseWithBody("http://localhost:8081/actuator/info", HttpMethod.GET,
+                prepareInfoResponse("FirstApp", "1.0"));
+        prepareMockedSuccessResponseWithBody("http://localhost:8081/actuator/health", HttpMethod.GET,
+                prepareHealthCheckResponse("UP"));
+        prepareMockedSuccessResponseWithBody("http://localhost:8082/actuator/info", HttpMethod.GET,
+                prepareInfoResponse("SecondApp", "2.0s"));
+        prepareMockedSuccessResponseWithBody("http://localhost:8082/actuator/health", HttpMethod.GET,
+                prepareHealthCheckResponse("DOWN"));
+
+        monitoringHandler.scheduled();
+        //When
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        ResponseEntity<String> response = testRestTemplate.exchange(getUri("status"), HttpMethod.GET,
+                new HttpEntity<Object>(headers), String.class);
+        //Then
+        String expected = readFile("integration/expectedStatus.json");
+        JSONObject actualJSON = new JSONObject(response.getBody());
+        JSONAssert.assertEquals("Status response", new JSONObject(expected), actualJSON, true);
 
     }
 
@@ -83,13 +127,38 @@ class IntegrationTest {
     }
 
     private void prepareMockedSuccessResponse(String url, HttpMethod httpMethod) {
+        prepareMockedSuccessResponseWithBody(url, httpMethod, "ok");
+    }
+
+    private void prepareMockedSuccessResponseWithBody(String url, HttpMethod httpMethod, String body) {
         mockRestServiceServer.expect(times(1), requestTo(url))
                 .andExpect(method(httpMethod))
-                .andRespond(withSuccess("ok", MediaType.APPLICATION_JSON));
+                .andRespond(withSuccess(body, MediaType.APPLICATION_JSON));
     }
 
     private void prepareMockedResourceAccessException(String url) {
         mockRestServiceServer.expect(requestTo(url))
                 .andRespond((response) -> { throw new ResourceAccessException("No resources available"); });
+    }
+
+    private String prepareInfoResponse(String appName, String version) {
+        JSONObject app = new JSONObject()
+                .put("version", version)
+                .put("name", appName);
+
+         return new JSONObject()
+                .put("app",app)
+                .toString();
+    }
+
+    private String prepareHealthCheckResponse(String status) {
+        return new JSONObject()
+                .put("status",status)
+                .toString();
+    }
+
+    private String readFile(String path) throws IOException {
+        File resource = new ClassPathResource(path).getFile();
+        return new String(Files.readAllBytes(resource.toPath()), StandardCharsets.UTF_8);
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
-@Profile("dev")
+@Profile({"dev", "test"})
 public class CommandExecutorDev implements CommandExecutor {
 
     public int execute(String cmd) {

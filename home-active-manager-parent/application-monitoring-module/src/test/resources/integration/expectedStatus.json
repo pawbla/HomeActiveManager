@@ -1,0 +1,67 @@
+{
+  "hardware": {
+    "platformLabel": "platform_label",
+    "platformId": "platform_id",
+    "cpuRevision": "cpu_revision",
+    "cpuArchitecture": "cpu_architecture",
+    "modelName": "model_name",
+    "processor": "processor",
+    "boardTypeName": "board_type_name",
+    "cpuTemperature": 12.0,
+    "cpuVoltage": 3.5,
+    "dateTime": "2022-08-16T20:40:01"
+  },
+  "os": {
+    "name": "OS Name",
+    "version": "OS Version",
+    "architecture": "OS Architecture",
+    "firmwareBuild": "OS Firmware build",
+    "firmwareDate": "OS Firmware date"
+  },
+  "network": {
+    "hostName": "Network Host Name",
+    "ipAddress": [
+      "1.1.1.1",
+      "1.1.1.2"
+    ],
+    "fqdn": [
+      "1.1.2.1",
+      "1.1.2.2"
+    ],
+    "nameserver": [
+      "Nameserver1",
+      "Namserver2"
+    ]
+  },
+  "memory": {
+    "total": 50,
+    "used": 20,
+    "free": 5,
+    "shared": 15,
+    "buffers": 5,
+    "cached": 5
+  },
+  "java": {
+    "vendor": "Vendor",
+    "vendorUrl": "vendor.url",
+    "version": "1.8",
+    "virtualMachinve": "vm",
+    "runtime": "jre-1.8"
+  },
+  "applications": [
+    {
+      "port": "8081",
+      "name": "FirstApp",
+      "version": "1.0",
+      "health": true,
+      "dateTime": "2022-08-16T19:40:01"
+    },
+    {
+      "port": "8082",
+      "name": "SecondApp",
+      "version": "2.0s",
+      "health": false,
+      "dateTime": "2022-08-16T19:40:01"
+    }
+  ]
+}
