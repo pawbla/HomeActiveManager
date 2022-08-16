@@ -27,6 +27,8 @@ public class RestConnector implements RestInterface {
     private Response response;
     private DateFormat dateFormat;
 
+    boolean test = true;
+
     @Autowired
     public RestConnector() {
         logger.info("Create REST Template object.");
@@ -81,7 +83,10 @@ public class RestConnector implements RestInterface {
                 }
             } catch (RestClientException e) {
                 logger.warn("Unable to fetch datas from ip " + connector.getName() + " caused by exception: " + e);
-                throw new RestClientException(e.getMessage());
+                if (iter == 2) {
+                    //Throw an exception only when appeard for the last fallback call
+                    throw new RestClientException(e.getMessage());
+                }
             }
             iter++;
         }
