@@ -178,6 +178,11 @@
       "date":"10.04 20:38",
       "isError":false,
       "value":"457"},
+    "isPrecipation": {
+      "date": "10.04 20:38",
+      "isError": false,
+      "value": false
+    },
     "windDirectionDeg":{
       "date":"10.04 20:38",
       "isError":false,
@@ -194,6 +199,16 @@
       "date":"10.04 20:38",
       "isError":false,
       "value":"100"},
+    "isDayTime": {
+      "date": "10.04 20:38",
+      "isError": false,
+      "value": true
+    },
+    "precipationType": {
+      "date": "10.04 20:38",
+      "isError": false,
+      "value": ""
+    },
     "uvIndexDescription":{
       "date":"10.04 20:38",
       "isError":false,

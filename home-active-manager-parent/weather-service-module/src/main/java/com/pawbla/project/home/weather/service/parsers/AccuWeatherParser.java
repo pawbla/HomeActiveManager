@@ -40,7 +40,10 @@ public class AccuWeatherParser extends AbstractParser {
         UV_INDEX_COLOR("uvIndexColor"),
         VISIBILITY("visibility"),
         CLOUD_COVER("cloudCover"),
-        CEILING("ceiling");
+        CEILING("ceiling"),
+        IS_PRECIPATION("isPrecipation"),
+        PRECIPATION_TYPE("precipationType"),
+        IS_DAY_TIME("isDayTime");
 
         public final String value;
 
@@ -70,6 +73,9 @@ public class AccuWeatherParser extends AbstractParser {
     private static final String VISIBILITY_KEY = "Visibility";
     private static final String CLOUD_COVER_KEY = "CloudCover";
     private static final String CEILING_KEY = "Ceiling";
+    private static final String HAS_PRECIPATION_KEY = "HasPrecipitation";
+    private static final String PRECIPATION_TYPE_KEY = "PrecipitationType";
+    private static final String IS_DAY_TIME_KEY = "IsDayTime";
     private static final String VIOLET_HEX = "#B803FF";
 
     @Override
@@ -94,9 +100,13 @@ public class AccuWeatherParser extends AbstractParser {
                 /* Cloud cover and ceiling */
                 String cloudCover = Integer.toString(mainObj.getInt(CLOUD_COVER_KEY));
                 String ceiling = Integer.toString(mainObj.getJSONObject(CEILING_KEY).getJSONObject(METRIC_KEY).getInt(VALUE_KEY));
+                boolean isPrecipation = mainObj.getBoolean(HAS_PRECIPATION_KEY);
+                String precipationType = mainObj.isNull(PRECIPATION_TYPE_KEY) ? "" : mainObj.getString(PRECIPATION_TYPE_KEY);
+                boolean isDayNight = mainObj.getBoolean(IS_DAY_TIME_KEY);
                 accWeMeasurement.setDate(response.getDate());
                 accWeMeasurement.setMeasurements(weatherText, weatherIcon, windDirection, windDirectionDeg, windSpeed,
-                        uvIndex, uvIndexText, uvIndexColor, visibility, cloudCover, ceiling);
+                        uvIndex, uvIndexText, uvIndexColor, visibility, cloudCover, ceiling, isPrecipation, precipationType,
+                        isDayNight);
             }
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());
