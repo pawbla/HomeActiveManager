@@ -109,6 +109,11 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "isError": false,
             "value": "457"
           },
+            "isPrecipation": {
+            "date": "10.03 22:34",
+            "isError": false,
+            "value": false
+          },
           "windDirectionDeg": {
             "date": "10.05 21:22",
             "isError": false,
@@ -128,6 +133,11 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "date": "10.05 21:22",
             "isError": false,
             "value": "100"
+          },
+          "isDayTime": {
+            "date": "10.03 22:34",
+            "isError": false,
+            "value": true
           },
           "uvIndexDescription": {
             "date": "10.05 21:22",
@@ -158,6 +168,11 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "date": "10.05 21:22",
             "isError": false,
             "value": "7"
+          },
+            "precipationType": {
+            "date": "10.03 22:34",
+            "isError": false,
+            "value": ""
           },
           "weatherText": {
             "date": "10.05 21:22",

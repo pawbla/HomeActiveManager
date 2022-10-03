@@ -69,6 +69,12 @@ public class WeatherRenderer implements Renderer {
                                 this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getUvIndexDescription()))
                         .put(AccuWeatherParser.AccuWeatherValues.UV_INDEX_VALUE.getValue(),
                                 this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getUvIndexValue()))
+                        .put(AccuWeatherParser.AccuWeatherValues.IS_PRECIPATION.getValue(),
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().isPrecipation()))
+                        .put(AccuWeatherParser.AccuWeatherValues.PRECIPATION_TYPE.getValue(),
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getPrecipationType()))
+                        .put(AccuWeatherParser.AccuWeatherValues.IS_DAY_TIME.getValue(),
+                                this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().isDayTime()))
                         .put(AccuWeatherParser.AccuWeatherValues.UV_INDEX_COLOR.getValue(),
                                 this.setMeasureObj(getAccuWeatherMeasurement(), this.getAccuWeatherMeasurement().getUvIndexColor())))
                         .put(AirLyParser.AirLyValues.HISTORY.getValue(), prepareAirLyHistory(getAirLyMeasurement()))
@@ -104,6 +110,13 @@ public class WeatherRenderer implements Renderer {
     }
 
     private JSONObject setMeasureObj(Measurement measurement, String value) {
+        return new JSONObject()
+                .put("value", value)
+                .put("isError", measurement.isError())
+                .put("date", measurement.getDate());
+    }
+
+    private JSONObject setMeasureObj(Measurement measurement, boolean value) {
         return new JSONObject()
                 .put("value", value)
                 .put("isError", measurement.isError())

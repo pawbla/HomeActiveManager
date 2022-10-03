@@ -15,10 +15,14 @@ public class AccWeMeasurement extends Measurement {
     private String visibility = EMPTY;
     private String cloudCover = EMPTY;
     private String ceiling = EMPTY;
+    private boolean isPrecipation = false;
+    private String precipationType = EMPTY;
+    private boolean isDayTime = false;
 
     public void setMeasurements(String weatherText, String weatherIcon, String windDirection,
                             String windDirectionDeg, String windSpeed, String uvIndexValue, String uvIndexDescription,
-                            String uvIndexColor, String visibility, String cloudCover, String ceiling) {
+                            String uvIndexColor, String visibility, String cloudCover, String ceiling, boolean isPrecipation,
+                            String precipationType, boolean isDayTime) {
         this.weatherText = weatherText;
         this.weatherIcon = weatherIcon;
         this.windDirection = windDirection;
@@ -30,6 +34,9 @@ public class AccWeMeasurement extends Measurement {
         this.visibility = visibility;
         this.cloudCover = cloudCover;
         this.ceiling = ceiling;
+        this.isPrecipation = isPrecipation;
+        this.precipationType = precipationType;
+        this.isDayTime = isDayTime;
     }
 
     public String getWeatherText() {
@@ -76,5 +83,15 @@ public class AccWeMeasurement extends Measurement {
         return ceiling;
     }
 
+    public boolean isPrecipation() {
+        return isPrecipation;
+    }
 
+    public String getPrecipationType() {
+        return precipationType;
+    }
+
+    public boolean isDayTime() {
+        return isDayTime;
+    }
 }
