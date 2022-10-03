@@ -26,6 +26,7 @@ public class HardwareServiceImpl implements HardwareService {
 
     @Override
     public void gatherHardwareInfo(Hardware hardware) {
+        logger.info("Read hardware info");
         hardware.setCpuArchitecture(readCpuArchitecture());
         hardware.setBoardTypeName(readBoardTypeName());
         hardware.setPlatformLabel(readPlatformLabel());
@@ -39,6 +40,7 @@ public class HardwareServiceImpl implements HardwareService {
 
     @Override
     public void updateHardwareInfo(Hardware hardware) {
+        logger.info("Update hardware info");
         hardware.setCpuTemperature(readCpuTemperature());
         hardware.setCpuVoltage(readCpuVoltage());
         hardware.setDateTime(dateTimeUtils.getNow());

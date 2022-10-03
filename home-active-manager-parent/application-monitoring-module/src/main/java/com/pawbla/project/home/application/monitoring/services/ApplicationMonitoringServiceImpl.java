@@ -34,6 +34,7 @@ public class ApplicationMonitoringServiceImpl implements ApplicationMonitoringSe
 
     @Override
     public void readApplicationsInfo(List<Application> applicationList) {
+        log.info("Read applications info");
         applicationList
                 .stream()
                 .filter(app -> StringUtils.isBlank(app.getName()))
@@ -69,6 +70,7 @@ public class ApplicationMonitoringServiceImpl implements ApplicationMonitoringSe
     }
 
     private void healthCheck(Application application) {
+        log.info("Health check for {}", application.getName());
         String url = getHealthCheckUrl(application.getPort());
         String responseBody = "";
         boolean health = false;

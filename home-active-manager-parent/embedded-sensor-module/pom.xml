@@ -102,6 +102,10 @@
                   <sourceFile>${project.basedir}/scripts/app.config</sourceFile>
                   <destinationFile>${release.project.folder}/app.config</destinationFile>
                 </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/scripts/libdhtread.so</sourceFile>
+                  <destinationFile>${release.project.folder}/libdhtread.so</destinationFile>
+                </fileSet>
               </fileSets>
             </configuration>
           </execution>
