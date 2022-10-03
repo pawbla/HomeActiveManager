@@ -2,7 +2,10 @@ package com.pawbla.project.home.embedded.sensor.handler;
 
 import com.pawbla.project.home.embedded.sensor.model.DHT;
 import com.pawbla.project.home.embedded.sensor.reader.Reader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -11,30 +14,31 @@ import java.util.LinkedList;
 
 @Component
 public class DHTHandler implements Handler {
+    private final Logger LOG = LogManager.getLogger(DHTHandler.class);
 
     private final LinkedList<DHT> measurements;
     private final Reader reader;
     private LocalDateTime lastCorrectReadData;
-    private int errCounter;
+    private int pin;
+    private boolean isError;
 
     private static final int LIST_MAX_SIZE = 10;
-    private static final int MAX_ACCEPTABLE_CONSECUTIVE_ERRORS = 3;
+    private static final int DHT_SENSOR_TYPE = 22;
 
     @Autowired
-    public DHTHandler(Reader reader) {
+    public DHTHandler(@Value("${custom.dhtDataPin}") int pin, Reader reader) {
         this.reader = reader;
+        isError = false;
         measurements = new LinkedList<>();
-        errCounter = 0;
         lastCorrectReadData = LocalDateTime.of(2000, 1, 1, 1, 1, 1);
+        this.pin = pin;
     }
 
     @Scheduled(fixedRate = 20000, initialDelay = 20000)
-    public void handle() throws InterruptedException {
-        DHT dht;
-        reader.read();
-        dht = (DHT) reader.getDht();
-        addDHTToList(measurements, dht);
-        handleError(dht);
+    public void handle() {
+        LOG.info("Read data from DHT sensor on pin " + pin);
+        int errorCode = reader.read(DHT_SENSOR_TYPE, pin);
+        addDHTToList(measurements, (DHT) reader.getDht(), errorCode);
     }
 
     @Override
@@ -58,24 +62,21 @@ public class DHTHandler implements Handler {
 
     @Override
     public boolean isError() {
-        return errCounter > MAX_ACCEPTABLE_CONSECUTIVE_ERRORS;
+        return isError;
     }
 
-    private void addDHTToList(LinkedList list, DHT dht) {
-        if (!dht.isError()) {
+    private void addDHTToList(LinkedList list, DHT dht, int errorCode) {
+        if (errorCode == 0) {
+            LOG.info("Data has read correctly");
+            isError = false;
             list.add(dht);
             lastCorrectReadData = LocalDateTime.now();
             if (list.size() > LIST_MAX_SIZE) {
                 list.remove();
             }
-        }
-    }
-
-    private void handleError(DHT dht) {
-        if (dht.isError()) {
-            errCounter++;
         } else {
-            errCounter = 0;
+            isError = true;
+            LOG.warn("Data incorrectly read with error code " + errorCode);
         }
     }
 }

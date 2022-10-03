@@ -17,6 +17,7 @@ public class OperatingSystemImpl implements OperatingSystemService {
 
     @Override
     public void gatherOperathingSystemInfo(OperatingSystem operatingSystem) {
+        logger.info("Gather OS info");
         operatingSystem.setName(readName());
         operatingSystem.setVersion(readVersion());
         operatingSystem.setArchitecture(readArchitecture());

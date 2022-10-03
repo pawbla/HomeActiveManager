@@ -16,6 +16,7 @@ public class MemoryServiceImpl implements MemoryService {
 
     @Override
     public void gatherMemoryInfo(Memory memory) {
+        logger.info("Gather memory info");
         memory.setTotal(readTotal());
         memory.setUsed(readUsed());
         memory.setFree(readFree());

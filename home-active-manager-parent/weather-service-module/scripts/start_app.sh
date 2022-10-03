@@ -10,9 +10,9 @@ log_file="/var/log/home_active_manager/startup_log"
 
 if [[ $1 == "dev" ]];then
   profile="dev"
-  source ./${path}/dev.config
+  source ${path}/dev.config
 else
-  source ./${path}/prod.config
+  source ${path}/prod.config
 fi
 
 echo "${curr_date} Start ${app_name} application with profile ${profile}" >> $log_file

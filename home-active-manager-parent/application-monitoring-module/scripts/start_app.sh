@@ -15,4 +15,4 @@ echo "${curr_date} Start ${app_name} application with profile ${profile}" >> $lo
 
 java_args=("-Dspring.profiles.active=${profile}")
 
-sudo java -jar ${java_args[@]} ${path}/${app_name}-*.jar
+sudo java -jar ${java_args[@]} ${path}/${app_name}-*.jar &

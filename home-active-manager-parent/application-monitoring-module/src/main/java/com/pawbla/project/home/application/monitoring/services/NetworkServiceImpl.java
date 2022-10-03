@@ -19,6 +19,7 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public void gatherNetworkInfo(Network network) {
+        logger.info("Gather Network info");
         network.setHostName(readHostname());
         network.setIpAddressList(readIpAddress());
         network.setFqdnList(readFQDN());

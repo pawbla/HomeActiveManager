@@ -25,7 +25,7 @@ public class DHTHandlerTest {
 
     @Before
     public void setUp() {
-        handler = new DHTHandler(reader);
+        handler = new DHTHandler(1, reader);
         MockitoAnnotations.initMocks(this);
     }
 
@@ -41,7 +41,7 @@ public class DHTHandlerTest {
     @Test
     public void handleTest() throws InterruptedException {
         //before
-        Mockito.when(reader.getDht()).thenReturn(new DHT(12, 35, false));
+        Mockito.when(reader.getDht()).thenReturn(new DHT(12, 35));
         //when
         handler.handle();
         //then
@@ -53,40 +53,16 @@ public class DHTHandlerTest {
     @Test
     public void calculateAvgValuesTest() throws InterruptedException {
         //before
-        Mockito.when(reader.getDht()).thenReturn(new DHT(10, 11, false));
+        Mockito.when(reader.getDht()).thenReturn(new DHT(10, 11));
         handler.handle();
-        Mockito.when(reader.getDht()).thenReturn(new DHT(11, 43, false));
+        Mockito.when(reader.getDht()).thenReturn(new DHT(11, 43));
         handler.handle();
-        Mockito.when(reader.getDht()).thenReturn(new DHT(15, 12, false));
+        Mockito.when(reader.getDht()).thenReturn(new DHT(15, 12));
         //when
         handler.handle();
         //then
         Assert.assertEquals("Temperature", 12, handler.getTemperature());
         Assert.assertEquals("Humidity", 22, handler.getHumidity());
         Assert.assertFalse("Is Error", handler.isError());
-    }
-
-    @Test
-    public void maxAcceptableConsecutiveErrorsReachedTest() throws InterruptedException {
-        //before
-        Mockito.when(reader.getDht()).thenReturn(new DHT(10, 11, true));
-        //when
-        for (int i =0; i < MAX_ACCEPTABLE_CONSECUTIVE_ERRORS; i++) {
-            handler.handle();
-        }
-        //then
-        Assert.assertFalse("Is Error", handler.isError());
-    }
-
-    @Test
-    public void maxAcceptableConsecutiveErrorsExceededTest() throws InterruptedException {
-        //before
-        Mockito.when(reader.getDht()).thenReturn(new DHT(10, 11, true));
-        //when
-        for (int i = 0; i < MAX_ACCEPTABLE_CONSECUTIVE_ERRORS + 1; i++) {
-            handler.handle();
-        }
-        //then
-        Assert.assertTrue("Is Error", handler.isError());
     }
 }

@@ -16,24 +16,15 @@ public class DHTDevReader implements Reader {
 
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
-    private int pin;
-    private int supplyPin;
-
-
-    public DHTDevReader(@Value("${custom.dhtDataPin}") int pin, @Value("${custom.dhtSupplyPin}") int supplyPin) {
-        logger.info("DHTDevReader initialisation with data pin: " + pin + " and supply pin: " + supplyPin);
-        this.pin = pin;
-        this.pin = supplyPin;
-    }
-
     @Override
-    public void read() {
-        logger.info("Read values.");
+    public int read(int type, int pin) {
+        logger.info("Read values with DHT" + type + "and on pin " + pin);
+        return 0;
     }
 
     @Override
     public Object getDht() {
         logger.info("Get DHT");
-        return new DHT(12, 35, false);
+        return new DHT(12, 35);
     }
 }
