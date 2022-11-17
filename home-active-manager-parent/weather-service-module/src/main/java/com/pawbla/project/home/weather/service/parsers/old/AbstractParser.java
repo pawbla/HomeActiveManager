@@ -1,4 +1,4 @@
-package com.pawbla.project.home.weather.service.parsers;
+package com.pawbla.project.home.weather.service.parsers.old;
 
 import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;

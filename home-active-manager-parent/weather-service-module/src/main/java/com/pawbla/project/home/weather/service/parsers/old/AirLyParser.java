@@ -1,8 +1,8 @@
-package com.pawbla.project.home.weather.service.parsers;
+package com.pawbla.project.home.weather.service.parsers.old;
 
-import com.pawbla.project.home.weather.service.models.AirLyHistory;
-import com.pawbla.project.home.weather.service.models.AirPollutionForecast;
-import com.pawbla.project.home.weather.service.models.AirlyMeasurement;
+import com.pawbla.project.home.weather.service.models.old.AirLyHistory;
+import com.pawbla.project.home.weather.service.models.old.AirPollutionForecast;
+import com.pawbla.project.home.weather.service.models.old.AirlyMeasurement;
 import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
 import org.apache.logging.log4j.LogManager;
@@ -107,7 +107,6 @@ public class AirLyParser extends AbstractParser {
 
                 airlyMeasurement.setMeasurements(temperature, humidity, pressure, pm1, pm10, pm25, caqi, caqiColor,
                         pm10perc, pm25per, airPollutionForecasts, airLyHistoryList);
-                airlyMeasurement.setDate(response.getDate());
             }
         } catch (JSONException e) {
             logger.error("An error has occured during JSON conversion" + e.getMessage());

@@ -1,11 +1,5 @@
 package com.pawbla.project.home.weather.service.models;
 
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Scheduled;
-
-import java.time.LocalDate;
-
 /**
  *
  * @author blapaw

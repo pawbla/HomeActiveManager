@@ -1,6 +1,7 @@
 package com.pawbla.project.home.weather.service.parsers;
 
-import com.pawbla.project.home.weather.service.models.MoonPhaseMeasurement;;
+import com.pawbla.project.home.weather.service.models.old.MoonPhaseMeasurement;;
+import com.pawbla.project.home.weather.service.parsers.old.MoonPhaseParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

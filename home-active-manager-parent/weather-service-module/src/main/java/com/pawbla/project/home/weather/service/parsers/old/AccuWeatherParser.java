@@ -1,6 +1,6 @@
-package com.pawbla.project.home.weather.service.parsers;
+package com.pawbla.project.home.weather.service.parsers.old;
 
-import com.pawbla.project.home.weather.service.models.AccWeMeasurement;
+import com.pawbla.project.home.weather.service.models.old.AccWeMeasurement;
 import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
 import org.apache.logging.log4j.LogManager;
@@ -103,7 +103,6 @@ public class AccuWeatherParser extends AbstractParser {
                 boolean isPrecipation = mainObj.getBoolean(HAS_PRECIPATION_KEY);
                 String precipationType = mainObj.isNull(PRECIPATION_TYPE_KEY) ? "" : mainObj.getString(PRECIPATION_TYPE_KEY);
                 boolean isDayNight = mainObj.getBoolean(IS_DAY_TIME_KEY);
-                accWeMeasurement.setDate(response.getDate());
                 accWeMeasurement.setMeasurements(weatherText, weatherIcon, windDirection, windDirectionDeg, windSpeed,
                         uvIndex, uvIndexText, uvIndexColor, visibility, cloudCover, ceiling, isPrecipation, precipationType,
                         isDayNight);

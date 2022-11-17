@@ -3,7 +3,7 @@ package com.pawbla.project.home.weather.service.handlers;
 import com.pawbla.project.home.weather.service.models.Connector;
 import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
-import com.pawbla.project.home.weather.service.parsers.ParserInterface;
+import com.pawbla.project.home.weather.service.parsers.old.ParserInterface;
 import com.pawbla.project.home.weather.service.processor.MoonPhaseProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

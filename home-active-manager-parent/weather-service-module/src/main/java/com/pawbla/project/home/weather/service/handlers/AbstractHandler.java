@@ -2,7 +2,8 @@ package com.pawbla.project.home.weather.service.handlers;
 
 import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
-import com.pawbla.project.home.weather.service.parsers.ParserInterface;
+import com.pawbla.project.home.weather.service.parsers.ResponseMapper;
+import com.pawbla.project.home.weather.service.parsers.old.ParserInterface;
 import com.pawbla.project.home.weather.service.registry.ConnectorsRegistryInterface;
 import com.pawbla.project.home.weather.service.rest.RestInterface;
 import com.pawbla.project.home.weather.service.models.Connector;
@@ -18,6 +19,7 @@ public abstract class AbstractHandler implements HandlerInterface {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     private ParserInterface parser;
+    private ResponseMapper responseMapper;
     private RestInterface restConnector;
     private Connector connector;
     private ConnectorsRegistryInterface registry;
@@ -38,7 +40,11 @@ public abstract class AbstractHandler implements HandlerInterface {
         this.confTime = 0;
     }
 
-    public void setParser(ParserInterface parser) {
+    public void setResponseMapper(ResponseMapper responseMapper) {
+        this.responseMapper = responseMapper;
+    }
+
+    public void setParser(ParserInterface parser) { //TODO remove when all response mapper inplemented
         this.parser = parser;
     }
 
@@ -58,7 +64,11 @@ public abstract class AbstractHandler implements HandlerInterface {
         do {
             this.restConnector.execute();
             Response response = this.connector.getResponse();
-            measurement = this.parser.parse(response);
+            if (responseMapper != null) {
+                measurement = responseMapper.map(response);
+            } else {
+                measurement = this.parser.parse(response);
+            }
             if (response.getResponseCode() == 200 || confTime == 0) {
                 break;
             }

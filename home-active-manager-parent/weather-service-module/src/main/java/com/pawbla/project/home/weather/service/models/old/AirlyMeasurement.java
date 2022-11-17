@@ -1,4 +1,6 @@
-package com.pawbla.project.home.weather.service.models;
+package com.pawbla.project.home.weather.service.models.old;
+
+import com.pawbla.project.home.weather.service.models.Measurement;
 
 import java.util.ArrayList;
 import java.util.List;

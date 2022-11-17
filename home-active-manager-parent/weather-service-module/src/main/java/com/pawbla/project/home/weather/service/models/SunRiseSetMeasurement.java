@@ -1,29 +1,29 @@
 package com.pawbla.project.home.weather.service.models;
 
-import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class SunRiseSetMeasurement extends Measurement {
-    private String SunRise = EMPTY;
-    private String SunSet = EMPTY;
-    private String DayLength = EMPTY;
 
-    public void setMeasurements(String sunRise, String sunSet, String dayLength) {
-        SunRise = sunRise;
-        SunSet = sunSet;
-        DayLength = dayLength;
+    @JsonProperty("sunrise")
+    private String sunrise;
+
+    @JsonProperty("sunset")
+    private String sunset;
+
+    @JsonProperty("day_length")
+    private int dayLength;
+
+    public String getSunrise() {
+        return sunrise;
     }
 
-    public String getSunRise() {
-        return SunRise;
+    public String getSunset() {
+        return sunset;
     }
 
-    public String getSunSet() {
-        return SunSet;
+    public int getDayLength() {
+        return dayLength;
     }
-
-    public String getDayLength() {
-        return DayLength;
-    }
-
-
 }

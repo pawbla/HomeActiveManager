@@ -1,7 +1,7 @@
-package com.pawbla.project.home.weather.service.parsers;
+package com.pawbla.project.home.weather.service.parsers.old;
 
 import com.pawbla.project.home.weather.service.models.Measurement;
-import com.pawbla.project.home.weather.service.models.MoonPhaseMeasurement;
+import com.pawbla.project.home.weather.service.models.old.MoonPhaseMeasurement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;

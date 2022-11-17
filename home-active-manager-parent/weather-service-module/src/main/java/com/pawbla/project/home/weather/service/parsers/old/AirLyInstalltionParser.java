@@ -1,6 +1,6 @@
-package com.pawbla.project.home.weather.service.parsers;
+package com.pawbla.project.home.weather.service.parsers.old;
 
-import com.pawbla.project.home.weather.service.models.AirLyInstallationMeasurement;
+import com.pawbla.project.home.weather.service.models.old.AirLyInstallationMeasurement;
 import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.Response;
 import org.apache.logging.log4j.LogManager;
@@ -58,7 +58,6 @@ public class AirLyInstalltionParser  extends AbstractParser {
                 String country = jsonArray.getString(COUNTRY_KEY);
                 String city = jsonArray.getString(CITY_KEY);
                 String street = jsonArray.getString(STREET_KEY);
-                airLyInstallationMeasurement.setDate(response.getDate());
                 airLyInstallationMeasurement.setMeasurements(country, city, street);
             }
         } catch (JSONException e) {
