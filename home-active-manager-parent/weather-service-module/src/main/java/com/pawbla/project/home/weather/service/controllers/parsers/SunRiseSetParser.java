@@ -40,7 +40,7 @@ public class SunRiseSetParser extends AbstractParser<SunRiseSetMeasurement> {
 
     @Override
     public JSONObject getParsedObject() {
-        SunRiseSetMeasurement measurement = getSunMeasurement(sunRiseSet);
+        SunRiseSetMeasurement measurement = getMeasurement(sunRiseSet);
         return new JSONObject()
                 .put(SUN_RISE, getSunRiseObject(measurement))
                 .put(SUN_SET, getSunSetObject(measurement))

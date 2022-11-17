@@ -5,13 +5,11 @@ import com.pawbla.project.home.weather.service.models.old.AccWeMeasurement;
 import com.pawbla.project.home.weather.service.models.old.AirLyHistory;
 import com.pawbla.project.home.weather.service.models.old.AirPollutionForecast;
 import com.pawbla.project.home.weather.service.models.old.AirlyMeasurement;
-import com.pawbla.project.home.weather.service.models.old.InternalMeasurement;
 import com.pawbla.project.home.weather.service.models.Measurement;
 import com.pawbla.project.home.weather.service.models.old.MoonPhaseMeasurement;
 import com.pawbla.project.home.weather.service.handlers.HandlerInterface;
 import com.pawbla.project.home.weather.service.parsers.old.AccuWeatherParser;
 import com.pawbla.project.home.weather.service.parsers.old.AirLyParser;
-import com.pawbla.project.home.weather.service.parsers.old.InternalParser;
 import com.pawbla.project.home.weather.service.parsers.old.MoonPhaseParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,32 +23,28 @@ import java.util.List;
 @Component
 public class WeatherJsonResponseParser implements Renderer {
     private ResponseParser sunRiseSetParser;
+    private ResponseParser internalParser;
 
     //TODO OLD
-    private HandlerInterface internal;
     private HandlerInterface airLy;
     private HandlerInterface accuWeather;
     private HandlerInterface moonPhase;
 
     @Autowired
-    public WeatherJsonResponseParser(@Qualifier("sunRiseSetParser") ResponseParser sunRiseSetParser, @Qualifier("internal") HandlerInterface internal,
+    public WeatherJsonResponseParser(@Qualifier("sunRiseSetParser") ResponseParser sunRiseSetParser, @Qualifier("internalParser") ResponseParser internalParser,
                                      @Qualifier("AirLy") HandlerInterface airLy,
                                      @Qualifier("accuWeather") HandlerInterface accuWeather, @Qualifier("moonPhase") HandlerInterface moonPhase) {
-        this.internal = internal;
         this.airLy = airLy;
         this.accuWeather = accuWeather;
         this.moonPhase = moonPhase;
         this.sunRiseSetParser = sunRiseSetParser;
+        this.internalParser = internalParser;
     }
 
     @Override
     public String getJSON() {
         JSONObject response = new JSONObject()
-                .put("in", new JSONObject()
-                        .put(InternalParser.InternalValues.TEMPERATURE.getValue(),
-                                this.setMeasureObj(getInternalMeasurement(), getInternalMeasurement().getTemperature()))
-                        .put(InternalParser.InternalValues.HUMIDITY.getValue(),
-                                this.setMeasureObj(getInternalMeasurement(), getInternalMeasurement().getHumidity())))
+                .put("in", internalParser.getParsedObject())
                 .put("out", new JSONObject()
                         .put(AirLyParser.AirLyValues.TEMPERATURE.getValue(),
                                 this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getTemperature()))
@@ -127,11 +121,6 @@ public class WeatherJsonResponseParser implements Renderer {
 
     private AirlyMeasurement getAirLyMeasurement() {
         return (AirlyMeasurement) airLy.getMeasurement();
-    }
-
-
-    private InternalMeasurement getInternalMeasurement() {
-        return (InternalMeasurement) internal.getMeasurement();
     }
 
     private AccWeMeasurement getAccuWeatherMeasurement() {

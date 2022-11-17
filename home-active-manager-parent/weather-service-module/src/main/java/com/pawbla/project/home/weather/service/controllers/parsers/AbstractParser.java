@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public abstract class AbstractParser<T> implements ResponseParser {
 
-    protected T getSunMeasurement(HandlerInterface handlerInterface) {
+    protected T getMeasurement(HandlerInterface handlerInterface) {
         return (T) handlerInterface.getMeasurement();
     }
 
