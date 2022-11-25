@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 @Component("sunRiseSet")
-public class SunRiseSetParser extends AbstractResponseMapper<SunRiseSetMeasurement> {
+public class SunRiseSetMapper extends AbstractResponseMapper<SunRiseSetMeasurement> {
 
     @Override
     protected String prepareBody(String body) {

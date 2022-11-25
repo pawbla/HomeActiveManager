@@ -24,5 +24,6 @@ java_args+=("-Dcustom.ipAirLyInstallation=${AIRLY_INSTALLATION_IP}")
 java_args+=("-Dcustom.apiKeyAirLy=${AIRLY_API_KEY}")
 java_args+=("-Dcustom.ipSunSetRise=${SUN_RISE_SET_IP}")
 java_args+=("-Dcustom.urlAccuWeather=${ACCU_WEATHER_URL}")
+java_args+=("-Dspring.profiles.active=${profile}")
 
 sudo java -jar ${java_args[@]} ${path}/${app_name}-*.jar &

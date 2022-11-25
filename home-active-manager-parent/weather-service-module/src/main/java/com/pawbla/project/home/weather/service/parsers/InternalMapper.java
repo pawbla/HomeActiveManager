@@ -4,7 +4,7 @@ import com.pawbla.project.home.weather.service.models.InternalMeasurement;
 import org.springframework.stereotype.Component;
 
 @Component("internal")
-public class InternalParser extends AbstractResponseMapper<InternalMeasurement> {
+public class InternalMapper extends AbstractResponseMapper<InternalMeasurement> {
 
     @Override
     protected Class getValueType() {

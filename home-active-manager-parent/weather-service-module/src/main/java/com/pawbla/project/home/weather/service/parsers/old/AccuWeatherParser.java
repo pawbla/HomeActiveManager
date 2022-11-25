@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.awt.*;
 
-@Component
-@Qualifier("accuWeather")
+
 public class AccuWeatherParser extends AbstractParser {
 
     /**
