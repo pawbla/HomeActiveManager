@@ -165,7 +165,7 @@
     "ceiling":{
       "isError":false,
       "value":"457"},
-    "isPrecipation": {
+    "isPrecipitation": {
       "isError": false,
       "value": false
     },
@@ -185,7 +185,7 @@
       "isError": false,
       "value": true
     },
-    "precipationType": {
+    "precipitationType": {
       "isError": false,
       "value": ""
     },
@@ -203,7 +203,7 @@
       "value":"NE"},
     "windSpeed":{
       "isError":false,
-      "value":"18"},
+      "value":"19"},
     "uvIndexValue":{
       "isError":false,
       "value":"7"},

@@ -14,4 +14,8 @@ public class AccuWeatherMapper extends AbstractResponseMapper<AccuWeatherMeasure
     protected String getName() {
         return "AccuWeather";
     }
+
+    protected String prepareBody(String body) {
+        return body.replaceAll("^\\[|\\]$", "");
+    }
 }
