@@ -32,64 +32,64 @@ class MoonPhaseProcessorTest {
     void newMoonTest() {
         when(dataTimeUtils.getCurrentMonth()).thenReturn(1);
         when(dataTimeUtils.getCurrentDay()).thenReturn(2);
-        double actual = moonPhaseProcessor.calc();
-        Assertions.assertEquals(0.0, actual, "New moon");
+        moonPhaseProcessor.calc();
+        Assertions.assertEquals(0.0, moonPhaseProcessor.getMoonPhaseValue(), "New moon");
     }
 
     @Test
     void waxingCrescentcentTest() {
         when(dataTimeUtils.getCurrentMonth()).thenReturn(2);
         when(dataTimeUtils.getCurrentDay()).thenReturn(4);
-        double actual = moonPhaseProcessor.calc();
-        Assertions.assertEquals(13.0, actual, "Waxing crescent");
+        moonPhaseProcessor.calc();
+        Assertions.assertEquals(13.0, moonPhaseProcessor.getMoonPhaseValue(), "Waxing crescent");
     }
 
     @Test
     void firstQuarterTest() {
         when(dataTimeUtils.getCurrentMonth()).thenReturn(3);
         when(dataTimeUtils.getCurrentDay()).thenReturn(10);
-        double actual = moonPhaseProcessor.calc();
-        Assertions.assertEquals(50.0, actual, "First quarter");
+        moonPhaseProcessor.calc();
+        Assertions.assertEquals(50.0, moonPhaseProcessor.getMoonPhaseValue(), "First quarter");
     }
 
     @Test
     void waxingGibbousTest() {
         when(dataTimeUtils.getCurrentMonth()).thenReturn(7);
         when(dataTimeUtils.getCurrentDay()).thenReturn(10);
-        double actual = moonPhaseProcessor.calc();
-        Assertions.assertEquals(84.0, actual, "Waxing gibbous");
+        moonPhaseProcessor.calc();
+        Assertions.assertEquals(84.0, moonPhaseProcessor.getMoonPhaseValue(), "Waxing gibbous");
     }
 
     @Test
     void fullMoonTest() {
         when(dataTimeUtils.getCurrentMonth()).thenReturn(6);
         when(dataTimeUtils.getCurrentDay()).thenReturn(14);
-        double actual = moonPhaseProcessor.calc();
-        Assertions.assertEquals(-99.0, actual, "Full moon");
+        moonPhaseProcessor.calc();
+        Assertions.assertEquals(-99.0, moonPhaseProcessor.getMoonPhaseValue(), "Full moon");
     }
 
     @Test
     void wanningGibbousTest() {
         when(dataTimeUtils.getCurrentMonth()).thenReturn(11);
         when(dataTimeUtils.getCurrentDay()).thenReturn(12);
-        double actual = moonPhaseProcessor.calc();
-        Assertions.assertEquals(-84.0, actual, "Wanning Gibous");
+        moonPhaseProcessor.calc();
+        Assertions.assertEquals(-84.0, moonPhaseProcessor.getMoonPhaseValue(), "Wanning Gibous");
     }
 
     @Test
     void lastQuarterGibbousTest() {
         when(dataTimeUtils.getCurrentMonth()).thenReturn(5);
         when(dataTimeUtils.getCurrentDay()).thenReturn(22);
-        double actual = moonPhaseProcessor.calc();
-        Assertions.assertEquals(-53.0, actual, "New moon");
+        moonPhaseProcessor.calc();
+        Assertions.assertEquals(-53.0, moonPhaseProcessor.getMoonPhaseValue(), "New moon");
     }
 
     @Test
     void wanningCactualcentTest() {
         when(dataTimeUtils.getCurrentMonth()).thenReturn(9);
         when(dataTimeUtils.getCurrentDay()).thenReturn(21);
-        double actual = moonPhaseProcessor.calc();
-        Assertions.assertEquals(-18.0, actual, "New moon");
+        moonPhaseProcessor.calc();
+        Assertions.assertEquals(-18.0, moonPhaseProcessor.getMoonPhaseValue(), "New moon");
     }
 
 }
