@@ -3,7 +3,6 @@ package com.pawbla.project.home.weather.service.handlers;
 import com.pawbla.project.home.weather.service.connectors.ConnectorInterface;
 import com.pawbla.project.home.weather.service.parsers.ResponseMapper;
 import com.pawbla.project.home.weather.service.registry.ConnectorsRegistryInterface;
-import com.pawbla.project.home.weather.service.parsers.old.ParserInterface;
 import com.pawbla.project.home.weather.service.rest.RestInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,4 +1,4 @@
-package com.pawbla.project.home.weather.service.models;
+package com.pawbla.project.home.weather.service.models.accuweather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

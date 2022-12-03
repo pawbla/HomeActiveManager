@@ -2,6 +2,9 @@ package com.pawbla.project.home.weather.service.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pawbla.project.home.weather.service.models.accuweather.Ceiling;
+import com.pawbla.project.home.weather.service.models.accuweather.Visibility;
+import com.pawbla.project.home.weather.service.models.accuweather.Wind;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class AccuWeatherMeasurement extends Measurement {

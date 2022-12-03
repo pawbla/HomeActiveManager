@@ -2,7 +2,8 @@ package com.pawbla.project.home.weather.service.controllers.parsers;
 
 import com.pawbla.project.home.weather.service.handlers.HandlerInterface;
 import com.pawbla.project.home.weather.service.models.AccuWeatherMeasurement;
-import com.pawbla.project.home.weather.service.models.Wind;
+import com.pawbla.project.home.weather.service.models.AirLyMeasurement;
+import com.pawbla.project.home.weather.service.models.accuweather.Wind;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,10 @@ public class WeatherParser extends AbstractParser<AccuWeatherMeasurement> {
     private static final String IS_PRECIPITATION = "isPrecipitation";
     private static final String PRECIPITATION_TYPE = "precipitationType";
     private static final String IS_DAY_TIME = "isDayTime";
+    private static final String PRESSURE = "pressure";
     private static final String VIOLET_HEX = "#B803FF";
+
+    private static final String PRESSURE_OBJ_NAME = "PRESSURE";
 
     private final HandlerInterface accuWeather;
     private final HandlerInterface airLy;
@@ -39,7 +43,10 @@ public class WeatherParser extends AbstractParser<AccuWeatherMeasurement> {
     @Override
     public JSONObject getParsedObject() {
         AccuWeatherMeasurement accuWeatherMeasurement = getMeasurement(accuWeather);
+        AirLyMeasurement airLyMeasurement = (AirLyMeasurement) airLy.getMeasurement();
         return new JSONObject()
+                .put(PRESSURE, getRoundedValue(getValueByName(airLyMeasurement.getCurrent().getValues(), PRESSURE_OBJ_NAME),
+                        airLyMeasurement.isError()))
                 .put(WEATHER_ICON, getValue(accuWeatherMeasurement.getWeatherIcon(), accuWeatherMeasurement.isError()))
                 .put(WEATHER_TEXT, getValue(accuWeatherMeasurement.getWeatherText(), accuWeatherMeasurement.isError()))
                 .put(CLOUD_COVER, getValue(accuWeatherMeasurement.getCloudCover(), accuWeatherMeasurement.isError()))

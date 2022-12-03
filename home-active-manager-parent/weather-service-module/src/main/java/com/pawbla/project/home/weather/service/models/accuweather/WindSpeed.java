@@ -1,10 +1,11 @@
-package com.pawbla.project.home.weather.service.models;
+package com.pawbla.project.home.weather.service.models.accuweather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pawbla.project.home.weather.service.models.accuweather.Metric;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Ceiling {
+public class WindSpeed {
     @JsonProperty("Metric")
     private Metric metric;
 
