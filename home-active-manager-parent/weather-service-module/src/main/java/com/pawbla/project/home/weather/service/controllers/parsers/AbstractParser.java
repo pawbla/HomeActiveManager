@@ -10,12 +10,14 @@ import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
 
 public abstract class AbstractParser<T> implements ResponseParser {
 
+    protected static final double DEFAULT_VALUE = 0.0;
+
     protected T getMeasurement(HandlerInterface handlerInterface) {
         return (T) handlerInterface.getMeasurement();
     }
 
     protected double getValueByName(final List<Value> valueList, String name) {
-        return valueList.stream().filter(v -> v.getName().equals(name)).map(Value::getValue).findFirst().get();
+        return valueList.stream().filter(v -> v.getName().equals(name)).map(Value::getValue).findFirst().orElse(DEFAULT_VALUE);
     }
 
     protected JSONObject getRoundedValue(String value, boolean isError) {

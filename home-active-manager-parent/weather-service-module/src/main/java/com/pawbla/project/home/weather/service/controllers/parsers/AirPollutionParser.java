@@ -70,7 +70,7 @@ public class AirPollutionParser extends AbstractParser<AirLyMeasurement> {
     }
 
     private double getPollutionByName(final List<Standard> standardList, String name) {
-        return standardList.stream().filter(v -> v.getPollutant().equals(name)).map(Standard::getPercent).findFirst().get();
+        return standardList.stream().filter(v -> v.getPollutant().equals(name)).map(Standard::getPercent).findFirst().orElse(DEFAULT_VALUE);
     }
 
     private JSONObject prepareAirPollutionForecast(AirLyMeasurement measurement) {
