@@ -13,13 +13,13 @@ public class RestControllers {
     private ConnectorDetailsRenderer connectorDetailsRenderer;
 
     @Autowired
-    private WeatherRenderer weatherRenderer;
+    private WeatherJsonResponseParser weatherJsonResponseParser;
 
     @GetMapping(value = "/measurements", produces= MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @ResponseBody
     public ResponseEntity<String> weather() {
-        return ResponseEntity.ok().body(weatherRenderer.getJSON());
+        return ResponseEntity.ok().body(weatherJsonResponseParser.getJSON());
     }
 
     @GetMapping(value = "/status", produces=MediaType.APPLICATION_JSON_VALUE)

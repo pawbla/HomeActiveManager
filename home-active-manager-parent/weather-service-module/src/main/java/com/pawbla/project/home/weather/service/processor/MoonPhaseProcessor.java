@@ -8,13 +8,15 @@ import org.springframework.stereotype.Component;
 public class MoonPhaseProcessor {
 
     private final DateTimeUtils dateTimeUtils;
+    private int moonPhaseValue;
 
     @Autowired
     public MoonPhaseProcessor(DateTimeUtils dateTimeUtils) {
         this.dateTimeUtils = dateTimeUtils;
+        this.moonPhaseValue = 0;
     }
 
-    public int calc() {
+    public void calc() {
         int year = dateTimeUtils.getCurrentYear();
         int month = dateTimeUtils.getCurrentMonth();
         int day = dateTimeUtils.getCurrentDay();
@@ -40,7 +42,11 @@ public class MoonPhaseProcessor {
             phi1 = -1 * phi1;
         }
 
-        return  (int) (100 * phi1);
+        moonPhaseValue =  (int) (100 * phi1);
+    }
+
+    public int getMoonPhaseValue() {
+        return moonPhaseValue;
     }
 
     private double calcPhi1(double jdp) {

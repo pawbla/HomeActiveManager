@@ -109,7 +109,7 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "isError": false,
             "value": "457"
           },
-            "isPrecipation": {
+            "isPrecipitation": {
             "date": "10.03 22:34",
             "isError": false,
             "value": false
@@ -169,7 +169,7 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
             "isError": false,
             "value": "7"
           },
-            "precipationType": {
+            "precipitationType": {
             "date": "10.03 22:34",
             "isError": false,
             "value": ""

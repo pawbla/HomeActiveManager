@@ -1,6 +1,7 @@
 package com.pawbla.project.home.weather.service.config;
 
 import com.pawbla.project.home.weather.service.handlers.HandlerInterface;
+import com.pawbla.project.home.weather.service.processor.MoonPhaseProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -10,8 +11,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-
-import javax.annotation.PreDestroy;
 
 @Configuration
 @EnableScheduling
@@ -23,17 +22,17 @@ public class SchedulerConfiguration {
     private HandlerInterface accuWeather;
     private HandlerInterface internal;
     private HandlerInterface sunRiseSet;
-    private HandlerInterface moonPhase;
+    private MoonPhaseProcessor moonPhaseProcessor;
 
     @Autowired
     public SchedulerConfiguration(@Qualifier("AirLy") HandlerInterface airLy, @Qualifier("accuWeather") HandlerInterface accuWeather,
                                   @Qualifier("internal") HandlerInterface internal, @Qualifier("sunRiseSet") HandlerInterface sunRiseSet,
-                                  @Qualifier("moonPhase") HandlerInterface moonPhase) {
+                                  MoonPhaseProcessor moonPhaseProcessor) {
         this.airLy = airLy;
         this.accuWeather = accuWeather;
         this.internal = internal;
         this.sunRiseSet = sunRiseSet;
-        this.moonPhase = moonPhase;
+        this.moonPhaseProcessor = moonPhaseProcessor;
     }
 
     @Bean
@@ -90,6 +89,6 @@ public class SchedulerConfiguration {
     @EventListener(ApplicationReadyEvent.class)
     @Scheduled(cron="0 0 * * * ?", zone="Europe/Warsaw") //cron configured at 00:00:10am every day
     public void calculateMoonPhase() {
-        moonPhase.execute();
+        moonPhaseProcessor.calc();
     }
 }

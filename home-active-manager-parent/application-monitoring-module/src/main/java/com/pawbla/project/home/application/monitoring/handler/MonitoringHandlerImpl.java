@@ -79,7 +79,7 @@ public class MonitoringHandlerImpl implements MonitoringHandler {
     }
 
     @Scheduled(cron="0 */10 * ? * *", zone="Europe/Warsaw")
-    public void scheduled() { //TODO configure scheduler
+    public void scheduled() {
         logger.info("Read monitored data on scheduled.");
         applicationMonitoringService.readApplicationsInfo(applicationList);
         applicationMonitoringService.healthCheck(applicationList);

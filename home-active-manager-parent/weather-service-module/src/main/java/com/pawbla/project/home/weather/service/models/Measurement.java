@@ -8,7 +8,6 @@ public class Measurement {
 
     public Measurement() {
         this.isError = false;
-        this.date = "2000-00-00";
     }
 
     public void setError(boolean isError) {
@@ -17,13 +16,5 @@ public class Measurement {
 
     public boolean isError() {
         return isError;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getDate() {
-        return date;
     }
 }

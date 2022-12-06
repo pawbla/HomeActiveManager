@@ -1,15 +1,16 @@
 package com.pawbla.project.home.weather.service.models;
 
-import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class InternalMeasurement extends Measurement {
-    private String temperature = EMPTY;
-    private String humidity = EMPTY;
-
-    public void setMeasurements(String temperature, String humidity) {
-        this.temperature = temperature;
-        this.humidity = humidity;
-    }
+    @JsonProperty("temperature")
+    private String temperature;
+    @JsonProperty("humidity")
+    private String humidity;
+    @JsonProperty("isError")
+    private boolean isError;
+    @JsonProperty("dateTime")
+    private String dateTime;
 
     public String getTemperature() {
         return temperature;
@@ -19,5 +20,12 @@ public class InternalMeasurement extends Measurement {
         return humidity;
     }
 
+    @Override
+    public boolean isError() {
+        return isError;
+    }
 
+    public String getDateTime() {
+        return dateTime;
+    }
 }

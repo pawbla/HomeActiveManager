@@ -1,44 +1,33 @@
-package com.pawbla.project.home.weather.service.parsers;
+package com.pawbla.project.home.weather.service.controllers.parsers;
 
-import com.pawbla.project.home.weather.service.models.Measurement;
-import com.pawbla.project.home.weather.service.models.MoonPhaseMeasurement;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.json.JSONException;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.pawbla.project.home.weather.service.processor.MoonPhaseProcessor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
-@Component
-@Qualifier("moonPhase")
-public class MoonPhaseParser extends AbstractParser {
-    private final Logger logger = LogManager.getLogger(this.getClass().getName());
+@Component("moonPhase")
+public class MoonPhaseParser implements ResponseParser {
 
-    private MoonPhaseMeasurement measurement;
+    private static final String TEXT = "text";
+    private static final String PICTURE = "picture";
 
-    public enum MoonPhaseValues implements Values {
+    private MoonPhaseProcessor processor;
 
-        TEXT("text"),
-        PICTURE("picture");
-
-        public final String value;
-
-        private MoonPhaseValues(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
-
-    public MoonPhaseParser() {
-        measurement = new MoonPhaseMeasurement();
+    public MoonPhaseParser(MoonPhaseProcessor processor) {
+        this.processor = processor;
     }
 
     @Override
-    public Measurement parse(int value) throws JSONException {
-        measurement.setMeasurements(getText(value), getPictureNumber(value));
-        return measurement;
+    public JSONObject getParsedObject() {
+        int moonPhaseVal = processor.getMoonPhaseValue();
+        return new JSONObject()
+                .put(TEXT, getValue(getText(moonPhaseVal)))
+                .put(PICTURE, getValue(getPictureNumber(moonPhaseVal)));
+    }
+
+    private JSONObject getValue(String value) {
+        return new JSONObject()
+                .put("value", value)
+                .put("isError", false);
     }
 
     private String getText(int value) {
