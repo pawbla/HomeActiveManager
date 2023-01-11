@@ -29,8 +29,6 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class IntegrationTest {
 
-    private static final String REGEXP = "date\":\"[0-9.]* [0-9:]*";
-    private static final String DATE = "date\":\"10.04 20:38";
     private static final String REGEXP_SUN_RISE = "value\":\"0[0-9]:46";
     private static final String DATE_SUN_RISE = "value\":\"06:00";
     private static final String REGEXP_SUN_SET = "value\":\"1[0-9]:33";
@@ -59,7 +57,6 @@ public class IntegrationTest {
     @Test
     public void measurementsConnctorTest() throws IOException, JSONException {
         String actual = testRestTemplate.getForObject(getUri("measurements"), String.class);
-        actual = actual.replaceAll(REGEXP, DATE);
         actual = actual.replaceAll(REGEXP_SUN_RISE, DATE_SUN_RISE);
         actual = actual.replaceAll(REGEXP_SUN_SET, DATE_SUN_SET);
         String expected = readFile("integration/expectedMeasurements.json");
@@ -70,7 +67,6 @@ public class IntegrationTest {
     @Test
     public void statusConnectorTest() throws IOException, JSONException {
         String actual = testRestTemplate.getForObject(getUri("status"), String.class);
-        actual = actual.replaceAll(REGEXP, DATE);
         String expected = readFile("integration/expectedStatus.json");
         JSONAssert.assertEquals("Status response", expected, new JSONObject(actual), true);
     }

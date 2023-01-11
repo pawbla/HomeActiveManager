@@ -13,27 +13,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
 
 @Service
 @Scope("prototype")
 public class RestConnector implements RestInterface {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
-    private RestTemplate rest;
+    private final RestTemplate rest;
+    private final Response response;
     private Connector connector;
-    private Response response;
-    private DateFormat dateFormat;
-
-    boolean test = true;
 
     @Autowired
     public RestConnector() {
         logger.info("Create REST Template object.");
         rest = new RestTemplate();
-        dateFormat = new SimpleDateFormat("MM.dd HH:mm");
         response = new Response();
     }
 
@@ -53,18 +51,19 @@ public class RestConnector implements RestInterface {
             if (StringUtils.isNotBlank(resp.getBody())) {
                 logger.trace("Received response for " + connector.getName() + " body: " + resp.getBody());
                 response.setError(false);
-                response.setErrorMsg("");
+                response.setErrorMsg(EMPTY);
                 response.setBody(resp.getBody());
-                response.setDate(dateFormat.format(new Date()));
+                response.setOkResponseDate(getHeaderDateAsString(resp));
             }
+            response.setDate(getHeaderDateAsString(resp));
             response.setResponseCode(resp.getStatusCodeValue());
         } catch (RestClientException e) {
             connector.incrementErrorRequestCnt();
             response.setResponseCode(520);
-            response.setErrorMsg("Unknown error has occured: " + e.getMessage());
+            response.setErrorMsg("Unknown error has occurred: " + e.getMessage());
             response.setError(true);
             response.setModified(false);
-            logger.warn("An exception has occured when executed connection to url " + connector.getName() + ": " + e.getMessage());
+            logger.warn("An exception has occurred when executed connection to url " + connector.getName() + ": " + e.getMessage());
         } finally {
             connector.setResponse(response);
         }
@@ -91,6 +90,12 @@ public class RestConnector implements RestInterface {
             iter++;
         }
         return resp;
+    }
+
+    private String getHeaderDateAsString(ResponseEntity<String> resp) {
+        String headerDate = resp.getHeaders().get("Date").get(0);
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(headerDate, DateTimeFormatter.RFC_1123_DATE_TIME);
+        return zonedDateTime.format(DateTimeFormatter.ISO_DATE_TIME);
     }
 
     public void setConnector(Connector connector) {

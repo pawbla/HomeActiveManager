@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConnectorDetailsRenderer implements Renderer {
 
-    private ConnectorsRegistryInterface register;
+    private final ConnectorsRegistryInterface register;
 
     @Autowired
     public ConnectorDetailsRenderer(ConnectorsRegistryInterface register) {
@@ -39,6 +39,7 @@ public class ConnectorDetailsRenderer implements Renderer {
                 .put("isError", connector.getResponse().isError())
                 .put("errorMessage", connector.getResponse().getErrorMsg())
                 .put("date", connector.getResponse().getDate())
+                .put("okResponseDate", connector.getResponse().getOkResponseDate())
                 .put("dailyCounter", getCounter(connector.getDailyRequestCounter()))
                 .put("sumCounter", getCounter(connector.getSumRequestCounter()));
         return response;

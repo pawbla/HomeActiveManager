@@ -1,14 +1,19 @@
 package com.pawbla.project.home.weather.service.models;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Class for create REST Response object
  * @author pawbla
- * @param <T>
+ * @param
  *
  */
 public class Response {
 
     private String date;
+    private String okResponseDate;
     private boolean isModified;
     private int responseCode;
     private String errorMsg;
@@ -16,6 +21,8 @@ public class Response {
     private boolean isError;
 
     public Response() {
+        date = Instant.ofEpochMilli(0L).atZone(ZoneOffset.UTC).format(DateTimeFormatter.ISO_DATE_TIME);
+        okResponseDate = Instant.ofEpochMilli(0L).atZone(ZoneOffset.UTC).format(DateTimeFormatter.ISO_DATE_TIME);
         responseCode = 0;
         errorMsg = "";
         isModified = true;
@@ -27,6 +34,14 @@ public class Response {
     }
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getOkResponseDate() {
+        return okResponseDate;
+    }
+
+    public void setOkResponseDate(String okResponseDate) {
+        this.okResponseDate = okResponseDate;
     }
     public boolean isModified() {
         return isModified;

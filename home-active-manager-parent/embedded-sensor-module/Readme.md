@@ -56,7 +56,8 @@ Rest api is available on port 8083 with prefixed `/api/v1/embedded`
       user - username of user storend in database
    * **Success Response**
         * Code: 200
-
+        * Header:
+            * Date - The date and time at which the message was originated in "HTTP-date" format, e.g. "Sat, 1 Jan 2000 01:01:01 GMT"
    * **Sample call**
     <details>
     <summary>Click to open </summary>
