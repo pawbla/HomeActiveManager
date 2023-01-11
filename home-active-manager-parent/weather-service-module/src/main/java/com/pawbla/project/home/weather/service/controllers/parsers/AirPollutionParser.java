@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.pawbla.project.home.weather.service.utils.Constants.DOUBLE_DEFAULT_VALUE;
+import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
+
 @Component("airpollution")
 public class AirPollutionParser extends AbstractParser<AirLyMeasurement> {
 
@@ -31,30 +34,55 @@ public class AirPollutionParser extends AbstractParser<AirLyMeasurement> {
 
     private final HandlerInterface airLy;
 
+    private JSONArray airPollutionForecast;
+    private double caqi;
+    private double pm_1;
+    private double pm_10;
+    private double pm_10_percent;
+    private double pm_25;
+    private double pm_25_percent;
+    private String caqiColor;
+
     public AirPollutionParser(@Qualifier("AirLy") HandlerInterface airLy) {
         this.airLy = airLy;
+        this.airPollutionForecast = prepareDefaultAirPollutionForecast();
+        this.caqi = DOUBLE_DEFAULT_VALUE;
+        this.pm_1 = DOUBLE_DEFAULT_VALUE;
+        this.pm_10 = DOUBLE_DEFAULT_VALUE;
+        this.pm_10_percent = DOUBLE_DEFAULT_VALUE;
+        this.pm_25 = DOUBLE_DEFAULT_VALUE;
+        this.pm_25_percent = DOUBLE_DEFAULT_VALUE;
+        this.caqiColor = EMPTY;
     }
 
     @Override
-    public JSONObject getParsedObject() {
+    protected void parse() {
         AirLyMeasurement measurement = getMeasurement(airLy);
         List<Value> valueList = getAirLyValueList(measurement);
         List<Standard> standardList = getAirLyStandardList(measurement);
         Index index = getAirLyIndexValue(measurement);
+        isError = measurement.isError();
+        caqi = index.getValue();
+        caqiColor = index.getColor();
+        pm_1 = getValueByName(valueList, PM1_OBJ_NAME);
+        pm_10 = getValueByName(valueList, PM10_OBJ_NAME);
+        pm_10_percent = getPollutionByName(standardList, PM10_OBJ_NAME);
+        pm_25 = getValueByName(valueList, PM25_OBJ_NAME);
+        pm_25_percent = getPollutionByName(standardList, PM25_OBJ_NAME);
+        airPollutionForecast = prepareAirPollutionForecastArr(measurement.getForecast());
+    }
+
+    @Override
+    protected JSONObject getParsed() {
         return new JSONObject()
-                .put(CAQI, getRoundedValue(index.getValue(), measurement.isError()))
-                .put(CAQI_COLOR, getValue(index.getColor(), measurement.isError()))
-                .put(PM_1, getRoundedValue(getValueByName(valueList, PM1_OBJ_NAME),
-                        measurement.isError()))
-                .put(PM_10, getRoundedValue(getValueByName(valueList, PM10_OBJ_NAME),
-                        measurement.isError()))
-                .put(PM_10_PERCENT, getRoundedValue(getPollutionByName(standardList, PM10_OBJ_NAME),
-                        measurement.isError()))
-                .put(PM_25, getRoundedValue(getValueByName(valueList, PM25_OBJ_NAME),
-                        measurement.isError()))
-                .put(PM_25_PERCENT, getRoundedValue(getPollutionByName(standardList, PM25_OBJ_NAME),
-                        measurement.isError()))
-                .put(FORECAST, prepareAirPollutionForecast(measurement));
+                .put(CAQI, getRoundedValue(caqi, isError))
+                .put(CAQI_COLOR, getValue(caqiColor, isError))
+                .put(PM_1, getRoundedValue(pm_1, isError))
+                .put(PM_10, getRoundedValue(pm_10, isError))
+                .put(PM_10_PERCENT, getRoundedValue(pm_10_percent, isError))
+                .put(PM_25, getRoundedValue(pm_25, isError))
+                .put(PM_25_PERCENT, getRoundedValue(pm_25_percent, isError))
+                .put(FORECAST, prepareAirPollutionForecast());
     }
 
     private List<Value> getAirLyValueList(AirLyMeasurement measurement) {
@@ -73,10 +101,14 @@ public class AirPollutionParser extends AbstractParser<AirLyMeasurement> {
         return standardList.stream().filter(v -> v.getPollutant().equals(name)).map(Standard::getPercent).findFirst().orElse(DEFAULT_VALUE);
     }
 
-    private JSONObject prepareAirPollutionForecast(AirLyMeasurement measurement) {
+    private JSONObject prepareAirPollutionForecast() {
         return new JSONObject()
-                .put("isError", measurement.isError())
-                .put("values", prepareAirPollutionForecastArr(measurement.getForecast()));
+                .put("isError", isError)
+                .put("values", airPollutionForecast);
+    }
+
+    private JSONArray prepareDefaultAirPollutionForecast() {
+        return new JSONArray();
     }
 
     private JSONArray prepareAirPollutionForecastArr(List<Item> items) {

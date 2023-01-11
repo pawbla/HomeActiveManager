@@ -15,7 +15,7 @@ public abstract class AbstractResponseMapper<T extends Measurement> implements R
 
     public AbstractResponseMapper() {
         this.objectMapper = new ObjectMapper();
-        this.measurement = new Measurement();
+        this.measurement = getMeasurementDefaultObject();
     }
 
     @Override
@@ -40,4 +40,6 @@ public abstract class AbstractResponseMapper<T extends Measurement> implements R
     protected abstract Class<T> getValueType();
 
     protected abstract String getName();
+
+    protected abstract T getMeasurementDefaultObject();
 }
