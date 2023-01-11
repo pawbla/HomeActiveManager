@@ -44,144 +44,117 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
        {
         "airPolution": {
           "pm25percent": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "62"
           },
           "pm10percent": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "62"
           },
           "pm25": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "17"
           },
           "pm1": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "13"
           },
           "caqiColor": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "#D1CF1E"
           },
           "caqi": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "31"
           },
           "pm10": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "31"
           }
         },
         "moon": {
           "text":{
-            "date":"2000-00-00",
             "isError":false,
             "value":"Przybywający sierp"
           },
         "picture":{
-          "date":"2000-00-00",
           "isError":false,
           "value":"1"
           }
         },
         "in": {
           "temperature": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "1"
           },
           "humidity": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "35"
           }
         },
         "weather": {
           "ceiling": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "457"
           },
             "isPrecipitation": {
-            "date": "10.03 22:34",
             "isError": false,
             "value": false
           },
           "windDirectionDeg": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "45"
           },
           "weatherIcon": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "7"
           },
           "visibility": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "10"
           },
           "cloudCover": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "100"
           },
           "isDayTime": {
-            "date": "10.03 22:34",
             "isError": false,
             "value": true
           },
           "uvIndexDescription": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "Niska"
           },
           "uvIndexColor": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "#ffc800"
           },
           "pressure": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "1007"
           },
           "windDirection": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "NE"
           },
           "windSpeed": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "18"
           },
           "uvIndexValue": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "7"
           },
             "precipitationType": {
-            "date": "10.03 22:34",
             "isError": false,
             "value": ""
           },
           "weatherText": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "Czesciowo slonecznie "
           }
         },
         "history": {
-            "date": "05.05 17:17",
             "isError": false,
             "pressure": [
                 {
@@ -284,29 +257,24 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
         },
         "sun": {
           "dayLength": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "11:23"
           },
           "set": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "18:10"
           },
           "rise": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "06:46"
           }
         },
         "out": {
           "temperature": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "9"
           },
           "humidity": {
-            "date": "10.05 21:22",
             "isError": false,
             "value": "95"
           }
@@ -347,7 +315,8 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
       {
         "connectors": [
           {
-            "date": "10.05 21:22",
+            "date": "2023-01-11T19:06:13Z",
+            "okResponseDate": "2023-01-11T19:06:13Z",
             "isError": false,
             "provider": "Internal ESP8266",
             "name": "internal",
@@ -364,7 +333,8 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
               }
           },
           {
-            "date": "10.05 21:22",
+            "date": "2023-01-11T19:06:13Z",
+            "okResponseDate": "2023-01-11T19:06:13Z",
             "isError": false,
             "provider": "AccuWeather",
             "name": "accuweather",
@@ -381,7 +351,8 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
               }
           },
           {
-            "date": "10.05 21:22",
+            "date": "2023-01-11T19:06:13Z",
+            "okResponseDate": "2023-01-11T19:06:13Z",
             "isError": false,
             "provider": "Sunrise Sunset",
             "name": "sun",
@@ -398,7 +369,8 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
               }
           },
           {
-            "date": "10.05 21:22",
+            "date": "2023-01-11T19:06:13Z",
+            "okResponseDate": "2023-01-11T19:06:13Z",
             "isError": false,
             "provider": "AirLy",
             "name": "airLy",

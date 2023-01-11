@@ -1,7 +1,8 @@
 {
   "connectors":[
     {
-      "date":"10.04 20:38",
+      "date":"2023-01-11T19:06:13Z",
+      "okResponseDate":"2023-01-11T19:06:13Z",
       "isError":false,
       "provider":"Internal DHT22",
       "name":"internal",
@@ -17,7 +18,8 @@
         "errors": 0
       }
     },{
-      "date":"10.04 20:38",
+      "date":"2023-01-11T19:06:13Z",
+      "okResponseDate":"2023-01-11T19:06:13Z",
       "isError":false,
       "provider":"AccuWeather",
       "name":"accuweather",
@@ -33,7 +35,8 @@
         "errors": 0
       }
     },{
-      "date":"10.04 20:38",
+      "date":"2023-01-11T19:06:13Z",
+      "okResponseDate":"2023-01-11T19:06:13Z",
       "isError":false,
       "provider":"Sunrise Sunset",
       "name":"sun",
@@ -49,7 +52,8 @@
         "errors": 0
       }
     },{
-      "date":"10.04 20:38",
+      "date":"2023-01-11T19:06:13Z",
+      "okResponseDate":"2023-01-11T19:06:13Z",
       "isError":false,
       "provider":"AirLy",
       "name":"airLy",

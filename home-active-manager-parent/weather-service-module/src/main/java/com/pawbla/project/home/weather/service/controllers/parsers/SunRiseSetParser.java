@@ -29,6 +29,10 @@ public class SunRiseSetParser extends AbstractParser<SunRiseSetMeasurement> {
     private final SimpleDateFormat outFormatter;
     private final SimpleDateFormat outFormatter2;
 
+    private String sunRiseTime = "00:00";
+    private String sunSetTime = "00:00";
+    private String dayLength = "0";
+
     public SunRiseSetParser(@Qualifier("sunRiseSet") HandlerInterface sunRiseSet) {
         this.sunRiseSet = sunRiseSet;
         inFormatter = DateTimeFormat.forPattern(SIMPLE_DATE_FORMAT).withZoneUTC();
@@ -39,24 +43,32 @@ public class SunRiseSetParser extends AbstractParser<SunRiseSetMeasurement> {
     }
 
     @Override
-    public JSONObject getParsedObject() {
+    protected void parse() {
         SunRiseSetMeasurement measurement = getMeasurement(sunRiseSet);
+        isError = measurement.isError();
+        sunRiseTime = outFormatter.format(DateTime.parse(measurement.getSunrise(), inFormatter).toDate());
+        sunSetTime = outFormatter.format(DateTime.parse(measurement.getSunset(), inFormatter).toDate());
+        dayLength = outFormatter2.format(new Date((long) (measurement.getDayLength() * 1000L)));
+    }
+
+    @Override
+    protected JSONObject getParsed() {
         return new JSONObject()
-                .put(SUN_RISE, getSunRiseObject(measurement))
-                .put(SUN_SET, getSunSetObject(measurement))
-                .put(DAY_LENGTH, getDayLengthObject(measurement));
+                .put(SUN_RISE, getSunRiseObject())
+                .put(SUN_SET, getSunSetObject())
+                .put(DAY_LENGTH, getDayLengthObject());
     }
 
-    private JSONObject getSunRiseObject(SunRiseSetMeasurement measurement) {
-        return getValue(outFormatter.format(DateTime.parse(measurement.getSunrise(), inFormatter).toDate()), measurement.isError());
+    private JSONObject getSunRiseObject() {
+        return getValue(sunRiseTime, isError);
     }
 
-    private JSONObject getSunSetObject(SunRiseSetMeasurement measurement) {
-        return getValue(outFormatter.format(DateTime.parse(measurement.getSunset(), inFormatter).toDate()), measurement.isError());
+    private JSONObject getSunSetObject() {
+        return getValue(sunSetTime, isError);
     }
 
-    private JSONObject getDayLengthObject(SunRiseSetMeasurement measurement) {
-        return getValue(outFormatter2.format(new Date((long) (measurement.getDayLength() * 1000))), measurement.isError());
+    private JSONObject getDayLengthObject() {
+        return getValue(dayLength, isError);
     }
 
     private TimeZone getCurrentTimeZone() {

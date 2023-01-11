@@ -3,11 +3,19 @@ package com.pawbla.project.home.weather.service.controllers;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.ZoneOffset;
 
 /**
  * Controller created for mocked response from external services
@@ -2380,43 +2388,61 @@ public class MockedServices {
     @RequestMapping(value = "/mocked_internalsensor", method=GET, produces = "application/json")
     @ResponseBody
     @ResponseStatus( HttpStatus.OK )
-    public String internalSensorMock() {
-        return getInternal();
+    public ResponseEntity <String> internalSensorMock() {
+        return ResponseEntity.ok()
+                .headers(getHeader())
+                .body(getInternal());
     }
 
     @RequestMapping(value = "/mocked_externalsensor", method=GET, produces = "application/json")
     @ResponseBody
     @ResponseStatus( HttpStatus.OK )
-    public String externalSensorMock() {
-        return OPEN_WEATHER_JSON;
+    public ResponseEntity <String> externalSensorMock() {
+        return ResponseEntity.ok()
+                .headers(getHeader())
+                .body(OPEN_WEATHER_JSON);
     }
 
     @RequestMapping(value = "/mocked_airly", method=GET, produces = "application/json")
     @ResponseBody
     @ResponseStatus( HttpStatus.OK )
-    public String airlyMock() {
-        return AIRLY_JSON;
+    public ResponseEntity <String> airlyMock() {
+        return ResponseEntity.ok()
+                .headers(getHeader())
+                .body(AIRLY_JSON);
     }
 
     @RequestMapping(value = "/mocked_airlyInstalation", method=GET, produces = "application/json")
     @ResponseBody
     @ResponseStatus( HttpStatus.OK )
-    public String airlyInstalationMock() {
-        return AIRLY_INSTALATIONS_JSON;
+    public ResponseEntity <String> airlyInstalationMock() {
+        return ResponseEntity.ok()
+                .headers(getHeader())
+                .body(AIRLY_INSTALATIONS_JSON);
     }
 
     @RequestMapping(value = "/mocked_sunsetrise", method=GET)
     @ResponseBody
     @ResponseStatus( HttpStatus.OK )
-    public String sunsetriseMock() {
-        return SUN_RISE_SET_JSON;
+    public ResponseEntity <String> sunsetriseMock() {
+        return ResponseEntity.ok()
+                .headers(getHeader())
+                .body(SUN_RISE_SET_JSON);
     }
 
     @RequestMapping(value = "/mocked_accuweather", method=GET, produces = "application/json")
     @ResponseBody
     @ResponseStatus( HttpStatus.OK )
-    public String accuWeatherMock() {
-        return ACCU_WEATHER_JSON;
+    public ResponseEntity <String> accuWeatherMock() {
+        return ResponseEntity.ok()
+                .headers(getHeader())
+                .body(ACCU_WEATHER_JSON);
+    }
+
+    private HttpHeaders getHeader() {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Date", "Wed, 11 Jan 2023 19:06:13 GMT");
+        return responseHeaders;
     }
 }
 

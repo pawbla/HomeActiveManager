@@ -9,12 +9,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.matchesPattern;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Integration test.
@@ -35,10 +41,13 @@ public class IntegrationTest {
     @Test
     public void shouldAnswerWithTrue() throws InterruptedException, IOException {
         TimeUnit.SECONDS.sleep(20);
-        String actual = testRestTemplate.getForObject(getUri("measurements"), String.class);
-        actual = actual.replaceAll(REGEXP, DATE);
+        ResponseEntity<String> resposne = testRestTemplate.getForEntity(getUri("measurements"), String.class);
+        String actual = resposne.getBody().replaceAll(REGEXP, DATE);
+        String headerDate = resposne.getHeaders().get("Date").get(0);
         String expected = readFile("integration/expectedMeasurements.json");
         JSONAssert.assertEquals("Status response", expected, new JSONObject(actual), false);
+        assertNotNull(headerDate);
+        assertThat(headerDate, matchesPattern("^[A-Z][a-z]{2,3},\\s[0-9]{1,2}\\s[A-Z][a-z]{2,3}\\s20[0-9]{2}\\s[0-9]{2}:[0-9]{2}:[0-9]{2}\\sGMT$"));
     }
 
     private String getUri(String path) {

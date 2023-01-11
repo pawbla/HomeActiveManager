@@ -15,6 +15,12 @@ public class AccuWeatherMapper extends AbstractResponseMapper<AccuWeatherMeasure
         return "AccuWeather";
     }
 
+    @Override
+    protected AccuWeatherMeasurement getMeasurementDefaultObject() {
+        return new AccuWeatherMeasurement();
+    }
+
+    @Override
     protected String prepareBody(String body) {
         return body.replaceAll("^\\[|\\]$", "");
     }

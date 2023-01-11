@@ -15,7 +15,7 @@ public abstract class AbstractResponseMapper<T extends Measurement> implements R
 
     public AbstractResponseMapper() {
         this.objectMapper = new ObjectMapper();
-        this.measurement = new Measurement();
+        this.measurement = getMeasurementDefaultObject();
     }
 
     @Override
@@ -23,12 +23,13 @@ public abstract class AbstractResponseMapper<T extends Measurement> implements R
         try {
             if (!response.isError()) {
                 measurement = objectMapper.readValue(prepareBody(response.getBody()), getValueType());
-
             }
             measurement.setError(response.isError());
         } catch (JsonProcessingException e) {
             log.error("Parsing json failed for {}. Exception {}.", getName(), e.getMessage());
             measurement.setError(true);
+            response.setError(true);
+            response.setErrorMsg("Parsing json failed for " + getName() + ". Exception {}." + e.getMessage());
         }
         return measurement;
     }
@@ -40,4 +41,6 @@ public abstract class AbstractResponseMapper<T extends Measurement> implements R
     protected abstract Class<T> getValueType();
 
     protected abstract String getName();
+
+    protected abstract T getMeasurementDefaultObject();
 }

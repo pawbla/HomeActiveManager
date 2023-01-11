@@ -16,23 +16,34 @@ public class HistoryParser extends AbstractParser<AirLyMeasurement> {
     private static final String PRESSURE_OBJ_NAME = "PRESSURE";
 
     private final HandlerInterface airLy;
-
+    private JSONArray history;
     public HistoryParser(@Qualifier("AirLy") HandlerInterface airLy) {
         this.airLy = airLy;
+        this.history = prepareDefaultHistory();
     }
 
     @Override
-    public JSONObject getParsedObject() {
+    protected void parse() {
         AirLyMeasurement measurement = getMeasurement(airLy);
+        isError = measurement.isError();
+        history = prepareHistory(measurement.getHistory());
+    }
+
+    @Override
+    protected JSONObject getParsed() {
         return new JSONObject()
-                .put("isError", measurement.isError())
-                .put("pressure", prepareHistory(measurement.getHistory()));
+                .put("isError",isError)
+                .put("pressure", history);
     }
 
     private JSONArray prepareHistory(List<Item> items) {
         JSONArray history = new JSONArray();
         items.stream().forEach(item -> history.put(prepareHistoryObj(item)));
         return history;
+    }
+
+    private JSONArray prepareDefaultHistory() {
+        return new JSONArray();
     }
 
     private JSONObject prepareHistoryObj(final Item item) {

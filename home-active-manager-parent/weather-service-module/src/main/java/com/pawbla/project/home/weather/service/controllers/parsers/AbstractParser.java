@@ -2,6 +2,8 @@ package com.pawbla.project.home.weather.service.controllers.parsers;
 
 import com.pawbla.project.home.weather.service.handlers.HandlerInterface;
 import com.pawbla.project.home.weather.service.models.airly.Value;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -9,8 +11,25 @@ import java.util.List;
 import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
 
 public abstract class AbstractParser<T> implements ResponseParser {
+    private final Logger log = LogManager.getLogger(this.getClass().getName());
 
     protected static final double DEFAULT_VALUE = 0.0;
+    protected boolean isError = true;
+
+    @Override
+    public JSONObject getParsedObject() {
+        try {
+            parse();
+        } catch (NullPointerException e) {
+            isError = true;
+            log.warn("NullPointerException returned for parsed object");
+        }
+        return getParsed();
+    }
+
+    protected abstract void parse();
+
+    protected abstract JSONObject getParsed();
 
     protected T getMeasurement(HandlerInterface handlerInterface) {
         return (T) handlerInterface.getMeasurement();

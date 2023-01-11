@@ -15,4 +15,9 @@ public class InternalMapper extends AbstractResponseMapper<InternalMeasurement> 
     protected String getName() {
         return "InternalParser";
     }
+
+    @Override
+    protected InternalMeasurement getMeasurementDefaultObject() {
+        return new InternalMeasurement();
+    }
 }

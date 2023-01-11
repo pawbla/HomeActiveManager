@@ -3,12 +3,15 @@ package com.pawbla.project.home.weather.service.controllers.parsers;
 import com.pawbla.project.home.weather.service.handlers.HandlerInterface;
 import com.pawbla.project.home.weather.service.models.AccuWeatherMeasurement;
 import com.pawbla.project.home.weather.service.models.AirLyMeasurement;
+import com.pawbla.project.home.weather.service.models.accuweather.Metric;
 import com.pawbla.project.home.weather.service.models.accuweather.Wind;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+
+import static com.pawbla.project.home.weather.service.utils.Constants.*;
 
 @Component("weather")
 public class WeatherParser extends AbstractParser<AccuWeatherMeasurement> {
@@ -35,32 +38,82 @@ public class WeatherParser extends AbstractParser<AccuWeatherMeasurement> {
     private final HandlerInterface accuWeather;
     private final HandlerInterface airLy;
 
+    private boolean isErrorAirLy;
+    private double pressure;
+    private String weatherText;
+    private String weatherIcon;
+    private String cloudCover;
+    private String uvIndexText;
+    private String uvIndexValue;
+    private boolean isPrecipitation;
+    private String precipitationType;
+    private boolean isDayTime;
+    private String ceiling;
+    private String visibility;
+    private String windDirection;
+    private String windDirectionDeg;
+    private String windSpeed;
+
     public WeatherParser(@Qualifier("accuWeather") HandlerInterface accuWeather, @Qualifier("AirLy") HandlerInterface airLy) {
         this.accuWeather = accuWeather;
         this.airLy = airLy;
+        this.isErrorAirLy = true;
+        this.pressure = DOUBLE_DEFAULT_VALUE;
+        this.weatherText = EMPTY;
+        this.weatherIcon = "1";
+        this.cloudCover = STRING_DEFAULT_VALUE;
+        this.uvIndexText = STRING_DEFAULT_VALUE;
+        this.uvIndexValue = STRING_DEFAULT_VALUE;
+        this.isPrecipitation = false;
+        this.precipitationType = STRING_DEFAULT_VALUE;
+        this.isDayTime = false;
+        this.ceiling = STRING_DEFAULT_VALUE;
+        this.visibility = STRING_DEFAULT_VALUE;
+        this.windDirection = STRING_DEFAULT_VALUE;
+        this.windDirectionDeg = STRING_DEFAULT_VALUE;
+        this.windSpeed = STRING_DEFAULT_VALUE;
     }
 
     @Override
-    public JSONObject getParsedObject() {
+    protected void parse() {
         AccuWeatherMeasurement accuWeatherMeasurement = getMeasurement(accuWeather);
         AirLyMeasurement airLyMeasurement = (AirLyMeasurement) airLy.getMeasurement();
+        isError = accuWeatherMeasurement.isError();
+        isErrorAirLy = airLyMeasurement.isError();
+        pressure =getValueByName(airLyMeasurement.getCurrent().getValues(), PRESSURE_OBJ_NAME);
+        weatherText = accuWeatherMeasurement.getWeatherText();
+        weatherIcon = accuWeatherMeasurement.getWeatherIcon();
+        cloudCover = accuWeatherMeasurement.getCloudCover();
+        uvIndexText = accuWeatherMeasurement.getUvIndexText();
+        uvIndexValue = accuWeatherMeasurement.getUvIndexValue();
+        isPrecipitation = accuWeatherMeasurement.isPrecipitation();
+        precipitationType = accuWeatherMeasurement.getPrecipitationType();
+        isDayTime = accuWeatherMeasurement.isDayTime();
+        ceiling = accuWeatherMeasurement.getCeiling().getMetric().getValue();
+        visibility = accuWeatherMeasurement.getVisibility().getMetric().getValue();
+        windDirection = getWind(accuWeatherMeasurement).getDirection().getWindDirection();
+        windDirectionDeg = getWind(accuWeatherMeasurement).getDirection().getWindDirectionDeg();
+        windSpeed = getWind(accuWeatherMeasurement).getSpeed().getMetric().getValue();
+    }
+
+    @Override
+    protected JSONObject getParsed() {
         return new JSONObject()
-                .put(PRESSURE, getRoundedValue(getValueByName(airLyMeasurement.getCurrent().getValues(), PRESSURE_OBJ_NAME),
-                        airLyMeasurement.isError()))
-                .put(WEATHER_ICON, getValue(accuWeatherMeasurement.getWeatherIcon(), accuWeatherMeasurement.isError()))
-                .put(WEATHER_TEXT, getValue(accuWeatherMeasurement.getWeatherText(), accuWeatherMeasurement.isError()))
-                .put(CLOUD_COVER, getValue(accuWeatherMeasurement.getCloudCover(), accuWeatherMeasurement.isError()))
-                .put(CEILING, getRoundedValue(accuWeatherMeasurement.getCeiling().getMetric().getValue(), accuWeatherMeasurement.isError()))
-                .put(VISIBILITY, getRoundedValue(accuWeatherMeasurement.getVisibility().getMetric().getValue(), accuWeatherMeasurement.isError()))
-                .put(WIND_DIRECTION, getValue(getWind(accuWeatherMeasurement).getDirection().getWindDirection(), accuWeatherMeasurement.isError()))
-                .put(WIND_DIRECTION_DEG, getValue(getWind(accuWeatherMeasurement).getDirection().getWindDirectionDeg(), accuWeatherMeasurement.isError()))
-                .put(WIND_SPEED, getRoundedValue(getWind(accuWeatherMeasurement).getSpeed().getMetric().getValue(), accuWeatherMeasurement.isError()))
-                .put(UV_INDEX_DESCRIPTION, getValue(accuWeatherMeasurement.getUvIndexText(), accuWeatherMeasurement.isError()))
-                .put(UV_INDEX_VALUE, getValue(accuWeatherMeasurement.getUvIndexValue(), accuWeatherMeasurement.isError()))
-                .put(IS_PRECIPITATION, getValue(accuWeatherMeasurement.isPrecipitation(), accuWeatherMeasurement.isError()))
-                .put(PRECIPITATION_TYPE, getValue(accuWeatherMeasurement.getPrecipitationType(), accuWeatherMeasurement.isError()))
-                .put(IS_DAY_TIME, getValue(accuWeatherMeasurement.isDayTime(), accuWeatherMeasurement.isError()))
-                .put(UV_INDEX_COLOR, getValue(getUvIndexColor(accuWeatherMeasurement.getUvIndexValue()), accuWeatherMeasurement.isError()));
+                .put(PRESSURE, getRoundedValue(pressure, isErrorAirLy))
+                .put(WEATHER_ICON, getValue(weatherIcon, isError))
+                .put(WEATHER_TEXT, getValue(weatherText, isError))
+                .put(CLOUD_COVER, getValue(cloudCover, isError))
+                .put(CEILING, getRoundedValue(ceiling, isError))
+                .put(VISIBILITY, getRoundedValue(visibility, isError))
+                .put(WIND_DIRECTION, getValue(windDirection, isError))
+                .put(WIND_DIRECTION_DEG, getValue(windDirectionDeg, isError))
+                .put(WIND_SPEED, getRoundedValue(windSpeed, isError))
+                .put(UV_INDEX_DESCRIPTION, getValue(uvIndexText, isError))
+                .put(UV_INDEX_VALUE, getValue(uvIndexValue, isError))
+                .put(IS_PRECIPITATION, getValue(isPrecipitation, isError))
+                .put(PRECIPITATION_TYPE, getValue(precipitationType, isError))
+                .put(IS_DAY_TIME, getValue(isDayTime, isError))
+                .put(UV_INDEX_COLOR, getValue(getUvIndexColor(uvIndexValue), isError));
     }
 
     private Wind getWind(AccuWeatherMeasurement accuWeatherMeasurement) {
@@ -78,13 +131,9 @@ public class WeatherParser extends AbstractParser<AccuWeatherMeasurement> {
             color = Color.RED;
         } else if (uvIndexValueInt >= 11 ) {
             color = Color.decode(VIOLET_HEX);
+        } else {
+            color = Color.BLACK; //no matched value
         }
         return "#"+Integer.toHexString(color.getRGB()).substring(2);
     }
 }
-
-/*
-.put(AirLyParser.AirLyValues.PRESSURE.getValue(),
-                                this.setMeasureObj(getAirLyMeasurement(), getAirLyMeasurement().getPressure()))
-                        .put(AirLyParser.AirLyValues.HISTORY.getValue(), prepareAirLyHistory(getAirLyMeasurement()))
- */

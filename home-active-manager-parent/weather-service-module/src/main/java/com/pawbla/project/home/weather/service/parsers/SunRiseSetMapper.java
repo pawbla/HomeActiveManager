@@ -21,4 +21,9 @@ public class SunRiseSetMapper extends AbstractResponseMapper<SunRiseSetMeasureme
     protected String getName() {
         return "SunRiseSetParser";
     }
+
+    @Override
+    protected SunRiseSetMeasurement getMeasurementDefaultObject() {
+        return new SunRiseSetMeasurement();
+    }
 }
