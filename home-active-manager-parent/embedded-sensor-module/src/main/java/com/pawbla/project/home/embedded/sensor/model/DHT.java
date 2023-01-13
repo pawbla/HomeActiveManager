@@ -1,19 +1,21 @@
 package com.pawbla.project.home.embedded.sensor.model;
 
-public class DHT {
-    private int temperature;
-    private int humidity;
+import java.math.BigDecimal;
 
-    public DHT(int temperature, int humidity) {
+public class DHT {
+    private BigDecimal temperature;
+    private BigDecimal humidity;
+
+    public DHT(BigDecimal temperature, BigDecimal humidity) {
         this.temperature = temperature;
         this.humidity = humidity;
     }
 
-    public int getTemperature() {
+    public BigDecimal getTemperature() {
         return temperature;
     }
 
-    public int getHumidity() {
+    public BigDecimal getHumidity() {
         return humidity;
     }
 }

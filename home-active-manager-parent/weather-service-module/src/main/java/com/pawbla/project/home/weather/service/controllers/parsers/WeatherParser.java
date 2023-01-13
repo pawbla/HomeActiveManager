@@ -131,8 +131,6 @@ public class WeatherParser extends AbstractParser<AccuWeatherMeasurement> {
             color = Color.RED;
         } else if (uvIndexValueInt >= 11 ) {
             color = Color.decode(VIOLET_HEX);
-        } else {
-            color = Color.BLACK; //no matched value
         }
         return "#"+Integer.toHexString(color.getRGB()).substring(2);
     }
