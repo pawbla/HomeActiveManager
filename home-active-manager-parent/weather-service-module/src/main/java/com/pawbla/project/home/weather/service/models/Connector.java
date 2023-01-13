@@ -83,7 +83,7 @@ public class Connector {
     }
 
     public void restartDailyRequestCounter() {
-        sumRequestCounter = new RequestCounter();
+        dailyRequestCounter = new RequestCounter();
     }
 
     public RequestCounter getDailyRequestCounter() {

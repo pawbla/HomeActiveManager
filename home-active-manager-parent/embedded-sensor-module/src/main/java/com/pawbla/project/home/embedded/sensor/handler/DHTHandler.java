@@ -21,6 +21,7 @@ public class DHTHandler implements Handler {
     private LocalDateTime lastCorrectReadData;
     private int pin;
     private boolean isError;
+    private int errorCode;
 
     private static final int LIST_MAX_SIZE = 10;
     private static final int DHT_SENSOR_TYPE = 22;
@@ -28,16 +29,17 @@ public class DHTHandler implements Handler {
     @Autowired
     public DHTHandler(@Value("${custom.dhtDataPin}") int pin, Reader reader) {
         this.reader = reader;
-        isError = false;
+        isError = true;
         measurements = new LinkedList<>();
         lastCorrectReadData = LocalDateTime.of(2000, 1, 1, 1, 1, 1);
         this.pin = pin;
+        this.errorCode = -9;
     }
 
     @Scheduled(fixedRate = 20000, initialDelay = 20000)
     public void handle() {
         LOG.info("Read data from DHT sensor on pin " + pin);
-        int errorCode = reader.read(DHT_SENSOR_TYPE, pin);
+        errorCode = reader.read(DHT_SENSOR_TYPE, pin);
         addDHTToList(measurements, (DHT) reader.getDht(), errorCode);
     }
 
@@ -63,6 +65,11 @@ public class DHTHandler implements Handler {
     @Override
     public boolean isError() {
         return isError;
+    }
+
+    @Override
+    public int getErrorCode() {
+        return errorCode;
     }
 
     private void addDHTToList(LinkedList list, DHT dht, int errorCode) {

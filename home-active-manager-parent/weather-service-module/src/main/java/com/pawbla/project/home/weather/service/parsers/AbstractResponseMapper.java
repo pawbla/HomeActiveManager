@@ -28,8 +28,7 @@ public abstract class AbstractResponseMapper<T extends Measurement> implements R
         } catch (JsonProcessingException e) {
             log.error("Parsing json failed for {}. Exception {}.", getName(), e.getMessage());
             measurement.setError(true);
-            response.setError(true);
-            response.setErrorMsg("Parsing json failed for " + getName() + ". Exception {}." + e.getMessage());
+            response.setErrorAndMessage("Parsing json failed for " + getName() + ". Exception {}." + e.getMessage(), true);
         }
         return measurement;
     }

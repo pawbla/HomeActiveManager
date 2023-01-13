@@ -19,7 +19,7 @@ public class DHTDevReader implements Reader {
     @Override
     public int read(int type, int pin) {
         logger.info("Read values with DHT" + type + "and on pin " + pin);
-        return 0;
+        return -4;
     }
 
     @Override

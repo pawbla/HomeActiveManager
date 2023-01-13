@@ -8,4 +8,5 @@ public interface Handler {
     int getHumidity();
     LocalDateTime getLastCorrectReadData();
     boolean isError();
+    int getErrorCode();
 }
