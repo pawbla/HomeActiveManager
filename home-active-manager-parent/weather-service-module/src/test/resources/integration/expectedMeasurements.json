@@ -156,7 +156,7 @@
   "in":{
     "temperature":{
       "isError":false,
-      "value":"1"},
+      "value":"1.2"},
     "humidity":{
       "isError":false,
       "value":"35"}
@@ -326,7 +326,7 @@
   "out":{
     "temperature":{
       "isError":false,
-      "value":"9"},
+      "value":"8.6"},
     "humidity":{
       "isError":false,
       "value":"95"}
