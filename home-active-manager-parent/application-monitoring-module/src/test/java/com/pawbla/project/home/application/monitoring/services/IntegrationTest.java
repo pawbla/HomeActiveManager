@@ -89,12 +89,45 @@ class IntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<String>("", headers);
-        testRestTemplate.postForObject(getUri("shutdown"), request, String.class);
+        ResponseEntity<String> response = testRestTemplate.exchange(getUri("shutdown/hold"), HttpMethod.PUT, request, String.class);
 
         mockRestServiceServer.verify();
         verify(commandExecutor, Mockito.times(2)).execute(cmdCaptor.capture());
         assertEquals("Captured shutdown command", "sudo shutdown -h now", cmdCaptor.getValue());
+        assertEquals("Response code", 200, response.getStatusCodeValue());
+    }
 
+    @Test
+    void shouldRestartApplications() {
+
+        prepareMockedSuccessResponse("http://localhost:8081/actuator/shutdown", HttpMethod.POST);
+        prepareMockedSuccessResponse("http://localhost:8082/actuator/shutdown", HttpMethod.POST);
+
+        prepareMockedResourceAccessException("http://localhost:8081/actuator/health/liveness");
+        prepareMockedResourceAccessException("http://localhost:8082/actuator/health/liveness");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<String>("", headers);
+        ResponseEntity<String> response = testRestTemplate.exchange(getUri("shutdown/restart"), HttpMethod.PUT, request, String.class);
+
+        mockRestServiceServer.verify();
+        verify(commandExecutor, Mockito.times(2)).execute(cmdCaptor.capture());
+        assertEquals("Captured shutdown command", "sudo shutdown -r now", cmdCaptor.getValue());
+        assertEquals("Response code", 200, response.getStatusCodeValue());
+    }
+
+    @Test
+    void shouldHandleBadRequest() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<String>("", headers);
+        ResponseEntity<String> response = testRestTemplate.exchange(getUri("shutdown/badrequest"), HttpMethod.PUT, request, String.class);
+
+        mockRestServiceServer.verify();
+        verify(commandExecutor, Mockito.never()).execute(cmdCaptor.capture());
+        assertEquals("Response code", 400, response.getStatusCodeValue());
+        assertEquals("Error message", "Incorrect path parameter", response.getBody());
     }
 
     @Test

@@ -44,14 +44,12 @@ public class RestConnector implements RestInterface {
             logger.info("Received status code " + resp.getStatusCodeValue() + " for: " + connector.getName());
             if (resp.getStatusCodeValue() != 200) {
                 connector.incrementErrorRequestCnt();
-                response.setError(true);
+                response.setErrorAndMessage(resp.getStatusCode().getReasonPhrase(), true);
                 response.setModified(false);
-                response.setErrorMsg(resp.getStatusCode().getReasonPhrase());
             }
             if (StringUtils.isNotBlank(resp.getBody())) {
                 logger.trace("Received response for " + connector.getName() + " body: " + resp.getBody());
-                response.setError(false);
-                response.setErrorMsg(EMPTY);
+                response.setErrorAndMessage(EMPTY, false);
                 response.setBody(resp.getBody());
                 response.setOkResponseDate(getHeaderDateAsString(resp));
             }
@@ -60,8 +58,7 @@ public class RestConnector implements RestInterface {
         } catch (RestClientException e) {
             connector.incrementErrorRequestCnt();
             response.setResponseCode(520);
-            response.setErrorMsg("Unknown error has occurred: " + e.getMessage());
-            response.setError(true);
+            response.setErrorAndMessage("Unknown error has occurred: " + e.getMessage(), true);
             response.setModified(false);
             logger.warn("An exception has occurred when executed connection to url " + connector.getName() + ": " + e.getMessage());
         } finally {

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.actuate.autoconfigure.metrics.export.elastic.ElasticMetricsExportAutoConfiguration;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
+
 import static com.pawbla.project.home.weather.service.utils.Constants.EMPTY;
 
 @Component("internalParser")
@@ -29,8 +31,8 @@ public class InternalParser extends AbstractParser<InternalMeasurement> {
     protected void parse() {
         InternalMeasurement measurement = getMeasurement(internal);
         isError = measurement.isError();
-        temperature = measurement.getTemperature();
-        humidity = measurement.getHumidity();
+        temperature = String.format (Locale.ROOT, "%.1f", measurement.getTemperature());
+        humidity = String.format (Locale.ROOT, "%.0f",measurement.getHumidity());
     }
 
     @Override

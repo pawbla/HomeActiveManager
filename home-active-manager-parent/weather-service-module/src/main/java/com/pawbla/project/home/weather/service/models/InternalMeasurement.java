@@ -4,19 +4,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class InternalMeasurement extends Measurement {
     @JsonProperty("temperature")
-    private String temperature;
+    private double temperature;
     @JsonProperty("humidity")
-    private String humidity;
+    private double humidity;
     @JsonProperty("isError")
     private boolean isError;
     @JsonProperty("dateTime")
     private String dateTime;
 
-    public String getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public String getHumidity() {
+    public double getHumidity() {
         return humidity;
     }
 

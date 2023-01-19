@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Locale;
 
 import static com.pawbla.project.home.weather.service.utils.Constants.DOUBLE_DEFAULT_VALUE;
 
@@ -44,7 +45,7 @@ public class OutWeatherParser extends AbstractParser<AirLyMeasurement> {
     @Override
     protected JSONObject getParsed() {
         return new JSONObject()
-                .put(TEMPERATURE, getRoundedValue(temperature, isError))
+                .put(TEMPERATURE, getValue(String.format (Locale.ROOT, "%.1f", temperature), isError))
                 .put(HUMIDITY, getRoundedValue(humidity, isError));
     }
 }

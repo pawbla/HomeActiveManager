@@ -58,13 +58,11 @@ public class Response {
     public String getErrorMsg() {
         return errorMsg;
     }
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
     public boolean isError() {
         return isError;
     }
-    public void setError(boolean isError) {
+    public void setErrorAndMessage(String errorMsg, boolean isError) {
+        this.errorMsg = errorMsg;
         this.isError = isError;
     }
     public String getBody() {

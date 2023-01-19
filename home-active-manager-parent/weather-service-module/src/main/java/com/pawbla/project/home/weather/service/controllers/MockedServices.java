@@ -35,8 +35,8 @@ public class MockedServices {
         intTemp++;
         return "{\n" +
                 "  \"dateTime\":\"2021-10-23 01:01:01\",\n" +
-                "  \"temperature\":1,\n" +
-                "  \"humidity\":35,\n" +
+                "  \"temperature\":1.2,\n" +
+                "  \"humidity\":35.3,\n" +
                 "  \"isError\": false\n" +
                 "}";
     }

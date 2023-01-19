@@ -21,7 +21,6 @@ public abstract class AbstractParser<T> implements ResponseParser {
         try {
             parse();
         } catch (NullPointerException e) {
-            isError = true;
             log.warn("NullPointerException returned for parsed object");
         }
         return getParsed();

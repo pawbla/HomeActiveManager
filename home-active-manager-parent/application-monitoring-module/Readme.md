@@ -26,24 +26,32 @@ both shutdown and monitoring functionality.
 ## REST API
 
 Rest api is available on port 8085, with url beginning with `/api/v1/monitoring`
-- **Shutdown application and system**
+- **Shutdown or restart application and system**
 
   Return data about user.
     * **URL**
 
-      /shutdown
+      /shutdown/{command}
     * **Method**
 
       `POST`
+
+    * **Param**
+        
+        command - allowed: ***hold*** - close applications and shutdown the system, ***restart*** - close applications and restart the system       
+
     * **Success Response**
         * Code: 200
+
+  * **Incorrect Response**
+      * Code: 400 - when used param is not allowed, e.g. ***./shutdown/badparam***
 
     * **Sample call**
        <details>
        <summary>Click to open </summary>
 
        ```shell
-       curl --location --request POST 'http://localhost:8085/api/v1/monitoring/shutdown' --header 'Content-Type: application/json'
+       curl --location --request POST 'http://localhost:8085/api/v1/monitoring/shutdown/hold' --header 'Content-Type: application/json'
        ```
        </details>
 

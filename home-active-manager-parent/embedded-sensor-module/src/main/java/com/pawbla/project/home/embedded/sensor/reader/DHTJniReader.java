@@ -4,6 +4,9 @@ import com.pawbla.project.home.embedded.sensor.model.DHT;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Component
 @Profile({"prod"})
 public class DHTJniReader implements Reader {
@@ -18,6 +21,6 @@ public class DHTJniReader implements Reader {
 
     @Override
     public Object getDht() {
-        return new DHT(Math.round(temperature), Math.round(humidity));
+        return new DHT(BigDecimal.valueOf(temperature).setScale(1, RoundingMode.HALF_DOWN), BigDecimal.valueOf(humidity).setScale(1, RoundingMode.HALF_DOWN));
     }
 }

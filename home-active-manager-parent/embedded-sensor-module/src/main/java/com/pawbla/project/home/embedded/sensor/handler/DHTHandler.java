@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 
@@ -21,38 +22,41 @@ public class DHTHandler implements Handler {
     private LocalDateTime lastCorrectReadData;
     private int pin;
     private boolean isError;
+    private int errorCode;
 
     private static final int LIST_MAX_SIZE = 10;
     private static final int DHT_SENSOR_TYPE = 22;
+    private static final BigDecimal ZERO_DOUBLE = BigDecimal.valueOf(0);
 
     @Autowired
     public DHTHandler(@Value("${custom.dhtDataPin}") int pin, Reader reader) {
         this.reader = reader;
-        isError = false;
+        isError = true;
         measurements = new LinkedList<>();
         lastCorrectReadData = LocalDateTime.of(2000, 1, 1, 1, 1, 1);
         this.pin = pin;
+        this.errorCode = -9;
     }
 
     @Scheduled(fixedRate = 20000, initialDelay = 20000)
     public void handle() {
         LOG.info("Read data from DHT sensor on pin " + pin);
-        int errorCode = reader.read(DHT_SENSOR_TYPE, pin);
+        errorCode = reader.read(DHT_SENSOR_TYPE, pin);
         addDHTToList(measurements, (DHT) reader.getDht(), errorCode);
     }
 
     @Override
-    public int getTemperature() {
-        int sum = measurements.stream().map(DHT::getTemperature).reduce(0, Integer::sum);
+    public BigDecimal getTemperature() {
+        BigDecimal sum = measurements.stream().map(DHT::getTemperature).reduce(ZERO_DOUBLE, BigDecimal::add);
         int size = measurements.size();
-        return size != 0 ? sum / size : 0;
+        return size != 0 ? sum.divide(BigDecimal.valueOf(size)) : ZERO_DOUBLE;
     }
 
     @Override
-    public int getHumidity() {
-        int sum = measurements.stream().map(DHT::getHumidity).reduce(0, Integer::sum);
+    public BigDecimal getHumidity() {
+        BigDecimal sum = measurements.stream().map(DHT::getHumidity).reduce(ZERO_DOUBLE, BigDecimal::add);
         int size = measurements.size();
-        return size != 0 ? sum / size : 0;
+        return size != 0 ? sum.divide(BigDecimal.valueOf(size)) : ZERO_DOUBLE;
     }
 
     @Override
@@ -63,6 +67,11 @@ public class DHTHandler implements Handler {
     @Override
     public boolean isError() {
         return isError;
+    }
+
+    @Override
+    public int getErrorCode() {
+        return errorCode;
     }
 
     private void addDHTToList(LinkedList list, DHT dht, int errorCode) {

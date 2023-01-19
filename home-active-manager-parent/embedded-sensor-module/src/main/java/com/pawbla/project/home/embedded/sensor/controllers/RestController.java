@@ -3,6 +3,7 @@ package com.pawbla.project.home.embedded.sensor.controllers;
 import com.pawbla.project.home.embedded.sensor.handler.DHTHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,15 @@ public class RestController {
     @GetMapping(value = "/measurements", produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<String> weather() {
-        return ResponseEntity.ok()
-                .headers(getHeader())
-                .body(renderer.getJSON());
+        ResponseEntity responseEntity;
+        if (renderer.isError()) {
+            responseEntity = new ResponseEntity<String>(renderer.getErrorMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            responseEntity = ResponseEntity.ok()
+                    .headers(getHeader())
+                    .body(renderer.getJSON());
+        }
+        return responseEntity;
     }
 
     private HttpHeaders getHeader() {
