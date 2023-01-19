@@ -21,12 +21,13 @@ public class ShutdownApplicationsService {
     private static final String ACTUATOR_ENDPOINT = "/actuator";
     private static final String SHUTDOWN_ENDPOINT = ACTUATOR_ENDPOINT + "/shutdown";
     private static final String HEALTH_LIVENESS_ENDPOINT = ACTUATOR_ENDPOINT + "/health/liveness";
-    private static final String SHUTDOWN_UNIX_COMMAND = "sudo shutdown -h now";
+    private static final String HOLD_UNIX_COMMAND = "sudo shutdown -h now";
+    private static final String RESTART_UNIX_COMMAND = "sudo shutdown -r now";
     private static final Long WAIT_TIMEOUT_CLOSE_CHECK_MS = 2000L;
     private static final int CLOSE_CHECK_ATTEMPTS = 3;
 
     @Value("#{${registered.apps}}")
-    private Map<String,String> registeredApplications;
+    private final Map<String,String> registeredApplications;
 
     @Autowired
     private RestClient restClient;
@@ -38,14 +39,23 @@ public class ShutdownApplicationsService {
         this.registeredApplications = registeredApplications;
     }
 
-    public void execute() {
+    public boolean execute(String cmd) {
+        String shutdownCmd;
+        if (cmd.equalsIgnoreCase("hold")) {
+            shutdownCmd = HOLD_UNIX_COMMAND;
+        } else if (cmd.equalsIgnoreCase("restart")) {
+            shutdownCmd = RESTART_UNIX_COMMAND;
+        } else {
+            return false;
+        }
         registeredApplications.forEach(shutdownApplication);
-        int exitCode = commandExecutor.execute(SHUTDOWN_UNIX_COMMAND);
+        int exitCode = commandExecutor.execute(shutdownCmd);
         if (exitCode != 0) {
             log.warn("Fallback for incorrect exit code. Trying to execute command again.");
-            exitCode = commandExecutor.execute(SHUTDOWN_UNIX_COMMAND);
+            exitCode = commandExecutor.execute(shutdownCmd);
         }
         log.info("System shutdown command executed with {} exit code.", exitCode);
+        return true;
     }
 
     private final BiConsumer<String,String> shutdownApplication = new BiConsumer<String, String>() {
