@@ -200,6 +200,7 @@
     <module>embedded-sensor-module</module>
     <module>application-monitoring-module</module>
     <module>authorization-service-module</module>
+    <module>testing-module</module>
   </modules>
 
 </project>
