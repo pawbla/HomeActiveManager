@@ -81,27 +81,69 @@ Every application can be shutted down with the following REST API call:
       </details>
 
 ## Change log
-All important changes to this project will be documented in this place.
+#### [1.0.0] - 19.01.2022
 
-### Version 1.0.0
-<details>
-<summary><b>Features</b> </summary>
+* **Application monitoring service:** Add system restart option
+* **Weather service module:** Decimal numbers handling for temperature
+* **Embedded sensor module:** Temperature with decimals
 
-* Create a new module application-monitoring-module
-* Create a new module user-management-module
-* Configure Nginx to serve HomeActiveRemote static context application
-* Scripts for starting application on Raspberry
-* Configure Nginx to serve HomeActiveDisplay static context application
-* Create a new module weather-service-module
-* Create a new module embedded-sensor-module
-* Split application into modules
+#### [1.0.0] - 11.01.2022
+* **Weather service module:** Improvement in errors and data measurements
+* **Weather service module:** Handling AirLy sensor disabled
 
-</details>
+#### [1.0.0] - 3.10.2022
+* **Weather service module:** Parsers refactoring
 
-<details>
-<summary><b>Bugs</b></summary>
+#### [1.0.0] - 3.10.2022
+* **Embedded sensor module:** DHT measurement based on JNI and C library
+* **Weather service module:** Additional measured values  
 
-</details>
+#### [1.0.0] - 16.08.2022
+* **Application monitoring service:** Added system status and monitoring
+* **Fix:** Issue with refreshing error status in weather module
+* **Fix:** Not refreshed AirLy data when sensor was inactive before
+
+#### [1.0.0] - 22.06.2022
+* **Weather service module:** Added request counter
+
+#### [1.0.0] - 22.05.2022
+* **Weather service module:** Moon phase implementation
+
+#### [1.0.0] - 14.03.2022
+* **Weather service module:** Pressure history implementation
+* **Fix:** missing init conditions in weather sensor 
+
+#### [1.0.0] - 14.03.2022
+* **Add:** Authentication service module
+
+#### [1.0.0] - 14.02.2022
+* **Add:** Application monitoring module
+* **Application monitoring module:** shutdown system implementation
+
+#### [1.0.0] - 22.01.2022
+* **Weather Service Module:** Parsers refactoring
+* **User management module:** implementation
+* **Update:** user management scripts
+
+#### [1.0.0] - 3.12.2021
+* Integration with Home Active Display app
+* Configuration for DHT22
+
+#### [1.0.0] - 3.11.2021
+* **Add:** Start application scripts
+
+#### [1.0.0] - 23.10.2021
+* **Add:** Embedded sensor module
+
+#### [1.0.0] - 5.10.2021
+* **Add:** weather service module
+* **Add:** user management module
+* **Weather service module:** app refactoring based on old application
+
+## Creating new module
+
+1. Enter into parent folder `...\HomeActiveManager\home-active-manager-parent` and executed the following comand `mvn archetype:generate -DgroupId=com.pawbla.project.home -DartifactId=<artifact-id>` 
+  
 
 ## Contact
 
