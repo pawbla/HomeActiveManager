@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.1.4</version>
+    <version>3.1.5</version>
   </parent>
 
   <groupId>com.pawbla.project.home</groupId>
@@ -21,8 +21,8 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <copy.rename.maven.plugin>1.0</copy.rename.maven.plugin>
     <java.version>17</java.version>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.assembly.plugin.version>3.2.0</maven.assembly.plugin.version>
     <maven.shade.plugin>3.5.1</maven.shade.plugin>
     <maven.resources.plugin>3.3.1</maven.resources.plugin>
