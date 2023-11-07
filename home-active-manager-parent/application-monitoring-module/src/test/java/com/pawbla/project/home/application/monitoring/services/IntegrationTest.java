@@ -9,13 +9,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,11 +30,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.client.ExpectedCount.times;
@@ -71,6 +71,7 @@ class IntegrationTest {
 
     @BeforeEach
     public void before() {
+        MockitoAnnotations.openMocks(this);
         Mockito.when(commandExecutor.execute(anyString())).thenReturn(-9).thenReturn(1);
         Mockito.when(dateTimeUtils.getNow()).thenReturn(LocalDateTime.of(2022, 8, 16, 19, 40, 1));
         Mockito.when(dateTimeUtils.getTimeOf(anyString())).thenReturn(LocalDateTime.of(2022, 8, 16, 20, 40, 1));
@@ -93,8 +94,8 @@ class IntegrationTest {
 
         mockRestServiceServer.verify();
         verify(commandExecutor, Mockito.times(2)).execute(cmdCaptor.capture());
-        assertEquals("Captured shutdown command", "sudo shutdown -h now", cmdCaptor.getValue());
-        assertEquals("Response code", 200, response.getStatusCodeValue());
+        assertEquals("sudo shutdown -h now", cmdCaptor.getValue());
+        assertEquals(200, response.getStatusCodeValue());
     }
 
     @Test
@@ -113,8 +114,8 @@ class IntegrationTest {
 
         mockRestServiceServer.verify();
         verify(commandExecutor, Mockito.times(2)).execute(cmdCaptor.capture());
-        assertEquals("Captured shutdown command", "sudo shutdown -r now", cmdCaptor.getValue());
-        assertEquals("Response code", 200, response.getStatusCodeValue());
+        assertEquals("sudo shutdown -r now", cmdCaptor.getValue());
+        assertEquals(200, response.getStatusCodeValue());
     }
 
     @Test
@@ -126,8 +127,8 @@ class IntegrationTest {
 
         mockRestServiceServer.verify();
         verify(commandExecutor, Mockito.never()).execute(cmdCaptor.capture());
-        assertEquals("Response code", 400, response.getStatusCodeValue());
-        assertEquals("Error message", "Incorrect path parameter", response.getBody());
+        assertEquals(400, response.getStatusCodeValue());
+        assertEquals("Incorrect path parameter", response.getBody());
     }
 
     @Test
@@ -192,6 +193,6 @@ class IntegrationTest {
 
     private String readFile(String path) throws IOException {
         File resource = new ClassPathResource(path).getFile();
-        return new String(Files.readAllBytes(resource.toPath()), StandardCharsets.UTF_8);
+        return Files.readString(resource.toPath());
     }
 }

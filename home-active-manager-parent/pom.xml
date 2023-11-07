@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.5.RELEASE</version>
+    <version>3.1.5</version>
   </parent>
 
   <groupId>com.pawbla.project.home</groupId>
@@ -20,15 +20,20 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <copy.rename.maven.plugin>1.0</copy.rename.maven.plugin>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <java.version>17</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.assembly.plugin.version>3.2.0</maven.assembly.plugin.version>
-    <maven.shade.plugin>3.2.4</maven.shade.plugin>
-    <maven.resources.plugin>3.2.0</maven.resources.plugin>
+    <maven.shade.plugin>3.5.1</maven.shade.plugin>
+    <maven.resources.plugin>3.3.1</maven.resources.plugin>
     <mockserver-spring-test-listener.version>5.11.2</mockserver-spring-test-listener.version>
     <pi4j.version>1.3</pi4j.version>
     <release.folder.name>release</release.folder.name>
+    <hibernate.core.version>6.3.1.Final</hibernate.core.version>
+    <mysql.connector.version>8.0.33</mysql.connector.version>
+    <javax.annotation.version>1.3.2</javax.annotation.version>
+    <spring.security.crypt.version>6.1.4</spring.security.crypt.version>
+    <mockito.version>5.6.0</mockito.version>
   </properties>
 
   <dependencyManagement>
@@ -80,9 +85,14 @@
     </dependency>
     <!-- Other -->
     <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+      <version>${javax.annotation.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-crypto</artifactId>
-      <version>4.1.3.RELEASE</version>
+      <version>${spring.security.crypt.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -115,13 +125,13 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
-      <version>2.21.0</version>
+      <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>2.21.0</version>
+      <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

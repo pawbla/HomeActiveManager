@@ -44,9 +44,9 @@
   "java": {
     "vendor": "Vendor",
     "vendorUrl": "vendor.url",
-    "version": "1.8",
+    "version": "17",
     "virtualMachinve": "vm",
-    "runtime": "jre-1.8"
+    "runtime": "jre-17"
   },
   "applications": [
     {

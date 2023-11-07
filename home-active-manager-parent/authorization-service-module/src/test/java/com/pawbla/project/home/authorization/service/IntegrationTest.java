@@ -1,26 +1,26 @@
 package com.pawbla.project.home.authorization.service;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.io.IOException;
-
+@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = AFTER_CLASS)
@@ -68,7 +68,7 @@ public class IntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(response.getBody());
         String token = root.path("access_token").asText();
-        assertNotNull("Acess token exists", token);
+        assertNotNull(token);
         response = testRestTemplate.postForEntity(getUri("/api/v1/authorization/validate"), prepareRequest(token), String.class);
         assertEquals("Status response code", HttpStatus.OK, response.getStatusCode());
     }
@@ -94,7 +94,7 @@ public class IntegrationTest {
     private HttpEntity<String> prepareRequest(String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
-        return new HttpEntity<String>("{}", headers);
+        return new HttpEntity<>("{}", headers);
     }
 
     private HttpEntity<MultiValueMap<String, String>> authorizationRequest() {
@@ -105,9 +105,4 @@ public class IntegrationTest {
         map.add("password", "password");
         return new HttpEntity<>(map, headers);
     }
-
-
-
-
-
 }

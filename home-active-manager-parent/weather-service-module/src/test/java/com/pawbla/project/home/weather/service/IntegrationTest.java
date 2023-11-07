@@ -3,17 +3,17 @@ package com.pawbla.project.home.weather.service;
 import com.pawbla.project.home.weather.service.utils.DateTimeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 /**
  * Integration test.
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class IntegrationTest {
 
@@ -43,7 +43,7 @@ public class IntegrationTest {
     @LocalServerPort
     int serverPort;
 
-    @BeforeAll
+    @BeforeEach
     void init() {
         when(dataTimeUtils.getCurrentYear()).thenReturn(2022);
         when(dataTimeUtils.getCurrentMonth()).thenReturn(2);

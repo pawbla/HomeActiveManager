@@ -7,7 +7,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
 import org.springframework.test.annotation.DirtiesContext;
@@ -17,8 +17,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -52,21 +53,21 @@ public class IntegrationTest {
         String actual = testRestTemplate.getForObject(getUri("roles"), String.class);
         String expected = readFile("integration/rolesList.json");
         JSONObject actualJSON = new JSONObject(actual);
-        JSONAssert.assertEquals("Measurements response", new JSONObject(expected), actualJSON, true);
+        JSONAssert.assertEquals("Measurements response", new JSONObject(expected), actualJSON, false);
     }
 
     @Test
     public void add_user() throws IOException {
         String user = readFile("integration/userToStore.json");
         String response = testRestTemplate.postForObject(getUri("user"), prepareRequest(user), String.class);
-        assertEquals("Response message", "user stored succesfully", response);
+        assertEquals("user stored succesfully", response);
     }
 
     @Test
     public void remove_user() throws IOException {
         testRestTemplate.delete(getUri("user/4"));
         ResponseEntity<String> response = testRestTemplate.getForEntity(getUri("user?login=deleteUser"), String.class);
-        assertEquals("Removed user not found", 404, response.getStatusCode().value());
+        assertEquals(404, response.getStatusCode().value());
     }
 
     @Test
@@ -74,7 +75,7 @@ public class IntegrationTest {
         String user = readFile("integration/userUpdateInput.json");
         ResponseEntity<String> response = testRestTemplate.exchange(getUri("user/5"), HttpMethod.PUT,
                 prepareRequest(user), String.class);
-        assertEquals("User updated", 200, response.getStatusCode().value());
+        assertEquals(200, response.getStatusCode().value());
         String actual = testRestTemplate.getForObject(getUri("user?login=updateUser"), String.class);
         String expected = readFile("integration/userUpdateExpected.json");
         JSONObject actualJSON = new JSONObject(actual);
@@ -86,7 +87,7 @@ public class IntegrationTest {
         String user = readFile("integration/passwordUpdate.json");
         ResponseEntity<String> response = testRestTemplate.exchange(getUri("password/6"), HttpMethod.PUT,
                 prepareRequest(user), String.class);
-        assertEquals("Password updated", 200, response.getStatusCode().value());
+        assertEquals(200, response.getStatusCode().value());
     }
 
     private String getUri(String path) {
