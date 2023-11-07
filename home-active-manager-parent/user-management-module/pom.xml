@@ -26,14 +26,20 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
+      <version>${hibernate.core.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
+      <version>${mysql.connector.version}</version>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
@@ -73,6 +79,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
+            <id>shade-jar-with-dependencies</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
@@ -118,8 +125,8 @@
             <configuration>
               <fileSets>
                 <fileSet>
-                  <sourceFile>${project.basedir}/target/${project.build.finalName}.jar</sourceFile>
-                  <destinationFile>${release.project.folder}/${build.finalName}.jar</destinationFile>
+                  <sourceFile>${project.basedir}/target/${project.project.build.finalName}.jar</sourceFile>
+                  <destinationFile>${release.project.folder}/${project.build.finalName}.jar</destinationFile>
                 </fileSet>
                 <fileSet>
                   <sourceFile>${project.basedir}/scripts/start_app.sh</sourceFile>

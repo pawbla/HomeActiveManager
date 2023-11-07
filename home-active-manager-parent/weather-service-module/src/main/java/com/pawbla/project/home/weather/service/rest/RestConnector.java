@@ -44,7 +44,7 @@ public class RestConnector implements RestInterface {
             logger.info("Received status code " + resp.getStatusCodeValue() + " for: " + connector.getName());
             if (resp.getStatusCodeValue() != 200) {
                 connector.incrementErrorRequestCnt();
-                response.setErrorAndMessage(resp.getStatusCode().getReasonPhrase(), true);
+                response.setErrorAndMessage("TO FIX", true);
                 response.setModified(false);
             }
             if (StringUtils.isNotBlank(resp.getBody())) {

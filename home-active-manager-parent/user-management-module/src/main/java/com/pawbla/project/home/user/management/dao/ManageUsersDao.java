@@ -21,17 +21,17 @@ public interface ManageUsersDao extends JpaRepository<User, Long> {
     @Query("FROM Role")
     public List<Role> findRoles();
 
-    @Query("FROM User WHERE user_id=:user_id")
+    @Query("FROM User WHERE userId=?1")
     public User findByUserId(final int user_id);
 
-    @Query("FROM Role WHERE role=:role")
+    @Query("FROM Role WHERE role=?1")
     public Role findRole(final String role);
 
-    @Query("SELECT count(*) FROM User WHERE role_id = (SELECT roleId FROM Role WHERE role='ROLE_ADMIN')")
+    @Query("SELECT count(*) FROM User u WHERE u.role.roleId = (SELECT roleId FROM Role WHERE role='ROLE_ADMIN')")
     public int countAdminRecords();
 
     @Modifying
     @Transactional
-    @Query("UPDATE User SET password = :password WHERE user_id = :user_id")
+    @Query("UPDATE User SET password = ?2 WHERE userId = ?1")
     public void updatePassword(final int user_id, String password);
 }

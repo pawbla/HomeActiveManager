@@ -16,8 +16,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
     <release.project.folder>${project.parent.basedir}/${release.folder.name}/${project.name}</release.project.folder>
   </properties>
 
@@ -46,6 +46,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
+            <id>shade-jar-with-dependencies</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
@@ -91,8 +92,8 @@
             <configuration>
               <fileSets>
                 <fileSet>
-                  <sourceFile>${project.basedir}/target/${project.build.finalName}.jar</sourceFile>
-                  <destinationFile>${release.project.folder}/${build.finalName}.jar</destinationFile>
+                  <sourceFile>${project.basedir}/target/${project.project.build.finalName}.jar</sourceFile>
+                  <destinationFile>${release.project.folder}/${project.build.finalName}.jar</destinationFile>
                 </fileSet>
                 <fileSet>
                   <sourceFile>${project.basedir}/scripts/start_app.sh</sourceFile>

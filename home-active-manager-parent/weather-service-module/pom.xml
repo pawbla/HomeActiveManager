@@ -35,6 +35,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
+            <id>shade-jar-with-dependencies</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
@@ -81,7 +82,7 @@
               <fileSets>
                 <fileSet>
                   <sourceFile>${project.basedir}/target/${project.build.finalName}.jar</sourceFile>
-                  <destinationFile>${release.project.folder}/${build.finalName}.jar</destinationFile>
+                  <destinationFile>${release.project.folder}/${project.build.finalName}.jar</destinationFile>
                 </fileSet>
                 <fileSet>
                   <sourceFile>${project.basedir}/scripts/start_app.sh</sourceFile>

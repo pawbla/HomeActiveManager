@@ -11,8 +11,8 @@ public class JavaEnvironmentServiceDev implements JavaEnvironmentService {
     public void gatherJavaEnvironmentInfo(JavaEnvironment javaEnvironment) {
         javaEnvironment.setVendor("Vendor");
         javaEnvironment.setVendorUrl("vendor.url");
-        javaEnvironment.setVersion("1.8");
+        javaEnvironment.setVersion("17");
         javaEnvironment.setVirtualMachine("vm");
-        javaEnvironment.setRuntime("jre-1.8");
+        javaEnvironment.setRuntime("jre-17");
     }
 }

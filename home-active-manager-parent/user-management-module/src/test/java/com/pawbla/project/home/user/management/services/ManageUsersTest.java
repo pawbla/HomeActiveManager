@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -76,29 +76,29 @@ class ManageUsersTest {
     @Test
     public void getUserDetails() {
         User user = manageUsers.getUserByName("user").get();
-        assertEquals("First name for user", "userName1", user.getUserName());
-        assertEquals("Password for user","password1", user.getPassword());
-        assertFalse("Enabled for user", user.isEnabled());
+        assertEquals("userName1", user.getUserName());
+        assertEquals("password1", user.getPassword());
+        assertFalse(user.isEnabled());
     }
 
     @Test
     public void getUsersList() {
         List<User> userList = manageUsers.getUsers();
-        assertEquals("Users list size", 2, userList.size());
-        assertEquals("First name for first user", "userName1", userList.get(0).getUserName());
-        assertEquals("Password for first user","password1", userList.get(0).getPassword());
-        assertFalse("Enabled for first user", userList.get(0).isEnabled());
-        assertEquals("First name second user", "userName2", userList.get(1).getUserName());
-        assertEquals("Password for second user","password2", userList.get(1).getPassword());
-        assertTrue("Enabled for second user", userList.get(1).isEnabled());
+        assertEquals(2, userList.size());
+        assertEquals("userName1", userList.get(0).getUserName());
+        assertEquals("password1", userList.get(0).getPassword());
+        assertFalse(userList.get(0).isEnabled());
+        assertEquals("userName2", userList.get(1).getUserName());
+        assertEquals("password2", userList.get(1).getPassword());
+        assertTrue(userList.get(1).isEnabled());
     }
 
     @Test
     public void getRolesList() {
         List<Role> roleList = manageUsers.getRoles();
-        assertEquals("Roles list size", 2, roleList.size());
-        assertEquals("First role", "ROLE_USER", roleList.get(0).getRole());
-        assertEquals("Second role", "ROLE_ADMIN", roleList.get(1).getRole());
+        assertEquals(2, roleList.size());
+        assertEquals("ROLE_USER", roleList.get(0).getRole());
+        assertEquals("ROLE_ADMIN", roleList.get(1).getRole());
     }
 
     @Test
@@ -109,25 +109,25 @@ class ManageUsersTest {
         userToAdd.setPassword("password");
         manageUsers.addUser(userToAdd);
         verify(manageUsersDao).save(userCaptor.capture());
-        assertEquals("Stored username", "userToAdd", userCaptor.getValue().getUserName());
-        assertEquals("Stored first name", "firstName", userCaptor.getValue().getFirstName());
-        assertEquals("Stored password", "encodedPassword", userCaptor.getValue().getPassword());
-        assertFalse("Stored user id disabled", userCaptor.getValue().isEnabled());
+        assertEquals("userToAdd", userCaptor.getValue().getUserName());
+        assertEquals("firstName", userCaptor.getValue().getFirstName());
+        assertEquals("encodedPassword", userCaptor.getValue().getPassword());
+        assertFalse(userCaptor.getValue().isEnabled());
     }
 
     @Test
     public void removeUser() {
         int code = manageUsers.removeUser(1);
         verify(manageUsersDao).delete(userCaptor.capture());
-        assertEquals("Correctly removed user code", 0, code);
-        assertEquals("Removed username", "userName1", userCaptor.getValue().getUserName());
-        assertEquals("Removed password", "password1", userCaptor.getValue().getPassword());
+        assertEquals(0, code);
+        assertEquals("userName1", userCaptor.getValue().getUserName());
+        assertEquals("password1", userCaptor.getValue().getPassword());
     }
 
     @Test
     public void noRemoveAdmin() {
         int code = manageUsers.removeUser(2);
-        assertEquals("User cannot be removed", -1, code);
+        assertEquals(-1, code);
         verify(manageUsersDao, never()).delete(any());
     }
 
@@ -142,13 +142,13 @@ class ManageUsersTest {
         roleUpdate.setRole("ROLE_GUEST");
         userUpdate.setRole(roleUpdate);
         int code = manageUsers.updateUser(1,userUpdate);
-        assertEquals("Correctly removed user code", 0, code);
+        assertEquals(0, code);
         verify(manageUsersDao).save(userCaptor.capture());
-        assertEquals("Updated first name", "updatedFirstName", userCaptor.getValue().getFirstName());
-        assertEquals("Updated last name", "updatedLastName", userCaptor.getValue().getLastName());
-        assertEquals("Updated email", "updatedEmail", userCaptor.getValue().getEmail());
-        assertEquals("Updated role", "ROLE_GUEST", userCaptor.getValue().getRole().getRole());
-        assertTrue("Updated user id enabled", userCaptor.getValue().isEnabled());
+        assertEquals("updatedFirstName", userCaptor.getValue().getFirstName());
+        assertEquals("updatedLastName", userCaptor.getValue().getLastName());
+        assertEquals("updatedEmail", userCaptor.getValue().getEmail());
+        assertEquals("ROLE_GUEST", userCaptor.getValue().getRole().getRole());
+        assertTrue(userCaptor.getValue().isEnabled());
     }
 
     @Test
@@ -162,7 +162,7 @@ class ManageUsersTest {
         roleUpdate.setRole("ROLE_GUEST");
         userUpdate.setRole(roleUpdate);
         int code = manageUsers.updateUser(2,userUpdate);
-        assertEquals("User cannot be updated", -1, code);
+        assertEquals(-1, code);
         verify(manageUsersDao, never()).save(any());
     }
 
@@ -170,14 +170,14 @@ class ManageUsersTest {
     public void updatePassword() {
         Mockito.lenient().when(passwordEncoder.matches(anyString(),anyString())).thenReturn(true);
         int code = manageUsers.updatePassword(2,"pass1", "pass2");
-        assertEquals("User cannot be updated", 0, code);
+        assertEquals(0, code);
         verify(manageUsersDao, atLeastOnce()).updatePassword(2, "encodedPassword");
     }
 
     @Test
     public void noUpdateEqualOldAndNewPassword() {
         int code = manageUsers.updatePassword(2,"pass1", "pass1");
-        assertEquals("User cannot be updated", -1, code);
+        assertEquals(-1, code);
         verify(manageUsersDao, never()).updatePassword(anyInt(), anyString());
     }
 
@@ -185,7 +185,7 @@ class ManageUsersTest {
     public void noUpdateIncorrectOldPassword() {
         Mockito.lenient().when(passwordEncoder.matches(anyString(),anyString())).thenReturn(false);
         int code = manageUsers.updatePassword(2,"pass1", "pass2");
-        assertEquals("User cannot be updated", -2, code);
+        assertEquals(-2, code);
         verify(manageUsersDao, never()).updatePassword(anyInt(), anyString());
     }
 }
