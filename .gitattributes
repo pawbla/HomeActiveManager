@@ -1,0 +1,2 @@
+# additionally declare text file types
+*.sh        text eol=lf
