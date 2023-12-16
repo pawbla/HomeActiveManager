@@ -21,9 +21,9 @@ import java.util.Properties;
 @EnableJpaRepositories("com.pawbla.project.home.authorization.service.dao")
 @EntityScan("com.pawbla.project.home.authorization.service.models")
 public class DatabaseConfig {
-    private String dialect;
-    private String show_sql;
-    private String format_sql;
+    private final String dialect;
+    private final String show_sql;
+    private final String format_sql;
 
     public DatabaseConfig (@Value("${hibernate.dialect}") String dialect,
                             @Value("${hibernate.show-sql}") String show_sql,

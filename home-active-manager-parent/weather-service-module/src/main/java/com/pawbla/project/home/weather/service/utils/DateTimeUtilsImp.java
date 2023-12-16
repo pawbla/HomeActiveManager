@@ -2,6 +2,7 @@ package com.pawbla.project.home.weather.service.utils;
 
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -35,5 +36,10 @@ public class DateTimeUtilsImp implements DateTimeUtils {
     @Override
     public int getCurrentSecond() {
         return LocalDateTime.now().getSecond();
+    }
+
+    @Override
+    public Long getNowEpoch() {
+        return Instant.now().getEpochSecond();
     }
 }

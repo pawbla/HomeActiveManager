@@ -20,7 +20,10 @@ The application consist of the following modules:
 - Weather service module
 - Embedded sensor module
 - Application monitoring module
+- Authorization service module  
 - User management module
+- History service module
+- Testing module
 
 ### Application package
 Application release package is created on maven `package` phase. 
@@ -79,6 +82,9 @@ Every application can be shutted down with the following REST API call:
       }
       ```
       </details>
+## Change log
+#### [1.0.0] - 16.12.2023
+* **History service module:** new module
 
 ## Change log
 #### [1.0.0] - 19.01.2022

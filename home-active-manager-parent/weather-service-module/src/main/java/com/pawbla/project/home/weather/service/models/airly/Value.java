@@ -6,13 +6,13 @@ public class Value {
     @JsonProperty("name")
     private String name;
     @JsonProperty("value")
-    private double value;
+    private Double value;
 
     public String getName() {
         return name;
     }
 
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 }

@@ -44,7 +44,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext
-class IntegrationTest {
+class AppMonitoringIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;

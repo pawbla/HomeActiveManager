@@ -24,7 +24,7 @@ import org.springframework.util.MultiValueMap;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = AFTER_CLASS)
-public class IntegrationTest {
+public class AuthServiceIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;

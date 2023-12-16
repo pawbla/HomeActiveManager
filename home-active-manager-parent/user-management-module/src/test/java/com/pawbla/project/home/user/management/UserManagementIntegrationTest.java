@@ -24,7 +24,7 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = AFTER_CLASS)
-public class IntegrationTest {
+public class UserManagementIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;

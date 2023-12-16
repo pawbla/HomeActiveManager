@@ -1,6 +1,5 @@
 package com.pawbla.project.home.weather.service.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +8,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/v1/weather")
 public class RestControllers {
 
-    @Autowired
-    private ConnectorDetailsRenderer connectorDetailsRenderer;
+    private final ConnectorDetailsRenderer connectorDetailsRenderer;
+    private final WeatherJsonResponseParser weatherJsonResponseParser;
+    private final SimplifiedWeatherRenderer simplifiedWeatherRenderer;
 
-    @Autowired
-    private WeatherJsonResponseParser weatherJsonResponseParser;
+    public RestControllers(ConnectorDetailsRenderer connectorDetailsRenderer, WeatherJsonResponseParser weatherJsonResponseParser,
+                           SimplifiedWeatherRenderer simplifiedWeatherRenderer) {
+        this.connectorDetailsRenderer = connectorDetailsRenderer;
+        this.weatherJsonResponseParser = weatherJsonResponseParser;
+        this.simplifiedWeatherRenderer = simplifiedWeatherRenderer;
+    }
 
     @GetMapping(value = "/measurements", produces= MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
@@ -27,5 +31,12 @@ public class RestControllers {
     @ResponseBody
     public ResponseEntity<String> getConnectorsDetails() {
         return ResponseEntity.ok().body(connectorDetailsRenderer.getJSON());
+    }
+
+    @GetMapping(value = "/simplifiedMeasurement", produces=MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<String> getSimplifiedMeasurement() {
+        return ResponseEntity.ok().body(simplifiedWeatherRenderer.getJSON());
     }
 }
