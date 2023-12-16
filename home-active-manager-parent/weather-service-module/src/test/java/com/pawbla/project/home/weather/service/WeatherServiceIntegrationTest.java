@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class IntegrationTest {
+public class WeatherServiceIntegrationTest {
 
     private static final String REGEXP_SUN_RISE = "value\":\"0[0-9]:46";
     private static final String DATE_SUN_RISE = "value\":\"06:00";
@@ -51,6 +51,7 @@ public class IntegrationTest {
         when(dataTimeUtils.getCurrentHour()).thenReturn(12);
         when(dataTimeUtils.getCurrentMinute()).thenReturn(0);
         when(dataTimeUtils.getCurrentSecond()).thenReturn(0);
+        when(dataTimeUtils.getNowEpoch()).thenReturn(1702318304L);
     }
 
 
@@ -71,12 +72,19 @@ public class IntegrationTest {
         JSONAssert.assertEquals("Status response", expected, new JSONObject(actual), true);
     }
 
+    @Test
+    public void simplifiedConnectorTest() throws IOException, JSONException {
+        String actual = testRestTemplate.getForObject(getUri("simplifiedMeasurement"), String.class);
+        String expected = readFile("integration/simplified.json");
+        JSONAssert.assertEquals(expected, new JSONObject(actual), true);
+    }
+
     private String getUri(String path) {
         return "http://localhost:" + serverPort + "/api/v1/weather/" + path;
     }
 
     private String readFile(String path) throws IOException {
         File resource = new ClassPathResource(path).getFile();
-        return new String(Files.readAllBytes(resource.toPath()), StandardCharsets.UTF_8);
+        return Files.readString(resource.toPath());
     }
 }

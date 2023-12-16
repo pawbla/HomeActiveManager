@@ -15,11 +15,11 @@ import static com.pawbla.project.home.weather.service.utils.Constants.DOUBLE_DEF
 @Component("outWeather")
 public class OutWeatherParser extends AbstractParser<AirLyMeasurement> {
 
+    public static final String TEMPERATURE_OBJ_NAME = "TEMPERATURE";
+    public static final String HUMIDITY_OBJ_NAME = "HUMIDITY";
+
     private static final String TEMPERATURE = "temperature";
     private static final String HUMIDITY = "humidity";
-
-    private static final String TEMPERATURE_OBJ_NAME = "TEMPERATURE";
-    private static final String HUMIDITY_OBJ_NAME = "HUMIDITY";
 
     private final HandlerInterface airLy;
 

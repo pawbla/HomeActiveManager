@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class IntegrationTest {
+public class EmbeddedSensorIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;

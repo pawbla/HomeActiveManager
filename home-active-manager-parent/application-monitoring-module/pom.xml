@@ -99,7 +99,7 @@
             <configuration>
               <fileSets>
                 <fileSet>
-                  <sourceFile>${project.basedir}/target/${project.project.build.finalName}.jar</sourceFile>
+                  <sourceFile>${project.basedir}/target/${project.build.finalName}.jar</sourceFile>
                   <destinationFile>${release.project.folder}/${project.build.finalName}.jar</destinationFile>
                 </fileSet>
                 <fileSet>

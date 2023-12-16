@@ -16,6 +16,8 @@ import static com.pawbla.project.home.weather.service.utils.Constants.*;
 @Component("weather")
 public class WeatherParser extends AbstractParser<AccuWeatherMeasurement> {
 
+    public static final String PRESSURE_OBJ_NAME = "PRESSURE";
+
     private static final String WEATHER_TEXT = "weatherText";
     private static final String WEATHER_ICON = "weatherIcon";
     private static final String WIND_DIRECTION = "windDirection";
@@ -32,8 +34,6 @@ public class WeatherParser extends AbstractParser<AccuWeatherMeasurement> {
     private static final String IS_DAY_TIME = "isDayTime";
     private static final String PRESSURE = "pressure";
     private static final String VIOLET_HEX = "#B803FF";
-
-    private static final String PRESSURE_OBJ_NAME = "PRESSURE";
 
     private final HandlerInterface accuWeather;
     private final HandlerInterface airLy;

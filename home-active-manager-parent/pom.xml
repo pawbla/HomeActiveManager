@@ -39,6 +39,17 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-openfeign</artifactId>
+        <version>4.0.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.tomakehurst</groupId>
+        <artifactId>wiremock</artifactId>
+        <version>3.0.1</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>com.pi4j</groupId>
         <artifactId>pi4j-core</artifactId>
         <version>${pi4j.version}</version>
@@ -210,6 +221,7 @@
     <module>embedded-sensor-module</module>
     <module>application-monitoring-module</module>
     <module>authorization-service-module</module>
+    <module>history-service-module</module>
     <module>testing-module</module>
   </modules>
 

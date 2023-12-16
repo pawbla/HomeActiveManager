@@ -67,7 +67,7 @@
             <configuration>
               <fileSets>
                 <fileSet>
-                  <sourceFile>${project.basedir}/target/${project.project.build.finalName}.jar</sourceFile>
+                  <sourceFile>${project.basedir}/target/${project.build.finalName}.jar</sourceFile>
                   <destinationFile>${release.project.folder}/${project.build.finalName}.jar</destinationFile>
                 </fileSet>
                 <fileSet>
@@ -300,8 +300,6 @@
     </dependency>
   </dependencies>
   <properties>
-    <maven.compiler.target>17</maven.compiler.target>
-    <maven.compiler.source>17</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <release.project.folder>${project.parent.basedir}/${release.folder.name}/${project.name}</release.project.folder>
   </properties>

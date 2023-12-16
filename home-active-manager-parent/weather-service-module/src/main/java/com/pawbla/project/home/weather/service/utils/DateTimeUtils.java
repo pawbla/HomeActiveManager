@@ -7,4 +7,5 @@ public interface DateTimeUtils {
     int getCurrentHour();
     int getCurrentMinute();
     int getCurrentSecond();
+    Long getNowEpoch();
 }
