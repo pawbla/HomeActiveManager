@@ -19,6 +19,7 @@ public class DbSourceConfigurationDev {
     public DataSource dataSource() {
         logger.info("Create embedded database connection - for tests.");
         return new EmbeddedDatabaseBuilder()
+                .setName("testDB;MODE=MySQL")
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("database/schema.sql")
                 .addScript("database/data.sql")
