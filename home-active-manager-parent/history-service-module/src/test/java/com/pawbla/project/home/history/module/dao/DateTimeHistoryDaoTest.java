@@ -3,6 +3,7 @@ package com.pawbla.project.home.history.module.dao;
 import com.pawbla.project.home.history.module.config.DbConfiguration;
 import com.pawbla.project.home.history.module.config.DbSourceConfigurationDev;
 import com.pawbla.project.home.history.module.model.StatsValue;
+import com.pawbla.project.home.history.module.model.ValidData;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -224,5 +225,48 @@ class DateTimeHistoryDaoTest {
         assertEquals(BigDecimal.valueOf(1015.45).stripTrailingZeros(), statsValue1.getMeanVal().stripTrailingZeros());
         assertEquals(BigDecimal.valueOf(1015.45).stripTrailingZeros(), statsValue1.getMinVal().stripTrailingZeros());
         assertEquals(BigDecimal.valueOf(1015.45).stripTrailingZeros(), statsValue1.getMaxVal().stripTrailingZeros());
+    }
+
+    @Test
+    void shouldReadValidDates() {
+        List<ValidData> validDataList = dateTimeHistoryDao.findValidData();
+        assertEquals(3, validDataList.size());
+        ValidData validData0 = validDataList.get(0);
+        ValidData validData1 = validDataList.get(1);
+        ValidData validData2 = validDataList.get(2);
+        assertEquals("2022", validData0.getValidYear());
+        assertEquals("12", validData0.getValidMonth());
+        assertEquals("2023", validData1.getValidYear());
+        assertEquals("01", validData1.getValidMonth());
+        assertEquals("2023", validData2.getValidYear());
+        assertEquals("02", validData2.getValidMonth());
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenNoDayData() {
+        List<StatsValue> valueListTempIn = dateTimeHistoryDao.findTempInPerDay("2020", "01");
+        assertEquals(0, valueListTempIn.size());
+        List<StatsValue> valueListHumIn = dateTimeHistoryDao.findHumInPerDay("2020", "01");
+        assertEquals(0, valueListHumIn.size());
+        List<StatsValue> valueListTempOut = dateTimeHistoryDao.findTempOutPerDay("2020", "01");
+        assertEquals(0, valueListTempOut.size());
+        List<StatsValue> valueListHumOut = dateTimeHistoryDao.findHumOutPerDay("2020", "01");
+        assertEquals(0, valueListHumOut.size());
+        List<StatsValue> valueListPressure = dateTimeHistoryDao.findPressurePerDay("2020", "01");
+        assertEquals(0, valueListPressure.size());
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenNoMonthData() {
+        List<StatsValue> valueListTempIn = dateTimeHistoryDao.findTempInPerMonth("2020");
+        assertEquals(0, valueListTempIn.size());
+        List<StatsValue> valueListHumIn = dateTimeHistoryDao.findHumInPerMonth("2020");
+        assertEquals(0, valueListHumIn.size());
+        List<StatsValue> valueListTempOut = dateTimeHistoryDao.findTempOutPerMonth("2020");
+        assertEquals(0, valueListTempOut.size());
+        List<StatsValue> valueListHumOut = dateTimeHistoryDao.findHumOutPerMonth("2020");
+        assertEquals(0, valueListHumOut.size());
+        List<StatsValue> valueListPressure = dateTimeHistoryDao.findPressurePerMonth("2020");
+        assertEquals(0, valueListPressure.size());
     }
 }

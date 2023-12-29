@@ -2,6 +2,7 @@ package com.pawbla.project.home.history.module.dao;
 
 import com.pawbla.project.home.history.module.model.DateTimeHistory;
 import com.pawbla.project.home.history.module.model.StatsValue;
+import com.pawbla.project.home.history.module.model.ValidData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -45,4 +46,7 @@ public interface DateTimeHistoryDao extends JpaRepository<DateTimeHistory, Long>
 
     @Query(STAT_PRESSURE_PER_MONTH)
     List<StatsValue> findPressurePerMonth(@Param("tmpYear") String tmpYear);
+
+    @Query(VALID_DATES)
+    List<ValidData> findValidData();
 }

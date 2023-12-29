@@ -17,12 +17,12 @@ Purpose for refactoring was split a previous app which was king of a monolith to
 
 ### Modules
 The application consist of the following modules:
-- Weather service module
-- Embedded sensor module
-- Application monitoring module
-- Authorization service module  
-- User management module
-- History service module
+- Weather service module (port: 8082)
+- Embedded sensor module (port: 8083)
+- User management module (port: 8084)
+- Application monitoring module (port: 8085)
+- Authorization service module (port: 8086)
+- History service module (port: 8087)
 - Testing module
 
 ### Application package

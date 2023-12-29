@@ -42,4 +42,5 @@ public class QueryUtils {
             "ROUND(AVG(weatherMeasurement.pressure),2) as meanVal, MIN(weatherMeasurement.pressure) as minVal, MAX(weatherMeasurement.pressure) as maxVal " +
             "FROM DateTimeHistory WHERE tmpYear = :tmpYear GROUP BY tmpMonth ORDER BY tmpMonth";
 
+    public static final String VALID_DATES = "SELECT DISTINCT tmpYear as validYear, tmpMonth as validMonth FROM DateTimeHistory";
 }

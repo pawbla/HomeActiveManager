@@ -17,7 +17,7 @@ Rest api is available on port 8082, beginning with `/api/v1/weather/`
     Return weather datas gathered by module
   * **URL**
 
-    /measurements
+    /validData
   * **Method**
 
     `GET`
