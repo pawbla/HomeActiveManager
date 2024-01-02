@@ -10,7 +10,7 @@
         <!--  Rolling file appender  -->
         <RollingFile name="RollingFile"
                      fileName="/var/log/home_active_manager/application_monitoring/log.txt"
-                     filePattern="/var/log/home_active_manager/application_monitoring/log-%d{MM-dd-yyyy}-%i.txt.gz">
+                     filePattern="/var/log/home_active_manager/application_monitoring/log-%d{YYYY-MM-dd}-%i.txt.gz">
             <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%-5p] [%c{1}:%L] - %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy />
@@ -33,7 +33,7 @@
 
         <Root level="trace">
             <AppenderRef ref="Console" level="debug"/>
-            <AppenderRef ref="RollingFile" level="trace"/>
+            <!--<AppenderRef ref="RollingFile" level="trace"/>-->
         </Root>
     </Loggers>
 </Configuration>

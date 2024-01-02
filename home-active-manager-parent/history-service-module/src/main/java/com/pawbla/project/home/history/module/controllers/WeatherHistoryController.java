@@ -45,7 +45,6 @@ public class WeatherHistoryController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-
     }
 
     @GetMapping(value = "/month", produces= MediaType.APPLICATION_JSON_VALUE)
