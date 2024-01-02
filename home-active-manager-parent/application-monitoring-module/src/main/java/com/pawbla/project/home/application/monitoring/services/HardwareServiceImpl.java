@@ -58,7 +58,7 @@ public class HardwareServiceImpl implements HardwareService {
         String cpuRevision = "";
         try {
             cpuRevision = SystemInfo.getCpuRevision();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | UnsupportedOperationException e) {
             logger.warn("Cannot read CPU Revision. " + e.getMessage());
         }
         return cpuRevision;
@@ -68,7 +68,7 @@ public class HardwareServiceImpl implements HardwareService {
         String cpuArchitecture = "";
         try {
             cpuArchitecture = SystemInfo.getCpuArchitecture();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | UnsupportedOperationException e) {
             logger.warn("Cannot read CPU Architecture. " + e.getMessage());
         }
         return cpuArchitecture;
@@ -78,7 +78,7 @@ public class HardwareServiceImpl implements HardwareService {
         String modelName = "";
         try {
             modelName = SystemInfo.getModelName();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | UnsupportedOperationException e) {
             logger.warn("Cannot read Model name. " + e.getMessage());
         }
         return modelName;
@@ -88,7 +88,7 @@ public class HardwareServiceImpl implements HardwareService {
         String processor = "";
         try {
             processor = SystemInfo.getProcessor();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | UnsupportedOperationException e) {
             logger.warn("Cannot read Processor. " + e.getMessage());
         }
         return processor;
@@ -98,7 +98,7 @@ public class HardwareServiceImpl implements HardwareService {
         String boardTypeName = "";
         try {
             boardTypeName = SystemInfo.getBoardType().name();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | UnsupportedOperationException e) {
             logger.warn("Cannot read Board Type Name. " + e.getMessage());
         }
         return boardTypeName;
@@ -108,7 +108,7 @@ public class HardwareServiceImpl implements HardwareService {
         float cpuTemperature = 0;
         try {
             cpuTemperature = SystemInfo.getCpuTemperature();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | UnsupportedOperationException e) {
             logger.warn("Cannot read CPU temperature. " + e.getMessage());
         }
         return cpuTemperature;
@@ -118,7 +118,7 @@ public class HardwareServiceImpl implements HardwareService {
         float cpuVoltage = 0;
         try {
             cpuVoltage = SystemInfo.getCpuVoltage();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | UnsupportedOperationException e) {
             logger.warn("Cannot read CPU voltage. " + e.getMessage());
         }
         return cpuVoltage;

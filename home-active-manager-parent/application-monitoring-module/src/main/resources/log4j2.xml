@@ -29,7 +29,7 @@
     <Loggers>
         <Logger name="org.hibernate" level="warn">
             <AppenderRef ref="Console"/>
-        </Logger>
+        </Logger>mo
         <Logger name="org.springframework" level="warn">
             <AppenderRef ref="Console"/>
         </Logger>
