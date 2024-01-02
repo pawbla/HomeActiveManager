@@ -28,43 +28,51 @@ class WeatherHistoryDaoTest {
 
     @Test
     void shouldReadRecord() {
-        WeatherMeasurement weatherMeasurement = weatherHistoryDao.findByEpochDateTimeStamp(1701975600L);
-        assertEquals(1701975600L, weatherMeasurement.getEpochDateTimeStamp());
-        assertEquals(BigDecimal.valueOf(6.0).stripTrailingZeros(),
+        WeatherMeasurement weatherMeasurement = weatherHistoryDao.findByEpochDateTimeStamp(1672664412L);
+        assertEquals(1672664412L, weatherMeasurement.getEpochDateTimeStamp());
+        assertEquals(BigDecimal.valueOf(19.92).stripTrailingZeros(),
                 weatherMeasurement.getTemperatureIn().stripTrailingZeros());
-        assertEquals(BigDecimal.valueOf(46.1).stripTrailingZeros(),
+        assertEquals(BigDecimal.valueOf(33.4).stripTrailingZeros(),
                 weatherMeasurement.getHumidityIn().stripTrailingZeros());
-        assertEquals(BigDecimal.valueOf(-10.0).stripTrailingZeros(),
+        assertEquals(BigDecimal.valueOf(-4.3).stripTrailingZeros(),
                 weatherMeasurement.getTemperatureOut().stripTrailingZeros());
-        assertEquals(BigDecimal.valueOf(55.0).stripTrailingZeros(),
-                weatherMeasurement.getHumidityOut().stripTrailingZeros());
-        assertNull(weatherMeasurement.getPressure());
+        assertNull(weatherMeasurement.getHumidityOut());
+        assertEquals(BigDecimal.valueOf(1023.11).stripTrailingZeros(),
+                weatherMeasurement.getPressure().stripTrailingZeros());
     }
 
     @Test
     void shouldReadAllRecords() {
         List<WeatherMeasurement> weatherMeasurementList = weatherHistoryDao.findAll();
-        assertEquals(6, weatherMeasurementList.size());
+        assertEquals(10, weatherMeasurementList.size());
         List<Long> timestampsList = getTimestampsList(weatherMeasurementList);
-        assertTrue(timestampsList.contains(1701957600L));
-        assertTrue(timestampsList.contains(1701961200L));
-        assertTrue(timestampsList.contains(1701964800L));
-        assertTrue(timestampsList.contains(1701968400L));
-        assertTrue(timestampsList.contains(1701972000L));
-        assertTrue(timestampsList.contains(1701975600L));
+        assertTrue(timestampsList.contains(1672470012L));
+        assertTrue(timestampsList.contains(1672491612L));
+        assertTrue(timestampsList.contains(1672520412L));
+        assertTrue(timestampsList.contains(1672556412L));
+        assertTrue(timestampsList.contains(1672578012L));
+        assertTrue(timestampsList.contains(1672606812L));
+        assertTrue(timestampsList.contains(1672642812L));
+        assertTrue(timestampsList.contains(1672664412L));
+        assertTrue(timestampsList.contains(1672693212L));
+        assertTrue(timestampsList.contains(1675237677L));
     }
 
     @Test
     void shouldReadByTimestampRange() {
-        List<WeatherMeasurement> weatherMeasurementList = weatherHistoryDao.findByEpochDateTimeStampBetween(1701961000L, 1701972100L);
+        List<WeatherMeasurement> weatherMeasurementList = weatherHistoryDao.findByEpochDateTimeStampBetween(1672497345L, 1672607445L);
         assertEquals(4, weatherMeasurementList.size());
         List<Long> timestampsList = getTimestampsList(weatherMeasurementList);
-        assertFalse(timestampsList.contains(1701957600L));
-        assertTrue(timestampsList.contains(1701961200L));
-        assertTrue(timestampsList.contains(1701964800L));
-        assertTrue(timestampsList.contains(1701968400L));
-        assertTrue(timestampsList.contains(1701972000L));
-        assertFalse(timestampsList.contains(1701975600L));
+        assertFalse(timestampsList.contains(1672470012L));
+        assertFalse(timestampsList.contains(1672491612L));
+        assertTrue(timestampsList.contains(1672520412L));
+        assertTrue(timestampsList.contains(1672556412L));
+        assertTrue(timestampsList.contains(1672578012L));
+        assertTrue(timestampsList.contains(1672606812L));
+        assertFalse(timestampsList.contains(1672642812L));
+        assertFalse(timestampsList.contains(1672664412L));
+        assertFalse(timestampsList.contains(1672693212L));
+        assertFalse(timestampsList.contains(1675237677L));
     }
 
     @Test
@@ -79,7 +87,7 @@ class WeatherHistoryDaoTest {
 
         weatherHistoryDao.save(dataToSave);
         List<WeatherMeasurement> weatherMeasurementList = weatherHistoryDao.findAll();
-        assertEquals(7, weatherMeasurementList.size());
+        assertEquals(11, weatherMeasurementList.size());
         assertTrue(getTimestampsList(weatherMeasurementList).contains(1701982800L));
         WeatherMeasurement savedMeasurement = weatherMeasurementList.stream()
                 .filter(m -> m.getEpochDateTimeStamp().equals(1701982800L))
@@ -98,5 +106,4 @@ class WeatherHistoryDaoTest {
     private List<Long> getTimestampsList(List<WeatherMeasurement> weatherMeasurementList) {
         return weatherMeasurementList.stream().map(WeatherMeasurement::getEpochDateTimeStamp).collect(Collectors.toList());
     }
-
 }

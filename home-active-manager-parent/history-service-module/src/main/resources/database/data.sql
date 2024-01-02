@@ -1,6 +1,10 @@
-INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1701957600, 1.0, 32.1, -12.0, 75.0, 1234.0);
-INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1701961200, 2.0, 32.3, 0.0, 75.0, 1234.0);
-INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1701964800, 3.0, 33.1, -11.0, 45.0, 1234.0);
-INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1701968400, 4.0, 35.1, -10.0, 35.0, 1234.0);
-INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1701972000, 5.0, 55.1, -9.0, 35.0, 1234.0);
-INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut) VALUES (1701975600, 6.0, 46.1, -10.0, 55.0);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1672470012, 24.12, 33.1, -2.1, 83.1, 1024.12);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1672491612, 25.11, 33.1, -1.1, 85.01, 1022.01);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1672520412, 23.12, 33.1, -0.3, 82.00, 1011.10);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1672556412, 21.0, 36.1, 12.4, 82.1, 1023.21);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1672578012, 21.5, 35.2, 11.2, 81.0, 1020.00);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1672606812, 22.0, 35.7, 10.3, 80.0, 1000.00);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1672642812, 19.91, 33.1, 12.5, 76.5, 1021.12);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, pressure) VALUES (1672664412, 19.92, 33.4, -4.3, 1023.11);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1672693212, 20.01, 35.0, 12.1, 77.01, 1020.45);
+INSERT INTO weatherHistory (epochDateTimeStamp, temperatureIn, humidityIn, temperatureOut, humidityOut, pressure) VALUES (1675237677, 1.01, 32.0, 2.1, 69.01, 1015.45);
