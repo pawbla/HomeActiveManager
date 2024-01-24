@@ -16,9 +16,11 @@ public class AbstractHistoryParserTest {
                 .collect(Collectors.toList());
     }
 
-    protected String getExpected(String type, List<List<String>> inputData) {
+    protected String getExpected(String type, List<List<String>> inputData, String measurement) {
         JSONObject expected = new JSONObject()
                 .put("year", inputData.get(0).get(0))
+                .put("period", type.equals("day") ? "month" : "year")
+                .put("type", measurement)
                 .put("history", getExpectedStats(type, inputData));
 
         if (type.equals("day")) {

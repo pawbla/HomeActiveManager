@@ -12,9 +12,9 @@ import org.hibernate.annotations.Subselect;
 @Entity
 @Immutable
 @Subselect("SELECT epochDateTimeStamp as timestamp, " +
-        "FROM_UNIXTIME(epochDateTimeStamp, 'YYYY') as tmpYear, " +
-        "FROM_UNIXTIME(epochDateTimeStamp, 'MM') as tmpMonth, " +
-        "FROM_UNIXTIME(epochDateTimeStamp, 'dd') as tmpDay FROM weatherHistory")
+        "from_unixtime(epochDateTimeStamp, '%Y') as tmpYear, " +
+        "from_unixtime(epochDateTimeStamp, '%m') as tmpMonth, " +
+        "from_unixtime(epochDateTimeStamp, '%d') as tmpDay FROM weatherHistory")
 public class DateTimeHistory {
     @Id
     @Column

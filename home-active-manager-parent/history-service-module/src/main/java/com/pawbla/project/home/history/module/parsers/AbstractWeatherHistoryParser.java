@@ -24,4 +24,14 @@ public class AbstractWeatherHistoryParser {
                 .put(MAX, statsValue.getMaxVal())
                 .put(MIN, statsValue.getMinVal());
     }
+
+    protected String getType(String type) {
+        return switch (type) {
+            case TEMP_IN_TYPE, TEMP_OUT_TYPE -> TEMPERATURE;
+            case HUM_IN_TYPE, HUM_OUT_TYPE -> HUMIDITY;
+            case PRESSURE_TYPE -> PRESSURE;
+            default -> EMPTY;
+        };
+    }
+
 }

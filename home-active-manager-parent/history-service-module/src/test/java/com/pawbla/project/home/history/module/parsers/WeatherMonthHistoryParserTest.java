@@ -41,7 +41,7 @@ class WeatherMonthHistoryParserTest extends AbstractHistoryParserTest {
     void shouldPrepareResponseForTempIn() {
         Mockito.when(dao.findTempInPerMonth("2023")).thenReturn(getInputData(INPUT_DATA));
         String actual = parser.getParsed("tempIn", "2023");
-        String expected = getExpected("month", INPUT_DATA);
+        String expected = getExpected("month", INPUT_DATA, "temperature");
         JSONAssert.assertEquals(expected, actual,false);
         verify(dao, times(1)).findTempInPerMonth("2023");
     }
@@ -50,7 +50,7 @@ class WeatherMonthHistoryParserTest extends AbstractHistoryParserTest {
     void shouldPrepareResponseForHumIn() {
         Mockito.when(dao.findHumInPerMonth("2023")).thenReturn(getInputData(INPUT_DATA));
         String actual = parser.getParsed("humIn", "2023");
-        String expected = getExpected("month", INPUT_DATA);
+        String expected = getExpected("month", INPUT_DATA, "humidity");
         JSONAssert.assertEquals(expected, actual,false);
         verify(dao, times(1)).findHumInPerMonth("2023");
     }
@@ -59,7 +59,7 @@ class WeatherMonthHistoryParserTest extends AbstractHistoryParserTest {
     void shouldPrepareResponseForTempOut() {
         Mockito.when(dao.findTempOutPerMonth("2023")).thenReturn(getInputData(INPUT_DATA));
         String actual = parser.getParsed("tempOut", "2023");
-        String expected = getExpected("month", INPUT_DATA);
+        String expected = getExpected("month", INPUT_DATA, "temperature");
         JSONAssert.assertEquals(expected, actual,false);
         verify(dao, times(1)).findTempOutPerMonth("2023");
     }
@@ -68,7 +68,7 @@ class WeatherMonthHistoryParserTest extends AbstractHistoryParserTest {
     void shouldPrepareResponseForHumOut() {
         Mockito.when(dao.findHumOutPerMonth("2023")).thenReturn(getInputData(INPUT_DATA));
         String actual = parser.getParsed("humOut", "2023");
-        String expected = getExpected("month", INPUT_DATA);
+        String expected = getExpected("month", INPUT_DATA, "humidity");
         JSONAssert.assertEquals(expected, actual,false);
         verify(dao, times(1)).findHumOutPerMonth("2023");
     }
@@ -77,7 +77,7 @@ class WeatherMonthHistoryParserTest extends AbstractHistoryParserTest {
     void shouldPrepareResponseForPressure() {
         Mockito.when(dao.findPressurePerMonth("2023")).thenReturn(getInputData(INPUT_DATA));
         String actual = parser.getParsed("pressure", "2023");
-        String expected = getExpected("month", INPUT_DATA);
+        String expected = getExpected("month", INPUT_DATA, "pressure");
         JSONAssert.assertEquals(expected, actual,false);
         verify(dao, times(1)).findPressurePerMonth("2023");
     }
