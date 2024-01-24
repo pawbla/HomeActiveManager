@@ -20,5 +20,12 @@ public class AppConstants {
     public static final String MIN = "min";
     public static final String VALUES = "values";
 
+    public static final String PERIOD = "period";
+    public static final String TYPE = "type";
+    public static final String TEMPERATURE = "temperature";
+    public static final String HUMIDITY = "humidity";
+    public static final String PRESSURE = "pressure";
+    public static final String EMPTY = "";
+
     public static final String INCORRECT_TYPE_VALUE = "Incorrect type value";
 }

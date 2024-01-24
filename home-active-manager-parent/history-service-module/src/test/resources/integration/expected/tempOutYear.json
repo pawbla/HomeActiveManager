@@ -1,5 +1,7 @@
 {
   "year": "2023",
+  "period": "year",
+  "type": "temperature",
   "history": [
     {
       "month": "01",

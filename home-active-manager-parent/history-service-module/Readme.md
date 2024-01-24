@@ -159,6 +159,8 @@ Rest api is available on port 8087, beginning with `/api/v1/history/weather`
         {
           "month": "01",
           "year": "2023",
+          "period": "month",
+          "type": "temperature",
           "history": [
             {
               "day": "01",

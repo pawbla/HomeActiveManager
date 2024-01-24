@@ -24,6 +24,8 @@ public class WeatherDayHistoryParser extends AbstractWeatherHistoryParser {
         return new JSONObject()
                 .put(YEAR, year)
                 .put(MONTH, month)
+                .put(PERIOD, MONTH)
+                .put(TYPE, getType(type))
                 .put(HISTORY, getHistory(statsValueList, DAY)).toString();
     }
 
